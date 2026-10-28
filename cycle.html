@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="./styles.css">
 <link rel="stylesheet" href="./cycle.css">
 <link rel="stylesheet" href="./navigation.css">
+<link rel="stylesheet" href="./cycle-responsive.css">
 <script src="./managers-data.js" defer></script>
 <script src="./cycle-data.js" defer></script>
 <script src="./cycle.js" defer></script>
@@ -65,7 +66,7 @@
               <option value="other">Прочие</option>
             </select>
           </label>
-          <button class="cycle-reset" id="cycleReset" type="button">Сбросить</button>
+          <button class="cycle-reset" id="cycleReset" type="button" disabled>Сбросить</button>
         </div>
       </div>
 
@@ -123,10 +124,12 @@
           <div class="cycle-sort-control"><label for="cycleSort">Порядок сортировки</label><select id="cycleSort"><option value="longest">По длительности — сначала долгие</option><option value="shortest">Сначала быстрые</option><option value="date">По дате договора</option></select></div>
         </div>
         <div class="cycle-timeline-legend"><span><i class="cycle-dot fast"></i> 0–7 дней</span><span><i class="cycle-dot mid"></i> 8–30 дней</span><span><i class="cycle-dot long"></i> 31+ день</span></div>
-        <div class="cycle-timeline-wrap">
+        <div class="cycle-timeline-wrap" role="region" tabindex="0" aria-label="Временная шкала циклов сделок: договор, длительность и сумма">
           <div class="cycle-timeline-head"><span>Договор / ответственный</span><span>Длительность цикла</span><span>Дней</span><span>Сумма</span></div>
           <div id="cycleTimeline" class="cycle-timeline-body"></div>
         </div>
+        <p class="cycle-scroll-hint" id="cycleTimelineHint">Прокрутите временную шкалу горизонтально, чтобы увидеть все столбцы</p>
+        <div id="cycleTimelineCards" class="cycle-timeline-cards" aria-label="Циклы сделок в мобильном представлении"></div>
         <div class="cycle-timeline-footer"><span id="cycleTimelineSummary">Показано 13 договоров</span><span>Максимальная длительность: <b id="cycleMax">44 дня</b></span></div>
       </section>
 
@@ -148,7 +151,7 @@
           <div><span class="cycle-eyebrow">ПРОВЕРКА ИСХОДНЫХ ДАННЫХ</span><h2 id="cycleMissingTitle">Даты и длительность каждого договора</h2><p>Полная анонимизированная расшифровка сентября, включая три сделки из выгрузки CRM</p></div>
           <span class="cycle-panel-badge" id="cycleMissingCount">13 договоров</span>
         </div>
-        <div class="cycle-table-scroll">
+        <div class="cycle-table-scroll" role="region" tabindex="0" aria-label="Таблица дат обращений, договоров, длительности и происхождения дат">
           <table class="cycle-missing-table">
             <thead><tr>
               <th scope="col">Начало цикла</th>
@@ -162,6 +165,8 @@
             <tbody id="cycleMissingRows"></tbody><tfoot id="cycleMissingTotal"></tfoot>
           </table>
         </div>
+        <p class="cycle-scroll-hint" id="cycleTableHint">Прокрутите таблицу горизонтально, чтобы увидеть все семь столбцов</p>
+        <div id="cycleDateCards" class="cycle-date-cards" aria-label="Проверенные даты 13 договоров на мобильном экране"></div>
         <p class="cycle-panel-footer">По 10 договорам начало взято из сентябрьского отчёта («Заявка»), по трём добавленным — из даты создания сделки в CRM. Имена клиентов и идентификаторы сделок не публикуются.</p>
       </section>
 

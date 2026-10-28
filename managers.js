@@ -71,6 +71,8 @@
       const all=value(m,"incoming"),qual=value(m,"qualified");
       const b=make("button","mgr-bar-line"+(state.manager===m.id?" selected":""));
       b.type="button";b.title="Фильтр по сотруднику: "+m.name;
+      b.setAttribute("data-manager",m.id);
+      b.setAttribute("aria-label",m.name+": всего "+all+", целевых "+qual+". Выбрать сотрудника");
       b.setAttribute("aria-pressed",String(state.manager===m.id));
       const n=make("span","mgr-bar-name",m.name);
       const track=make("span","mgr-bar-graph");
@@ -84,6 +86,8 @@
         state.manager=state.manager===m.id?"all":m.id;
         $("mgrPerson").value=state.manager;
         render();
+        // Re-render replaces the row button: return keyboard focus to its successor.
+        $("mgrBars").querySelector('[data-manager="'+m.id+'"]')?.focus({preventScroll:true});
       });
       root.appendChild(b);
     }
@@ -208,12 +212,138 @@
     }
   }
 
+
+  /** One data model for desktop tables and mobile financial cards. */
+  function mobileValue(label,amount,cls=""){
+    const box=make("div","mgr-card-value"+(cls?" "+cls:""));
+    box.append(make("span","",label),make("b","",amount));
+    return box;
+  }
+  function mobileTitle(title,subtitle=""){
+    const header=make("div","mgr-card-title");
+    header.append(make("strong","",title));
+    if(subtitle)header.append(make("small","",subtitle));
+    return header;
+  }
+
+  function mobileSummary(){
+    const root=$("mgrSummaryCards");root.replaceChildren();
+    const group=selectedDeals(),totalRevenue=revenue(group);
+    const rows=[...selectedManagers()].sort((a,b)=>revenue(dealsForManager(b))-revenue(dealsForManager(a)));
+    for(const m of rows){
+      const deals=dealsForManager(m),rev=revenue(deals),all=value(m,"incoming"),qualified=value(m,"qualified");
+      const mgrMargin=margin(deals);
+      const card=make("article","mgr-summary-card"+(state.manager===m.id?" is-selected":""));
+      card.appendChild(mobileTitle(m.name,m.role));
+      const badge=make("span","mgr-card-badge"+(deals.length?"":" is-empty"),dealLabel(deals.length));
+      card.appendChild(badge);
+      const block=make("div","mgr-card-revenue");
+      block.append(make("span","","Выручка по договорам"),make("strong","",money(rev)));
+      card.appendChild(block);
+      const values=make("div","mgr-card-values");
+      [
+        mobileValue("Доля выручки",pct(totalRevenue?rev/totalRevenue*100:0)),
+        mobileValue("Средний чек",deals.length?money(Math.round(rev/deals.length)):"—"),
+        mobileValue("Маржа, ₽",mgrMargin===null?"Нет данных":money(mgrMargin),"is-margin"),
+        mobileValue("Обращения",rubles.format(all)),
+        mobileValue("Целевые обращения",rubles.format(qualified),"is-qualified"),
+        mobileValue("Доля целевых",all?pct(qualified/all*100):"—")
+      ].forEach(node=>values.appendChild(node));
+      card.appendChild(values);
+      root.appendChild(card);
+    }
+    const total=make("div","mgr-mobile-total");
+    total.append(make("strong","","Итого по выбранным фильтрам"),
+      make("span","",dealLabel(group.length)+" · "+money(totalRevenue)));
+    const summary=make("div","mgr-card-values");
+    const totalIn=sumNumbers(rows.map(m=>value(m,"incoming")));
+    const totalQ=sumNumbers(rows.map(m=>value(m,"qualified")));
+    summary.append(
+      mobileValue("Маржа по договорам",margin(group)===null?"Нет данных":money(margin(group)),"is-margin"),
+      mobileValue("Обращения",rubles.format(totalIn)),
+      mobileValue("Целевые обращения",rubles.format(totalQ),"is-qualified"),
+      mobileValue("Доля целевых",totalIn?pct(totalQ/totalIn*100):"—")
+    );
+    total.appendChild(summary);
+    root.appendChild(total);
+  }
+
+  function mobileDeals(){
+    const root=$("mgrDealCards");root.replaceChildren();
+    const deals=selectedDeals();
+    const src=Object.fromEntries(D.sources.map(s=>[s.id,s.title]));
+    const manager=Object.fromEntries(D.managers.map(m=>[m.id,m.name]));
+    if(!deals.length){
+      root.appendChild(make("p","mgr-panel-note","По выбранным фильтрам договоров нет."));
+    }
+    for(const d of deals){
+      const card=make("article","mgr-deal-card");
+      card.appendChild(mobileTitle(d.date+".2026",manager[d.manager]));
+      const block=make("div","mgr-card-revenue");
+      block.append(make("span","","Выручка по договору"),make("strong","",money(d.revenue)));
+      card.appendChild(block);
+      const values=make("div","mgr-card-values");
+      values.append(
+        mobileValue("Источник",src[d.source]),
+        mobileValue("Маржа по сделке, ₽",d.marginRub===null?"Не заполнено":money(d.marginRub),"is-margin")
+      );
+      card.appendChild(values);
+      root.appendChild(card);
+    }
+    const total=make("div","mgr-mobile-total");
+    total.append(make("strong","","Итого по договорам"),
+      make("span","",dealLabel(deals.length)+" · "+money(revenue(deals))),
+      make("span","",margin(deals)===null?"Маржа: нет данных":"Маржа: "+money(margin(deals))));
+    root.appendChild(total);
+  }
+
+  function mobileMatrix(){
+    const root=$("mgrMatrixCards");root.replaceChildren();
+    for(const m of selectedManagers()){
+      const card=make("article","mgr-matrix-card"+(state.manager===m.id?" is-selected":""));
+      card.appendChild(mobileTitle(m.name,"Обращения сентября по каналам"));
+      const grid=make("div","mgr-card-values");
+      for(const s of D.sources){
+        grid.appendChild(mobileValue(s.title,rubles.format(m.incoming[s.id]),
+          state.source===s.id?"is-source-selected":""));
+      }
+      card.appendChild(grid);
+      root.appendChild(card);
+    }
+  }
+
+  function updateScrollHints(){
+    document.querySelectorAll("#managerDashboard .mgr-table-scroll, #managerDashboard .mgr-matrix-scroll")
+      .forEach(region=>{
+        const hint=region.nextElementSibling;
+        if(!hint || !hint.classList.contains("mgr-scroll-hint"))return;
+        const visible=window.getComputedStyle(region).display!=="none";
+        hint.classList.toggle("is-visible",visible && region.scrollWidth>region.clientWidth+2);
+      });
+  }
+  function updateReset(){
+    const button=$("mgrResetFilters");
+    button.disabled=state.manager==="all"&&state.source==="all";
+  }
+
   function render(){
     bars();revenueBars();resultRows();dealRows();sourceMatrix();
+    mobileSummary();mobileDeals();mobileMatrix();
+    updateReset();updateScrollHints();
   }
   $("mgrSource").addEventListener("change",e=>{state.source=e.target.value;render();});
   $("mgrPerson").addEventListener("change",e=>{state.manager=e.target.value;render();});
+  $("mgrResetFilters").addEventListener("click",()=>{
+    state.manager="all";state.source="all";
+    $("mgrPerson").value="all";$("mgrSource").value="all";
+    render();
+  });
+  window.addEventListener("resize",updateScrollHints,{passive:true});
+  window.addEventListener("load",updateScrollHints);
   assertData();
   plans();
   render();
+  // Keep desktop tables visible if JS fails to build mobile alternatives.
+  document.documentElement.classList.add("bv-managers-ready");
+  updateScrollHints();
 })();

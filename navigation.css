@@ -1,0 +1,226 @@
+/*
+ * Bani Vyatki Analytics — adaptive shared navigation / iteration 02.
+ * Loaded AFTER styles.css and each page stylesheet to make the same
+ * sidebar/header behavior apply across all five pages.
+ *
+ * NeuroLab: R01/R02/R03/R12, Q4-06/Q4-07/Q4-09.
+ *
+ * Progressive enhancement: without JavaScript mobile navigation remains
+ * expanded and usable. Only .bv-nav-ready collapses it.
+ */
+.bv-menu-toggle {
+  display: none;
+}
+.sidebar .bv-nav-label {
+  min-width: 0;
+}
+.sidebar .nav-link .nav-icon {
+  flex: none;
+}
+.sidebar .nav-link[href]:focus-visible,
+.bv-menu-toggle:focus-visible {
+  outline: var(--bv-focus-outline-width, 3px) solid var(--bv-color-focus, #d6a958);
+  outline-offset: 3px;
+}
+.sidebar .nav-link[href]:hover:not(.current) {
+  background-color: rgba(255, 255, 255, .085);
+}
+.sidebar .nav-link.pending {
+  cursor: default;
+}
+.sidebar .nav-link.pending .bv-nav-label {
+  color: inherit;
+}
+
+/* Tablet / compact rail: icon-only visual presentation, but links retain
+   aria-label and have visible hover AND keyboard-focus tooltips. */
+@media (min-width: 721px) and (max-width: 1140px) {
+  .sidebar {
+    z-index: 20;
+    overflow: visible;
+  }
+  .sidebar nav {
+    overflow: visible;
+    position: relative;
+  }
+  .sidebar .nav-link {
+    position: relative;
+    justify-content: center;
+    min-height: var(--bv-control-target-min, 44px);
+    overflow: visible;
+  }
+  .sidebar .bv-nav-label {
+    display: none;
+  }
+  .sidebar .nav-link[data-bv-label]:is(:hover, :focus-visible)::after {
+    content: attr(data-bv-label);
+    position: absolute;
+    left: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 30;
+    padding: 9px 12px;
+    color: #f7f0de;
+    background: #174b39;
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 8px;
+    box-shadow: 0 12px 20px rgba(8, 24, 17, .20);
+    font: 650 12px/1.35 var(--bv-font-body, "Segoe UI", sans-serif);
+    letter-spacing: normal;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  /* Noninteractive future sections have no focus state. */
+  .sidebar .nav-link.pending:hover::after {
+    color: #e9dfc7;
+  }
+}
+
+/* Mobile header and accessible collapsible menu. */
+@media (max-width: 720px) {
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 10;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    padding: 8px var(--bv-gutter-mobile, 12px);
+  }
+  .sidebar .brand {
+    width: 100%;
+    min-height: 48px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sidebar .brand-mark,
+  .sidebar .brand-mark img {
+    width: 43px;
+    height: 43px;
+  }
+  .sidebar .brand-text {
+    display: grid;
+    min-width: 0;
+  }
+  .sidebar .brand-text b {
+    font-size: 17px;
+  }
+  .sidebar .brand-text small {
+    font-size: 9px;
+    letter-spacing: .16em;
+  }
+
+  /* No JS = menu expanded, no inert toggle. */
+  .sidebar nav {
+    display: grid;
+    position: relative;
+    z-index: 1;
+    gap: 4px;
+    margin-top: 9px;
+    padding: 12px 0 6px;
+    border-top: 1px solid rgba(247, 240, 222, .17);
+    overflow: visible;
+  }
+  .sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    min-height: var(--bv-control-target-min, 44px);
+    line-height: 1.35;
+    padding: 10px 12px;
+    white-space: normal;
+  }
+  .sidebar .nav-link .nav-icon {
+    font-size: 20px;
+  }
+  .sidebar .bv-nav-label {
+    display: inline;
+    overflow-wrap: anywhere;
+  }
+  .sidebar .nav-link.pending i {
+    display: inline;
+    margin-left: auto;
+    font-size: 11px;
+  }
+
+  /* Reveal a functional toggle only when navigation.js initialized. */
+  .bv-nav-ready .bv-menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: var(--bv-control-target-min, 44px);
+    min-width: 76px;
+    margin-left: auto;
+    padding: 0 10px;
+    border: 1px solid rgba(247, 240, 222, .30);
+    border-radius: var(--bv-radius-control, 10px);
+    background: rgba(247, 240, 222, .08);
+    color: #f7f0de;
+    font: 750 12px/1.2 var(--bv-font-body, "Segoe UI", sans-serif);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .bv-nav-ready .bv-menu-toggle:hover {
+    background: rgba(247, 240, 222, .18);
+  }
+  .bv-nav-ready .bv-menu-toggle:active {
+    background: rgba(247, 240, 222, .22);
+  }
+  .bv-menu-bars {
+    display: grid;
+    width: 16px;
+    gap: 4px;
+    flex: none;
+  }
+  .bv-menu-bars > span {
+    display: block;
+    width: 16px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform .18s ease, opacity .18s ease;
+  }
+  .bv-nav-ready .sidebar.bv-nav-open .bv-menu-bars > span:first-child {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .bv-nav-ready .sidebar.bv-nav-open .bv-menu-bars > span:nth-child(2) {
+    opacity: 0;
+  }
+  .bv-nav-ready .sidebar.bv-nav-open .bv-menu-bars > span:last-child {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+  .bv-nav-ready .sidebar:not(.bv-nav-open) nav#bv-primary-nav {
+    display: none;
+  }
+
+  /* The existing narrow topbar should never force a whole-page x-scroll. */
+  .topbar {
+    min-width: 0;
+    gap: 8px;
+  }
+  .topbar > span:first-child {
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .topbar > .demo-status {
+    min-width: 0;
+    max-width: 47%;
+    flex: 0 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bv-menu-bars > span {
+    transition: none !important;
+  }
+}

@@ -1,0 +1,587 @@
+/*
+ * Bani Vyatki Analytics · Iteration 04/08 · Источники обращений
+ * Loaded after navigation.css, scoped to #sources. Uses NeuroLab R01/R02/R03/R12
+ * and quality requirements Q4-05, Q4-06, Q4-07, Q4-09, Q4-12.
+ * Calculations and September CRM fixtures are intentionally unchanged.
+ */
+#sources,
+#sources .sources-heading,
+#sources .sources-heading > div,
+#sources .sources-filters,
+#sources .s-grid-main,
+#sources .s-grid-secondary,
+#sources .s-panel,
+#sources .s-panel-header {
+  min-width: 0;
+}
+#sources .sources-heading .subtitle,
+#sources .s-panel-header p,
+#sources .s-muted-note,
+#sources .s-insight p,
+#sources .s-method {
+  overflow-wrap: break-word;
+}
+/* Reuse the readable secondary-ink role from iteration 01. */
+#sources .subtitle,
+#sources .s-kpi h3,
+#sources .s-kpi p,
+#sources .s-kpi-footnote,
+#sources .s-panel-header p:last-child,
+#sources .s-muted-note,
+#sources .s-method,
+#sources .quality-legend,
+#sources .share-list button em,
+#sources .selected-day-summary span,
+#sources .share-donut small {
+  color: var(--bv-color-secondary-ink);
+}
+#sources .sources-filters .month span,
+#sources .sources-filters label {
+  color: var(--bv-color-secondary-ink);
+}
+
+/* The 30-day graph has its own scrolling viewport on compact screens.
+   This is preferable to shrinking 30 interactive bars to tiny targets. */
+#sources .daily-chart-viewport {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-color: #9eb6a0 #f0f1e9;
+  border-radius: 10px;
+}
+#sources .daily-chart-viewport:focus-visible,
+#sources .s-table-scroll:focus-visible {
+  outline: var(--bv-focus-outline-width, 3px) solid var(--bv-color-focus, #d6a958);
+  outline-offset: 2px;
+}
+#sources .chart-wrap {
+  min-width: 0;
+  flex: none;
+}
+#sources .s-chart-scroll-hint,
+#sources .s-table-scroll-hint {
+  display: none;
+  margin: 8px 0 10px;
+  color: var(--bv-color-secondary-ink);
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.4;
+}
+#sources .s-chart-scroll-hint.is-visible,
+#sources .s-table-scroll-hint.is-visible {
+  display: block;
+}
+#sources .s-chart-scroll-hint span {
+  margin-right: 5px;
+  font-size: 15px;
+  font-weight: 800;
+}
+#sources .selected-day {
+  min-width: 0;
+  justify-content: space-between;
+}
+#sources .selected-day-summary {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 13px;
+  min-width: 0;
+}
+#sources .selected-day-summary strong {
+  font-size: 12px;
+  color: #28523a;
+}
+#sources .selected-day-summary span {
+  font-size: 12px;
+}
+#sources .selected-day-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+#sources .selected-day-actions button {
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid #dce7da;
+  border-radius: 8px;
+  background: #f2f7ef;
+  color: #2d6846;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px 11px;
+  margin: 0;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+#sources .selected-day-actions button:hover:not(:disabled) {
+  background: #e2f1e2;
+  text-decoration: none;
+}
+#sources .selected-day-actions button:disabled {
+  opacity: .42;
+  cursor: not-allowed;
+}
+#sources .selected-day-actions #resetDay {
+  font-size: 12px;
+  font-weight: 760;
+}
+#sources .chart-legend button,
+#sources .share-list button {
+  min-height: 38px;
+  font-size: 12px;
+  color: #46624e;
+}
+#sources .chart-legend button:focus-visible,
+#sources .share-list button:focus-visible {
+  outline: var(--bv-focus-outline-width, 3px) solid var(--bv-color-focus, #d6a958);
+  outline-offset: 2px;
+}
+#sources .s-toggle button {
+  min-width: 54px;
+  min-height: 40px;
+  font-size: 12px;
+}
+#sources .share-list button span {
+  font-size: 12px;
+  color: #355e40;
+}
+#sources .share-list button em {
+  font-size: 12px;
+}
+#sources .quality-row .name,
+#sources .loss-item .loss-title {
+  font-size: 12px;
+}
+#sources .quality-legend,
+#sources .s-muted-note,
+#sources .s-method {
+  font-size: 12px;
+}
+#sources .s-table-scroll {
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-color: #9eb6a0 #f0f1e9;
+}
+#sources .s-table thead th {
+  font-size: 11px;
+  color: var(--bv-color-secondary-ink);
+}
+#sources .s-table td,
+#sources .s-table th {
+  font-size: 12px;
+}
+#sources .source-mobile-cards {
+  display: none;
+}
+#sources .s-insight p {
+  color: #6c593b;
+  font-size: 12px;
+}
+#sources .s-insight strong {
+  font-size: 13px;
+}
+
+/* Use available width for the 30-day graph on mid-size desktop instead of
+   squeezing it beside a second panel. The other charts still keep their data. */
+@media (max-width: 1510px) {
+  #sources .s-grid-main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #sources .share-panel {
+    display: grid;
+    grid-template-columns: minmax(170px, 245px) minmax(0, 1fr);
+    gap: 8px 20px;
+    align-items: center;
+  }
+  #sources .share-panel .s-panel-header,
+  #sources .share-panel .s-muted-note {
+    grid-column: 1 / -1;
+  }
+  #sources .share-panel .share-visual {
+    padding: 4px 0;
+  }
+}
+
+/* At 900px the complete 30-day chart is wider than the available screen:
+   keep its 920-unit SVG legible and let users pan horizontally. */
+@media (max-width: 900px) {
+  #sources .daily-chart-viewport .chart-wrap {
+    width: 960px;
+    min-width: 960px;
+    height: 330px;
+    min-height: 330px;
+    aspect-ratio: auto;
+  }
+  #sources .chart-wrap svg {
+    width: 100%;
+    height: 100%;
+  }
+  /* Touch/compact users get the same information in the selected-day panel.
+     Overlay tooltip would be clipped by the scrolling region. */
+  #sources .chart-tooltip {
+    display: none !important;
+  }
+}
+
+/* Tablet/compact controls, KPI spacing and charts. */
+@media (max-width: 1060px) {
+  #sources .sources-heading {
+    gap: 15px;
+  }
+  #sources .sources-filters {
+    width: 100%;
+  }
+  #sources .sources-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px;
+  }
+  #sources .s-kpi {
+    padding: 17px;
+  }
+  #sources .s-kpi h3 {
+    font-size: 13px;
+  }
+  #sources .s-kpi p,
+  #sources .s-kpi-footnote {
+    font-size: 12px;
+  }
+  #sources .s-number {
+    font-size: clamp(28px, 4vw, 35px);
+    overflow-wrap: anywhere;
+  }
+  #sources .s-panel-header p:last-child {
+    font-size: 12px;
+  }
+  #sources .s-toggle button {
+    min-height: 44px;
+  }
+}
+
+/* Mobile: dedicated, legible, tappable interface. */
+@media (max-width: 720px) {
+  #sources.sources-main {
+    padding: 20px var(--bv-gutter-mobile, 12px);
+  }
+  #sources .sources-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  #sources .sources-heading h1 {
+    font-size: clamp(30px, 7vw, 38px);
+    line-height: 1.13;
+  }
+  #sources .sources-heading .subtitle {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  #sources .sources-filters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+    align-items: stretch;
+  }
+  #sources .sources-filters .month,
+  #sources .sources-filters label {
+    min-width: 0;
+    width: 100%;
+    min-height: 68px;
+    padding: 10px 12px;
+    align-content: center;
+    white-space: normal;
+    font-size: 12px;
+  }
+  #sources .sources-filters .month span {
+    font-size: 12px;
+  }
+  #sources .sources-filters .month b {
+    font-size: 13px;
+  }
+  #sources .sources-filters select {
+    width: 100%;
+    min-height: 44px;
+    min-width: 0;
+    max-width: 100%;
+    font-size: 14px;
+    padding: 6px 18px 6px 0;
+    margin: 0;
+    background: transparent;
+    border: 0;
+    color: #234d36;
+  }
+  #sources .sources-kpis {
+    gap: 9px;
+  }
+  #sources .s-kpi {
+    min-height: 156px;
+    padding: 13px;
+  }
+  #sources .s-kpi-head {
+    min-height: 32px;
+    margin-bottom: 10px;
+    gap: 8px;
+  }
+  #sources .s-kpi-footnote {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+  #sources .s-kpi h3 {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  #sources .s-number {
+    font-size: clamp(27px, 5vw, 33px);
+    letter-spacing: -.035em;
+    line-height: 1.25;
+  }
+  #sources .s-kpi p {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+  #sources .s-panel {
+    padding: 15px;
+  }
+  #sources .s-panel h2 {
+    font-size: 18px;
+  }
+  #sources .s-overline {
+    font-size: 11px;
+    letter-spacing: .11em;
+  }
+  #sources .s-panel-header {
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+  }
+  #sources .daily-panel .s-panel-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #sources .daily-panel .s-panel-header .s-toggle {
+    justify-self: start;
+  }
+  #sources .chart-legend {
+    gap: 8px;
+    margin-top: 12px;
+  }
+  #sources .chart-legend button {
+    min-height: 44px;
+    padding: 9px 12px;
+    font-size: 12px;
+    line-height: 1.25;
+  }
+  #sources .selected-day {
+    display: grid;
+    gap: 10px;
+    align-items: start;
+  }
+  #sources .selected-day-summary {
+    display: grid;
+    gap: 3px;
+  }
+  #sources .selected-day-summary strong {
+    font-size: 14px;
+  }
+  #sources .selected-day-summary span {
+    font-size: 13px;
+  }
+  #sources .selected-day-actions {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  #sources .selected-day-actions #resetDay {
+    margin-left: auto;
+  }
+  #sources .share-panel {
+    display: block !important;
+  }
+  #sources .share-donut {
+    width: 164px;
+    height: 164px;
+  }
+  #sources .share-donut > div {
+    width: 112px;
+    height: 112px;
+  }
+  #sources .share-donut small {
+    font-size: 12px;
+  }
+  #sources .share-list button {
+    min-height: 44px;
+    padding: 9px 10px;
+    gap: 10px;
+  }
+  #sources .share-list button span,
+  #sources .share-list button em {
+    font-size: 12px;
+  }
+  #sources .quality-badge {
+    font-size: 12px;
+  }
+  #sources .loss-item {
+    min-height: 55px;
+    padding: 12px;
+  }
+  #sources .loss-item .loss-title {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  #sources .s-insight {
+    padding: 14px;
+  }
+  #sources .s-method,
+  #sources .s-muted-note {
+    font-size: 12px;
+  }
+}
+
+/* Source summary changes from six squeezed columns to card-per-channel.
+   The HTML table survives when JS is off or if sourceCards failed to render. */
+@media (max-width: 600px) {
+  .bv-sources-ready #sources .s-table-scroll {
+    display: none;
+  }
+  .bv-sources-ready #sources .source-mobile-cards {
+    display: grid;
+    gap: 10px;
+  }
+  #sources .s-table-scroll-hint {
+    display: none;
+  }
+  #sources .sources-filters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #sources .s-panel {
+    padding: 14px;
+  }
+  #sources .quality-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "name rate" "track track";
+    gap: 9px 10px;
+    padding: 3px 0;
+  }
+  #sources .quality-row .name {
+    grid-area: name;
+    font-size: 13px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  #sources .quality-row .rate {
+    grid-area: rate;
+    font-size: 14px;
+  }
+  #sources .quality-row .track {
+    grid-area: track;
+    height: 15px;
+  }
+  #sources .quality-rows {
+    gap: 17px;
+  }
+  #sources .source-mobile-card {
+    display: grid;
+    gap: 12px;
+    min-width: 0;
+    width: 100%;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #e3e7dc;
+    border-radius: 12px;
+    text-align: left;
+    color: #244934;
+    font: inherit;
+  }
+  #sources button.source-mobile-card {
+    min-height: 44px;
+    cursor: pointer;
+  }
+  #sources button.source-mobile-card:hover {
+    border-color: #b9cbb6;
+    background: #f9fbf7;
+  }
+  #sources .source-mobile-card.is-selected {
+    border-color: #82aa82;
+    background: #f0f7ed;
+  }
+  #sources .source-mobile-card.is-total {
+    background: #f8f4e9;
+    border-color: #e5d8be;
+  }
+  #sources .source-card-heading {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    justify-content: space-between;
+  }
+  #sources .source-card-heading strong {
+    font-size: 15px;
+    font-weight: 850;
+    color: #214b35;
+  }
+  #sources .source-card-heading em {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 750;
+    color: #4c7157;
+  }
+  #sources .source-card-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+  #sources .source-card-metric {
+    display: grid;
+    gap: 3px;
+    min-width: 0;
+    border-radius: 9px;
+    padding: 11px;
+    background: #f6f6f0;
+    border: 1px solid #eeeee7;
+  }
+  #sources .source-mobile-card.is-selected .source-card-metric {
+    background: #fff;
+  }
+  #sources .source-card-metric span {
+    font-size: 12px;
+    line-height: 1.35;
+    color: var(--bv-color-secondary-ink);
+  }
+  #sources .source-card-metric b {
+    font-size: clamp(16px, 5vw, 21px);
+    line-height: 1.25;
+    font-weight: 830;
+    color: #24513a;
+    font-variant-numeric: tabular-nums;
+  }
+  #sources .source-card-metric.is-qualified b {
+    color: #226943;
+  }
+}
+
+@media (max-width: 359px) {
+  #sources .sources-kpis {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #sources .s-kpi {
+    min-height: 130px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #sources .chart-wrap svg,
+  #sources .share-donut,
+  #sources .source-mobile-card {
+    transition: none !important;
+  }
+}

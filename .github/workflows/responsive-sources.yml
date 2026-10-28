@@ -1,0 +1,60 @@
+name: Responsive sources browser QA
+
+on:
+  pull_request:
+    paths:
+      - "sources.html"
+      - "sources.css"
+      - "sources-responsive.css"
+      - "sources.js"
+      - "sources-data.js"
+      - "styles.css"
+      - "design-system.css"
+      - "navigation.css"
+      - "navigation.js"
+      - "scripts/test-sources-browser.py"
+      - ".github/workflows/responsive-sources.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sources:
+    name: Source KPIs, 30-day chart and mobile cards
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Structural and financial regression checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check sources.js
+          node --check sources-data.js
+          node scripts/check-responsive-foundation.mjs
+          node scripts/check-navigation.mjs
+      - name: Install pinned test-only Playwright
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv .venv
+          .venv/bin/python -m pip install --disable-pip-version-check playwright==1.56.0
+          .venv/bin/python -m playwright install --with-deps chromium
+      - name: Run browser tests and capture screenshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/bv-sources-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" || true' EXIT
+          .venv/bin/python scripts/test-sources-browser.py
+      - name: Upload visual QA screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: sources-iteration-04-screenshots
+          path: artifacts/sources/*.png
+          retention-days: 7
+          if-no-files-found: warn

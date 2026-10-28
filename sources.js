@@ -59,6 +59,40 @@
     $("shareKpi").textContent = percent(q, total);
     $("excludedKpi").textContent = fmt(total - q);
   }
+
+  /** Make the selected day readable for touch and keyboard without tiny bars. */
+  function selectDay(day, restoreChartFocus=false) {
+    state.day = Math.max(1, Math.min(30, day));
+    drawDaily();
+    if (restoreChartFocus) {
+      const hit = $("dailyChart").querySelector('[data-day="' + state.day + '"]');
+      hit?.focus({preventScroll:true});
+    }
+  }
+  function centerSelectedDay() {
+    const viewport=$("dailyChartViewport");
+    const chart=viewport.querySelector(".chart-wrap");
+    if(!chart || chart.scrollWidth <= viewport.clientWidth+2) return;
+    // SVG uses a fixed 920-unit viewBox with 30 equally spaced days.
+    const dayCenter=(39+((state.day-.5)*((920-39-12)/30)))/920*chart.scrollWidth;
+    viewport.scrollLeft=Math.max(0,dayCenter-viewport.clientWidth/2);
+  }
+  function updateScrollHints() {
+    const viewport=$("dailyChartViewport");
+    const chart=viewport.querySelector(".chart-wrap");
+    const chartOverflows=chart && chart.scrollWidth>viewport.clientWidth+2;
+    $("dailyScrollHint").classList.toggle("is-visible",Boolean(chartOverflows));
+
+    const table=document.querySelector("#sources .s-table-scroll");
+    const visible=table && window.getComputedStyle(table).display!=="none";
+    const tableOverflows=visible && table.scrollWidth>table.clientWidth+2;
+    $("sourcesTableHint").classList.toggle("is-visible",Boolean(tableOverflows));
+  }
+  function updateDayButtons() {
+    $("prevDay").disabled=state.day<=1;
+    $("nextDay").disabled=state.day>=30;
+    $("resetDay").disabled=state.day===14;
+  }
   function svgElement(name, attrs={}, text) {
     const el=document.createElementNS("http://www.w3.org/2000/svg", name);
     Object.entries(attrs).forEach(([key,val])=>el.setAttribute(key,String(val)));
@@ -104,7 +138,7 @@
       if(labelDays.includes(day)){
         svg.appendChild(svgElement("text",{x:x+bWidth/2,y:H-13,"text-anchor":"middle",fill:day===state.day?"#205941":"#9aa69b","font-size":11,"font-weight":day===state.day?750:500},day));
       }
-      const hit=svgElement("rect",{x:x-4,y:T-4,width:bWidth+8,height:PH+7,fill:"transparent",style:"cursor:pointer",tabindex:0,role:"button","aria-label":`${day} сентября: ${dayData(day).total} обращений, ${dayData(day).qualified} целевых`});
+      const hit=svgElement("rect",{x:x-4,y:T-4,width:bWidth+8,height:PH+7,fill:"transparent",style:"cursor:pointer",tabindex:0,role:"button","data-day":day,"aria-label":`${day} сентября: ${dayData(day).total} обращений, ${dayData(day).qualified} целевых`});
       const showTooltip = e => {
         tooltip.innerHTML=tooltipContent(day);
         tooltip.hidden=false;
@@ -119,13 +153,14 @@
       hit.addEventListener("mouseleave",()=>tooltip.hidden=true);
       hit.addEventListener("focus",showTooltip);
       hit.addEventListener("blur",()=>tooltip.hidden=true);
-      hit.addEventListener("click",()=>{state.day=day;drawDaily()});
-      hit.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();state.day=day;drawDaily()}});
+      hit.addEventListener("click",()=>selectDay(day));
+      hit.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();selectDay(day,true)}});
       svg.appendChild(hit);
     }
     const d=dayData(state.day);
     $("selectedDayLabel").textContent=state.day+" сентября";
     $("selectedDayDetails").textContent=fmt(d.total)+" обращений · "+fmt(d.qualified)+" целевых";
+    updateDayButtons();
     tooltip.hidden=true;
     const legend=$("sourceLegend");legend.replaceChildren();
     monthly.forEach((row,j)=>{
@@ -136,6 +171,7 @@
       b.addEventListener("click",()=>setSource(state.source===row.id?"all":row.id));
       legend.appendChild(b);
     });
+    window.requestAnimationFrame(()=>{centerSelectedDay();updateScrollHints();});
   }
   function drawShares() {
     const total=totalMonthly;
@@ -143,6 +179,7 @@
     const boundaries=[];let run=0;
     monthly.forEach((row,i)=>{const a=run/total*360;run+=row.total;boundaries.push(`${colors[i]} ${a.toFixed(3)}deg ${(run/total*360).toFixed(3)}deg`)});
     $("shareDonut").style.background=`conic-gradient(${boundaries.join(",")})`;
+    $("shareDonut").setAttribute("aria-label","Доли каналов за сентябрь: "+monthly.map(row=>row.name+" — "+percent(row.total,total)).join("; "));
     const dn=$("shareDonut").firstElementChild;
     dn.querySelector("strong").textContent=fmt(sum(selectedRows().map(x=>x.total)));
     dn.querySelector("small").textContent=state.source==="all"?"обращения": "выбранный канал";
@@ -211,10 +248,63 @@
       const el=document.createElement(i===0?"th":"td");el.textContent=val;if(i===0)el.scope="row";footer.appendChild(el);
     });table.appendChild(footer);
   }
-  function draw() {drawKpis();drawDaily();drawShares();drawQuality();drawReasons();drawTable()}
+
+  /** Mobile alternative to wide table: one model, two presentations. */
+  function drawMobileCards() {
+    const rows=selectedRows();
+    const container=$("sourceCards");
+    container.replaceChildren();
+
+    const addCard=(row, isTotal=false)=>{
+      const el=document.createElement(isTotal?"article":"button");
+      el.className="source-mobile-card"+(isTotal?" is-total":state.source===row.id?" is-selected":"");
+      if(!isTotal){
+        el.type="button";
+        el.setAttribute("aria-pressed",String(state.source===row.id));
+        el.setAttribute("aria-label",row.name+": "+row.total+" обращений, "+row.qualified+" целевых. Выбрать источник");
+        el.addEventListener("click",()=>setSource(state.source===row.id?"all":row.id));
+      }
+      const head=document.createElement("div");
+      head.className="source-card-heading";
+      const name=document.createElement("strong");name.textContent=row.name;
+      const rate=document.createElement("em");rate.textContent="Целевые: "+percent(row.qualified,row.total);
+      head.append(name,rate);
+      const grid=document.createElement("div");
+      grid.className="source-card-metrics";
+      [
+        ["Обращения",row.total],
+        ["Целевые",row.qualified],
+        ["Исключены",row.total-row.qualified],
+        ["Договоры сентября",row.contracts]
+      ].forEach(([label,count],i)=>{
+        const box=document.createElement("span");
+        box.className="source-card-metric"+(i===1?" is-qualified":"");
+        const title=document.createElement("span");title.textContent=label;
+        const value=document.createElement("b");value.textContent=fmt(count);
+        box.append(title,value);
+        grid.appendChild(box);
+      });
+      el.append(head,grid);
+      container.appendChild(el);
+    };
+    rows.forEach(row=>addCard(row));
+    if(rows.length>1){
+      const total=key=>sum(rows.map(row=>row[key]));
+      addCard({name:"Итого",total:total("total"),qualified:total("qualified"),contracts:total("contracts")},true);
+    }
+  }
+
+  function draw() {drawKpis();drawDaily();drawShares();drawQuality();drawReasons();drawTable();drawMobileCards();updateScrollHints()}
   $("sourceFilter").addEventListener("change",e=>setSource(e.target.value));
   $("viewAll").addEventListener("click",()=>setView("all"));
   $("viewQualified").addEventListener("click",()=>setView("qualified"));
-  $("resetDay").addEventListener("click",()=>{state.day=14;drawDaily()});
+  $("resetDay").addEventListener("click",()=>selectDay(14));
+  $("prevDay").addEventListener("click",()=>selectDay(state.day-1));
+  $("nextDay").addEventListener("click",()=>selectDay(state.day+1));
   draw();
+  // If the data-driven mobile view fails to render, do not hide the table.
+  document.documentElement.classList.add("bv-sources-ready");
+  updateScrollHints();
+  window.addEventListener("resize",()=>{updateScrollHints();centerSelectedDay()},{passive:true});
+  window.addEventListener("load",updateScrollHints);
 })();

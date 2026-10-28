@@ -99,12 +99,12 @@
 .cycle-no-data{border-radius:10px;border:1px dashed #dcded5;color:#94a094;padding:24px;text-align:center;font-size:12px}
 .missing-panel{margin-bottom:18px}
 .cycle-table-scroll{border:1px solid #eeece5;border-radius:11px;overflow-x:auto}
-.cycle-missing-table{border-collapse:collapse;width:100%;min-width:770px;white-space:nowrap;font-size:11px}
+.cycle-missing-table{border-collapse:collapse;width:100%;min-width:1080px;white-space:nowrap;font-size:11px}
 .cycle-missing-table th,.cycle-missing-table td{padding:12px 15px;border-bottom:1px solid #efeee9;text-align:left}
 .cycle-missing-table thead th{background:#f5f4ee;color:#89978b;font-size:10px;font-weight:780}
-.cycle-missing-table td:nth-child(4),.cycle-missing-table th:nth-child(4){text-align:right}
+.cycle-missing-table td:nth-child(6),.cycle-missing-table th:nth-child(6){text-align:right}
 .cycle-missing-table tbody tr:hover{background:#fcfbf7}
-.cycle-missing-table tbody td:nth-child(4){font-variant-numeric:tabular-nums;font-weight:780;color:#325a40}
+.cycle-missing-table tbody td:nth-child(6){font-variant-numeric:tabular-nums;font-weight:780;color:#325a40}
 .cycle-missing-table .missing{color:#a1855b;background:#faf3e7;border-radius:5px;padding:5px 8px;font-size:10px;font-weight:750}
 .cycle-missing-table tfoot th,.cycle-missing-table tfoot td{font-weight:850;background:#eef5ec;color:#2d6242}
 .cycle-missing-table .empty{padding:24px;color:#879b88;text-align:center}
@@ -124,3 +124,14 @@
 .cycle-timeline-legend{gap:12px}.cycle-sort-control select{width:100%;max-width:none}.cycle-distribution{gap:7px}.cycle-note{align-items:start}}
 @media(max-width:410px){.cycle-kpis{grid-template-columns:1fr}.cycle-kpi{min-height:142px}.cycle-big{font-size:34px}.cycle-legend{gap:8px}}
 @media(prefers-reduced-motion:reduce){.cycle-coverage-track i,.cycle-group-track span{transition:none}}
+
+/* Все 13 договоров имеют начало цикла: отмечаем полноту данных. */
+.cycle-note.verified{background:#ecf5eb;border-color:#d5e9d7}
+.cycle-note.verified .cycle-note-icon{background:#348256;color:#fff}
+.cycle-note.verified p{color:#6f8b75}
+.cycle-note.verified p strong{color:#296744}
+.cycle-table-days{color:#2f7951;font-weight:850;font-variant-numeric:tabular-nums}
+.cycle-basis-crm,.cycle-basis-report{display:inline-block;font-size:10px;font-weight:750;padding:5px 7px;border-radius:6px}
+.cycle-basis-crm{background:#f8f0df;color:#9b7745}
+.cycle-basis-report{background:#e9f2e8;color:#467a54}
+.cycle-missing-table thead th{white-space:nowrap}

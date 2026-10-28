@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="./styles.css">
 <link rel="stylesheet" href="./sources.css">
 <link rel="stylesheet" href="./navigation.css">
+<link rel="stylesheet" href="./sources-responsive.css">
 <script src="./sources-data.js" defer></script>
 <script src="./sources.js" defer></script>
 <script src="./navigation.js" defer></script>
@@ -51,15 +52,21 @@
       <section class="s-grid-main">
         <article class="s-panel daily-panel" aria-labelledby="dailyTitle">
           <div class="s-panel-header"><div><p class="s-overline">ЕЖЕДНЕВНАЯ ДИНАМИКА</p><h2 id="dailyTitle">Заявки по дням сентября</h2><p>Нажми на столбец, чтобы увидеть состав выбранного дня</p></div><div class="s-toggle" role="group" aria-label="Тип обращений"><button id="viewAll" class="is-active" aria-pressed="true">Все</button><button id="viewQualified" aria-pressed="false">Целевые</button></div></div>
-          <div class="chart-wrap"><svg id="dailyChart" viewBox="0 0 920 305" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Столбчатый график количества обращений по дням с разбивкой по источникам"></svg><div class="chart-tooltip" id="chartTooltip" role="status" hidden></div></div>
+          <div class="daily-chart-viewport" id="dailyChartViewport" role="region" tabindex="0" aria-label="Прокручиваемая диаграмма обращений по 30 дням сентября">
+            <div class="chart-wrap"><svg id="dailyChart" viewBox="0 0 920 305" preserveAspectRatio="xMidYMid meet" role="group" aria-label="Столбчатая диаграмма заявок по дням с выбором дня"></svg><div class="chart-tooltip" id="chartTooltip" role="status" hidden></div></div>
+          </div>
+          <p class="s-chart-scroll-hint" id="dailyScrollHint"><span aria-hidden="true">↔</span> Прокрутите график по горизонтали, чтобы увидеть все 30 дней</p>
           <div class="chart-legend" id="sourceLegend" aria-label="Выбор источника"></div>
-          <div class="selected-day"><span id="selectedDayLabel">14 сентября</span><span id="selectedDayDetails">37 обращений · 16 целевых</span><button id="resetDay" type="button">Сбросить выделение</button></div>
+          <div class="selected-day">
+            <div class="selected-day-summary" role="status" aria-live="polite"><strong id="selectedDayLabel">14 сентября</strong><span id="selectedDayDetails">37 обращений · 16 целевых</span></div>
+            <div class="selected-day-actions"><button id="prevDay" type="button" aria-label="Предыдущий день" title="Предыдущий день">←</button><button id="nextDay" type="button" aria-label="Следующий день" title="Следующий день">→</button><button id="resetDay" type="button">К 14 сентября</button></div>
+          </div>
         </article>
         <article class="s-panel share-panel" aria-labelledby="shareTitle">
           <div class="s-panel-header"><div><p class="s-overline">СТРУКТУРА КАНАЛОВ</p><h2 id="shareTitle">Откуда приходят</h2><p>Доля источника в общем потоке</p></div></div>
-          <div class="share-visual"><div class="share-donut" id="shareDonut"><div><strong>222</strong><small>обращения</small></div></div></div>
+          <div class="share-visual"><div class="share-donut" id="shareDonut" role="img" aria-label="Распределение всех 222 обращений между четырьмя источниками"><div><strong>222</strong><small>обращения</small></div></div></div>
           <div id="sharesList" class="share-list"></div>
-          <p class="s-muted-note">«Звонок» — способ поступления заявки, не всегда первоначальный рекламный канал.</p>
+          <p class="s-muted-note">Кольцо показывает доли всех каналов. Число в центре отражает выбранный источник. «Звонок» — способ поступления заявки, не всегда первоначальный рекламный канал.</p>
         </article>
       </section>
       <section class="s-grid-secondary">
@@ -76,7 +83,9 @@
       </section>
       <section class="s-panel table-panel" aria-labelledby="tableTitle">
         <div class="s-panel-header"><div><p class="s-overline">ДЕТАЛИЗАЦИЯ ПО КАНАЛАМ</p><h2 id="tableTitle">Сводная таблица за месяц</h2><p>Источник, количество, качество и заключённые договоры</p></div></div>
-        <div class="s-table-scroll"><table class="s-table"><thead><tr><th scope="col">Источник</th><th scope="col">Обращения</th><th scope="col">Целевые</th><th scope="col">Исключены</th><th scope="col">Доля целевых</th><th scope="col">Договоры сентября</th></tr></thead><tbody id="sourcesTable"></tbody></table></div>
+        <div class="s-table-scroll" role="region" tabindex="0" aria-label="Таблица обращений, качества и договоров по каналам"><table class="s-table"><thead><tr><th scope="col">Источник</th><th scope="col">Обращения</th><th scope="col">Целевые</th><th scope="col">Исключены</th><th scope="col">Доля целевых</th><th scope="col">Договоры сентября</th></tr></thead><tbody id="sourcesTable"></tbody></table></div>
+        <p class="s-table-scroll-hint" id="sourcesTableHint">Прокрутите таблицу влево и вправо, чтобы увидеть все столбцы</p>
+        <div class="source-mobile-cards" id="sourceCards" aria-label="Карточки результатов каналов для мобильного экрана"></div>
         <p class="s-muted-note">Договоры — результат закрытия в сентябре, в том числе по обращениям прошлых месяцев. Не делим договоры на новые обращения месяца как когортную конверсию.</p>
       </section>
       <section class="s-insight" aria-label="Основные наблюдения"><div class="s-insight-icon">i</div><div><strong>Что заметили в сентябре</strong><p>14 сентября поступило 37 обращений, 28 сентября — 34. За два дня пришло 71 обращение (32% месячного потока), из них 67 — с Авито. Эти всплески стоит отдельно проверить на связь с рассылками и автоматическими обращениями.</p></div></section>

@@ -92,7 +92,7 @@
 
 /* Non-destructive baseline for responsive media and consistent sizing. */
 *, *::before, *::after { box-sizing: border-box; }
-img, svg { max-width: 100%; }
+img { max-width: 100%; } /* SVG charts retain their own viewBox/scroll sizing. */
 .brand-mark img { width: 52px; height: 52px; object-fit: contain; }
 
 /* Common opt-in primitives for the next iterations (not forced on old UI). */

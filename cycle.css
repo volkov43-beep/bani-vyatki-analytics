@@ -115,7 +115,7 @@
 .cycle-insight b{color:#286a44}
 .cycle-method{font-size:11px;border:1px solid #e7ddc8;border-radius:11px;padding:14px 16px;background:#f7f2e8;color:#8f806d;line-height:1.6}
 .cycle-method strong{color:#765c37}
-@media(max-width:1450px){.cycle-main{padding:27px var(--bv-gutter-compact)}.cycle-kpi{padding:15px 13px}.cycle-big{font-size:clamp(26px,2.3vw,34px)}.cycle-panel{padding:18px}}
+@media(max-width:1460px){.cycle-main{padding:27px var(--bv-gutter-compact)}.cycle-kpi{padding:15px 13px}.cycle-big{font-size:clamp(26px,2.3vw,34px)}.cycle-panel{padding:18px}}
 @media(max-width:1190px){.cycle-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.cycle-upper-grid,.cycle-bottom-grid{grid-template-columns:1fr}}
 @media(max-width:760px){.cycle-main{padding:20px var(--bv-gutter-mobile)}.cycle-heading{flex-direction:column;align-items:start}.cycle-heading h1{font-size:34px}.cycle-filter-row{flex-direction:column;align-items:stretch}
 .cycle-filters{flex-wrap:wrap}.cycle-filters label{flex:1;min-width:145px}.cycle-filters select{width:100%;min-width:0}.cycle-reset{align-self:end}

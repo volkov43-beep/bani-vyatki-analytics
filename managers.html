@@ -31,7 +31,7 @@
     <header class="topbar"><span>УПРАВЛЕНЧЕСКАЯ АНАЛИТИКА <b>/ РЕЗУЛЬТАТИВНОСТЬ МЕНЕДЖЕРОВ</b></span><span class="demo-status"><span class="status-dot"></span> Отчёт + срез CRM · сентябрь 2026</span></header>
     <main id="managerDashboard" class="mgr-main">
       <section class="mgr-heading">
-        <div><p class="eyebrow">BANI VYATKI ANALYTICS / 04</p><h1>Результативность менеджеров</h1><p class="subtitle">Нагрузка, качество заявок и подтверждённые продажи по сотрудникам. Планы по марже — отдельным блоком.</p></div>
+        <div><p class="eyebrow">BANI VYATKI ANALYTICS / 04</p><h1>Результативность менеджеров</h1><p class="subtitle">Нагрузка, выручка по договорам и качество обращений по сотрудникам. Маржа по каждой сделке появится после заполнения полей в CRM.</p></div>
         <div class="mgr-month"><span>Период отчёта</span><b>Сентябрь 2026</b></div>
       </section>
 
@@ -45,18 +45,18 @@
           <h2>Целевые обращения</h2><strong>122</strong><p>По методике маркетингового отчёта</p>
         </article>
         <article class="mgr-kpi">
-          <div class="mgr-kpi-top"><span class="mgr-icon gold">▤</span><span class="mgr-micro">10 из 13 атрибутировано</span></div>
+          <div class="mgr-kpi-top"><span class="mgr-icon gold">▤</span><span class="mgr-micro">13 из 13 распределены</span></div>
           <h2>Договоры за месяц</h2><strong>13 <small>шт.</small></strong><p>По дате заключения договора</p>
         </article>
         <article class="mgr-kpi">
-          <div class="mgr-kpi-top"><span class="mgr-icon brown">₽</span><span class="mgr-micro">Без разбивки по людям</span></div>
-          <h2>Маржа компании</h2><strong>1 240 000 <small>₽</small></strong><p>Персональная маржа пока не заполнена</p>
+          <div class="mgr-kpi-top"><span class="mgr-icon brown">₽</span><span class="mgr-micro">13 договоров</span></div>
+          <h2>Выручка по договорам</h2><strong>5 643 000 <small>₽</small></strong><p>По заключённым договорам, не по оплатам</p>
         </article>
       </section>
 
-      <div class="mgr-notice" role="note">
-        <span class="mgr-notice-symbol">!</span>
-        <div><strong>Данные по продажам пока частичные</strong><p>В сентябрьском отчёте по сотрудникам распределены 10 договоров на 4 318 000 ₽. Ещё 3 договора на 1 325 000 ₽ не имеют подтверждённой привязки к менеджерам. Мы показываем их отдельно, а не прибавляем кому-либо.</p></div>
+      <div class="mgr-notice mgr-notice-success" role="note">
+        <span class="mgr-notice-symbol">✓</span>
+        <div><strong>Все сентябрьские продажи распределены по менеджерам</strong><p>Добавлены три договора от 2, 4 и 5 сентября на 1 325 000 ₽. Теперь персональная выручка по 13 договорам в сумме составляет 5 643 000 ₽. Данные маржи по каждой сделке пока отсутствуют.</p></div>
       </div>
 
       <section class="mgr-tools" aria-label="Фильтрация данных менеджеров">
@@ -87,35 +87,38 @@
         </article>
 
         <article class="mgr-panel mgr-attribution-panel" aria-labelledby="mgrCoverageTitle">
-          <div class="mgr-panel-heading"><div><span class="mgr-kicker">ПОЛНОТА ДАННЫХ</span><h2 id="mgrCoverageTitle">Атрибуция продаж</h2><p>Что уже можем показать персонально</p></div></div>
-          <div class="mgr-coverage">
-            <div class="mgr-coverage-head"><span>Договоры с известным ответственным</span><b>10 из 13</b></div>
-            <div class="mgr-track"><i style="width:76.923%"></i></div>
-            <small>76,9% договоров</small>
-          </div>
-          <div class="mgr-coverage">
-            <div class="mgr-coverage-head"><span>Выручка с известным ответственным</span><b>4 318 000 ₽</b></div>
-            <div class="mgr-track"><i style="width:76.5196%" class="gold-track"></i></div>
-            <small>76,5% из 5 643 000 ₽</small>
-          </div>
-          <div class="mgr-unmapped">
-            <span>Не распределено по менеджерам</span>
-            <strong>3 договора</strong>
-            <b>1 325 000 ₽</b>
-            <p>Авито — 1, ВКонтакте — 1, входящие звонки — 1. Суммы этих договоров по источникам пока не известны.</p>
-          </div>
+          <div class="mgr-panel-heading"><div><span class="mgr-kicker">ФИНАНСОВЫЕ РЕЗУЛЬТАТЫ</span><h2 id="mgrCoverageTitle">Выручка по менеджерам</h2><p>Кто сколько принёс компании по договорам сентября</p></div></div>
+          <div id="mgrRevenueBars" class="mgr-revenue-bars" aria-live="polite"></div>
+          <div class="mgr-revenue-total"><span>Общая выручка по выбранным фильтрам</span><strong id="mgrRevenueTotal">5 643 000 ₽</strong></div>
+          <p class="mgr-panel-note">Выручка — сумма заключённых договоров. Поступления денег на счёт и маржа учитываются отдельно.</p>
         </article>
       </section>
 
       <section class="mgr-panel mgr-table-panel" aria-labelledby="mgrTableTitle">
-        <div class="mgr-panel-heading"><div><span class="mgr-kicker">СОТРУДНИКИ</span><h2 id="mgrTableTitle">Результаты по ответственным</h2><p>Новые обращения по CRM, подтверждённые продажи — по первоначальному сентябрьскому отчёту</p></div><span id="mgrTableCount" class="mgr-panel-badge">4 сотрудника</span></div>
+        <div class="mgr-panel-heading"><div><span class="mgr-kicker">СОТРУДНИКИ</span><h2 id="mgrTableTitle">Вклад менеджеров в выручку</h2><p>Все 13 договоров сентября, включая три добавленных; обращения — отдельная когорта CRM</p></div><span id="mgrTableCount" class="mgr-panel-badge">4 сотрудника</span></div>
         <div class="mgr-table-scroll"><table class="mgr-table">
           <thead><tr>
-            <th scope="col">Ответственный</th><th scope="col">Обращения</th><th scope="col">Целевые</th><th scope="col">Доля целевых</th><th scope="col">Договоры*</th><th scope="col">Выручка*</th><th scope="col">Средний чек*</th>
+            <th scope="col">Ответственный</th><th scope="col">Договоры</th><th scope="col">Выручка по договорам</th><th scope="col">Доля выручки</th><th scope="col">Средний чек</th><th scope="col">Маржа, ₽</th><th scope="col">Обращения</th><th scope="col">Целевые</th><th scope="col">Доля целевых</th>
           </tr></thead>
-          <tbody id="mgrTable"></tbody>
+          <tbody id="mgrTable"></tbody><tfoot id="mgrTableTotal"></tfoot>
         </table></div>
-        <p class="mgr-panel-note">* По 10 подтверждённым договорам первоначального отчёта. Это не персональная конверсия текущей сентябрьской когорты. Нулевое количество договоров в доступной детализации не доказывает отсутствия других продаж.</p>
+        <p class="mgr-panel-note">Договоры и выручка — результаты по дате заключения в сентябре. Обращения и целевые — сделки, созданные в сентябре. Это разные когорты, поэтому персональную конверсию между ними пока не считаем. «—» в марже означает отсутствие данных, а не нулевую прибыль.</p>
+      </section>
+
+      <section class="mgr-panel mgr-deals-panel" aria-labelledby="mgrDealsTitle">
+        <div class="mgr-panel-heading">
+          <div><span class="mgr-kicker">ДЕТАЛИЗАЦИЯ ПРОДАЖ</span><h2 id="mgrDealsTitle">Договоры сентября — по каждой сделке</h2><p>Дата, ответственный, источник, сумма продажи и поле будущего учёта маржи</p></div>
+          <span class="mgr-panel-badge" id="mgrDealsCount">13 договоров</span>
+        </div>
+        <div class="mgr-table-scroll">
+          <table class="mgr-deals-table">
+            <thead><tr><th scope="col">Дата договора</th><th scope="col">Менеджер</th><th scope="col">Источник</th><th scope="col">Выручка по договору, ₽</th><th scope="col">Маржа по сделке, ₽</th></tr></thead>
+            <tbody id="mgrDeals"></tbody>
+            <tfoot id="mgrDealsTotals"></tfoot>
+          </table>
+        </div>
+        <div class="mgr-deals-note"><strong>Маржа по сделке:</strong> поле пока пустое. После настройки Битрикс24 менеджеры будут заполнять его в карточке сделки, а наш дашборд будет автоматически суммировать маржу по каждому сотруднику. Здесь сохранение значений пока не реализовано.</div>
+        <p class="mgr-panel-note">Покупатели обезличены: в публичной демонстрации нет их имён, телефонов и идентификаторов CRM. Фильтры по менеджеру и источнику сверху действуют также на эту таблицу.</p>
       </section>
 
       <section class="mgr-bottom-grid">
@@ -127,12 +130,12 @@
         <article class="mgr-panel mgr-plan-panel" aria-labelledby="mgrPlanTitle">
           <div class="mgr-panel-heading"><div><span class="mgr-kicker">ПРЕДВАРИТЕЛЬНЫЕ ПЛАНЫ</span><h2 id="mgrPlanTitle">План по марже, ₽</h2><p>Уточнённые значения, которые ты сообщил после отчёта</p></div></div>
           <div id="mgrPlans" class="mgr-plan-rows"></div>
-          <div class="mgr-plan-message"><strong>Фактическая маржа по менеджерам неизвестна.</strong> Сумма маржи компании — 1 240 000 ₽. Поэтому проценты выполнения персональных планов пока не рассчитываем.</div>
+          <div class="mgr-plan-message"><strong>Маржа компании за сентябрь — 1 240 000 ₽.</strong> Маржа 13 отдельных сделок в исходных данных не заполнена. В таблице договоров поле предусмотрено; персональные фактические показатели и выполнение планов появятся после получения значений из Битрикс24.</div>
           <p class="mgr-panel-note">План 500 000 ₽ ещё не привязан к конкретному сотруднику. Планы Ильи и Михаила необходимо сверить с их учётными записями в CRM. Сумма показанных персональных планов не равна общему плану компании.</p>
         </article>
       </section>
 
-      <div class="mgr-method"><strong>Методика:</strong> качество обращений = целевые / всего созданных обращений. Целевыми считаются обращения, не находящиеся в категориях «Игнорит», «Спам» и «Не ответили после рассылки» на момент выгрузки. История переходов и фактическая маржа по каждому менеджеру появятся после интеграции с Битрикс24.</div>
+      <div class="mgr-method"><strong>Методика:</strong> выручка менеджера = сумма договоров, заключённых в сентябре под его ответственностью; доля выручки считается относительно выбранных фильтров. Качество обращений = целевые / всего созданных обращений. Маржа по каждому договору пока отсутствует и не заменяется общей маржой компании. История переходов появится после интеграции с Битрикс24.</div>
       <footer>© Bani Vyatki Analytics · Раздел 04 · Статический прототип для согласования</footer>
     </main>
   </div>

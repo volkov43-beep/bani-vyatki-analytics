@@ -20,6 +20,23 @@
     return el;
   }
 
+  /** The scroll hint is shown only when the graph exceeds its viewport. */
+  function updateTrendScrollHint() {
+    const viewport=$("salesTrendViewport");
+    const hint=$("salesTrendScrollHint");
+    if(!viewport||!hint)return;
+    const overflow=viewport.scrollWidth>viewport.clientWidth+2;
+    hint.classList.toggle("is-visible",overflow);
+  }
+
+  function updateSourceReset() {
+    const reset=$("resetPipelineSource");
+    reset.disabled=state.source==="all";
+    reset.setAttribute("aria-label",state.source==="all"
+      ? "Все источники уже выбраны"
+      : "Сбросить фильтр источника");
+  }
+
   function drawTrend() {
     const isRevenue=state.metric==="revenue";
     const rows=data.monthly;
@@ -44,7 +61,9 @@
       btn.classList.toggle("active",state.metric===m);
       btn.setAttribute("aria-pressed",String(state.metric===m));
     });
-    wrap.setAttribute("aria-label",isRevenue ? "Выручка по договорам за четыре месяца" : "Количество заключённых договоров за четыре месяца");
+    wrap.setAttribute("aria-label",(isRevenue ? "Выручка по договорам: " : "Количество договоров: ")+
+      rows.map(r=>r.name+" — "+(isRevenue?fmt(r.revenue)+" ₽":r.contracts+" шт.")).join("; "));
+    updateTrendScrollHint();
   }
 
   function setSource(value) {
@@ -53,6 +72,7 @@
     renderSourceBars();
     drawStages();
     drawReasons();
+    updateSourceReset();
   }
 
   function renderSourceBars() {
@@ -95,6 +115,8 @@
     data.stageGroups.forEach((entry,i)=>{
       const amount=counts[i];
       const row=create("div","stage-row");
+      row.setAttribute("role","listitem");
+      row.setAttribute("aria-label",entry.title+": "+fmt(amount)+" из "+fmt(total)+" обращений");
       row.title=entry.detail+": "+fmt(amount)+" из "+fmt(total);
       const name=create("span","stage-name",entry.title);
       const bar=create("div","stage-track");
@@ -120,6 +142,8 @@
     if(!rows.length){container.appendChild(create("p","sales-caption","В выбранном источнике причин потерь не зафиксировано."));return;}
     rows.forEach(row=>{
       const line=create("div","loss-line");
+      line.setAttribute("role","listitem");
+      line.setAttribute("aria-label",row.title+": "+fmt(row.count)+" обращений");
       const text=create("span","",row.title);
       const track=create("div","loss-track");
       const fill=create("i");
@@ -133,7 +157,12 @@
   }
 
   $("pipelineSource").addEventListener("change",e=>setSource(e.target.value));
+  $("resetPipelineSource").addEventListener("click",()=>setSource("all"));
   $("metricContracts").addEventListener("click",()=>{state.metric="contracts";drawTrend();});
   $("metricRevenue").addEventListener("click",()=>{state.metric="revenue";drawTrend();});
+  window.addEventListener("resize",updateTrendScrollHint,{passive:true});
+  window.addEventListener("load",updateTrendScrollHint);
   drawTrend();renderSourceBars();drawStages();drawReasons();
+  updateSourceReset();
+  updateTrendScrollHint();
 })();

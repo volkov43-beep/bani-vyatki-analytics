@@ -123,15 +123,15 @@
       const card=el("article","cycle-contract-card");
       card.append(
         headerBox(d.contractDate+" · "+names[d.manager],sources[d.source],d.days),
-        durationRail(d.days),
-        revenueBox(d.revenue)
+        durationRail(d.days)
       );
-      const metrics=el("div","cycle-card-metrics");
-      metrics.append(
-        metricBox("Дата начала",d.firstInquiry??"—"),
-        metricBox("Дата договора",d.contractDate)
+      // Compact timeline summary: full date audit remains in the section below.
+      const summary=el("div","cycle-timeline-compact");
+      summary.append(
+        el("span","",d.firstInquiry+" → "+d.contractDate),
+        el("strong","",rub(d.revenue))
       );
-      card.appendChild(metrics);
+      card.appendChild(summary);
       root.appendChild(card);
     });
     const total=el("div","cycle-cards-total");

@@ -63,35 +63,35 @@
 
       <section class="cycle-kpis" aria-label="Длительность сентябрьских продаж">
         <article class="cycle-kpi">
-          <div class="cycle-kpi-top"><span class="cycle-glyph green">◷</span><span class="cycle-kpi-context" id="cycleAvgCompare">+4,8 дня к июлю–августу</span></div>
-          <h2>Средний цикл продажи</h2><div class="cycle-big" id="cycleAverage">11,8 <small>дн.</small></div><p id="cycleAverageHint">По 10 договорам с известными датами</p>
+          <div class="cycle-kpi-top"><span class="cycle-glyph green">◷</span><span class="cycle-kpi-context" id="cycleAvgCompare">+4,5 дня к июлю–августу</span></div>
+          <h2>Средний цикл продажи</h2><div class="cycle-big" id="cycleAverage">11,5 <small>дн.</small></div><p id="cycleAverageHint">По всем 13 сентябрьским договорам</p>
         </article>
         <article class="cycle-kpi">
           <div class="cycle-kpi-top"><span class="cycle-glyph gold">↗</span><span class="cycle-kpi-context">Устойчивее среднего</span></div>
-          <h2>Медианный цикл</h2><div class="cycle-big" id="cycleMedian">8 <small>дн.</small></div><p>Половина известных продаж совершена не дольше указанного срока</p>
+          <h2>Медианный цикл</h2><div class="cycle-big" id="cycleMedian">9 <small>дн.</small></div><p>Половина известных продаж совершена не дольше указанного срока</p>
         </article>
         <article class="cycle-kpi">
           <div class="cycle-kpi-top"><span class="cycle-glyph brown">⚡</span><span class="cycle-kpi-context">До 7 календарных дней</span></div>
-          <h2>Быстрые сделки</h2><div class="cycle-big" id="cycleQuickShare">50,0 <small>%</small></div><p id="cycleQuickNote">5 из 10 договоров с известным циклом</p>
+          <h2>Быстрые сделки</h2><div class="cycle-big" id="cycleQuickShare">46,2 <small>%</small></div><p id="cycleQuickNote">6 из 13 договоров завершены до 7 дней</p>
         </article>
         <article class="cycle-kpi">
-          <div class="cycle-kpi-top"><span class="cycle-glyph olive">◉</span><span class="cycle-kpi-context">Полнота истории</span></div>
-          <h2>Известна дата обращения</h2><div class="cycle-big" id="cycleCoverage">10 <small>из 13</small></div><div class="cycle-coverage-track"><i id="cycleCoverageFill" style="width:76.9%"></i></div><p id="cycleCoverageHint">76,9% договоров выбранного набора</p>
+          <div class="cycle-kpi-top"><span class="cycle-glyph olive">◉</span><span class="cycle-kpi-context">Сопоставлено с CRM</span></div>
+          <h2>Известна дата обращения</h2><div class="cycle-big" id="cycleCoverage">13 <small>из 13</small></div><div class="cycle-coverage-track"><i id="cycleCoverageFill" style="width:100%"></i></div><p id="cycleCoverageHint">100% договоров выбранного набора</p>
         </article>
       </section>
 
-      <div class="cycle-note">
-        <span class="cycle-note-icon" aria-hidden="true">i</span>
-        <p><strong>Цикл рассчитан не для всех продаж.</strong> Для 10 сентябрьских договоров известна дата первого обращения; ещё 3 договора добавлены позднее без этих дат. Неизвестные циклы не включаем в среднее, медиану и распределение.</p>
+      <div class="cycle-note verified">
+        <span class="cycle-note-icon" aria-hidden="true">✓</span>
+        <p><strong>Все 13 договоров включены в расчёт.</strong> Для 10 продаж дата обращения взята из маркетингового отчёта, для трёх дополнительных — дата создания сделки в Битрикс24. Последняя может отличаться от даты первого фактического контакта.</p>
       </div>
 
       <section class="cycle-upper-grid">
         <article class="cycle-panel distribution-panel" aria-labelledby="cycleDistributionTitle">
-          <div class="cycle-panel-heading"><div><span class="cycle-eyebrow">СТРУКТУРА ЦИКЛА</span><h2 id="cycleDistributionTitle">Как долго клиенты принимают решение</h2><p>Распределение завершённых продаж с известной датой обращения</p></div><span class="cycle-panel-badge" id="cycleKnownCount">10 договоров</span></div>
+          <div class="cycle-panel-heading"><div><span class="cycle-eyebrow">СТРУКТУРА ЦИКЛА</span><h2 id="cycleDistributionTitle">Как долго клиенты принимают решение</h2><p>Распределение всех 13 сентябрьских договоров по длительности</p></div><span class="cycle-panel-badge" id="cycleKnownCount">13 договоров</span></div>
           <div class="cycle-distribution" id="cycleDistribution">
-            <div class="cycle-group cycle-fast"><span>Быстрые</span><small>0–7 дней</small><b>5</b><em>50%</em></div>
-            <div class="cycle-group cycle-mid"><span>Средние</span><small>8–30 дней</small><b>4</b><em>40%</em></div>
-            <div class="cycle-group cycle-long"><span>Долгие</span><small>31+ день</small><b>1</b><em>10%</em></div>
+            <div class="cycle-group cycle-fast"><span>Быстрые</span><small>0–7 дней</small><b>6</b><em>46,2%</em></div>
+            <div class="cycle-group cycle-mid"><span>Средние</span><small>8–30 дней</small><b>6</b><em>46,2%</em></div>
+            <div class="cycle-group cycle-long"><span>Долгие</span><small>31+ день</small><b>1</b><em>7,7%</em></div>
           </div>
           <div class="cycle-group-track" id="cycleDistributionTrack" role="img" aria-label="Доли быстрых, средних и долгих сделок"></div>
           <p class="cycle-panel-footer">Для анализа используем длительность в календарных днях, включая обращения, поступившие в августе.</p>
@@ -100,18 +100,18 @@
         <article class="cycle-panel period-panel" aria-labelledby="cyclePeriodTitle">
           <div class="cycle-panel-heading"><div><span class="cycle-eyebrow">СРАВНЕНИЕ ПЕРИОДОВ</span><h2 id="cyclePeriodTitle">Продажи стали длиннее</h2><p>Июль–август против сентября 2026 года</p></div></div>
           <div class="cycle-period-grid">
-            <div class="cycle-period-row"><div><span>Средний цикл</span><b>7 дней <small>→</small> 11,8 дня</b></div><div class="cycle-period-bar"><i style="width:59.3%"></i><i class="current" style="width:100%"></i></div></div>
-            <div class="cycle-period-row"><div><span>Медианный цикл</span><b>4 дня <small>→</small> 8 дней</b></div><div class="cycle-period-bar"><i style="width:50%"></i><i class="current" style="width:100%"></i></div></div>
-            <div class="cycle-period-row"><div><span>Быстрые сделки</span><b>85% <small>→</small> 50%</b></div><div class="cycle-period-bar"><i style="width:85%"></i><i class="current" style="width:50%"></i></div></div>
+            <div class="cycle-period-row"><div><span>Средний цикл</span><b>7 дней <small>→</small> 11,5 дня</b></div><div class="cycle-period-bar"><i style="width:60.9%"></i><i class="current" style="width:100%"></i></div></div>
+            <div class="cycle-period-row"><div><span>Медианный цикл</span><b>4 дня <small>→</small> 9 дней</b></div><div class="cycle-period-bar"><i style="width:44.4%"></i><i class="current" style="width:100%"></i></div></div>
+            <div class="cycle-period-row"><div><span>Быстрые сделки</span><b>85% <small>→</small> 46,2%</b></div><div class="cycle-period-bar"><i style="width:85%"></i><i class="current" style="width:46.2%"></i></div></div>
           </div>
-          <div class="cycle-legend"><span><i class="prior"></i> Июль–август (13)</span><span><i class="current"></i> Сентябрь (10 с известным циклом)</span></div>
-          <p class="cycle-panel-footer">Сравнение полных исходных периодов (без фильтра по менеджеру/источнику). Сентябрьская выборка неполная: три новых договора могут изменить показатели.</p>
+          <div class="cycle-legend"><span><i class="prior"></i> Июль–август (13)</span><span><i class="current"></i> Сентябрь (13 договоров)</span></div>
+          <p class="cycle-panel-footer">Сравнение полных исходных периодов (без фильтров). Для трёх дополнительных сентябрьских договоров датой начала служит регистрация сделки в CRM.</p>
         </article>
       </section>
 
       <section class="cycle-panel timeline-panel" aria-labelledby="cycleTimelineTitle">
         <div class="cycle-panel-heading">
-          <div><span class="cycle-eyebrow">ИНДИВИДУАЛЬНЫЕ ЦИКЛЫ</span><h2 id="cycleTimelineTitle">От первого обращения до договора</h2><p>Каждая строка — одна анонимизированная продажа. Чем длиннее полоса, тем дольше длился цикл.</p></div>
+          <div><span class="cycle-eyebrow">ИНДИВИДУАЛЬНЫЕ ЦИКЛЫ</span><h2 id="cycleTimelineTitle">От первого обращения до договора</h2><p>Все 13 продаж без данных покупателей. Чем длиннее полоса, тем больше дней от обращения до договора.</p></div>
           <div class="cycle-sort-control"><label for="cycleSort">Порядок сортировки</label><select id="cycleSort"><option value="longest">По длительности — сначала долгие</option><option value="shortest">Сначала быстрые</option><option value="date">По дате договора</option></select></div>
         </div>
         <div class="cycle-timeline-legend"><span><i class="cycle-dot fast"></i> 0–7 дней</span><span><i class="cycle-dot mid"></i> 8–30 дней</span><span><i class="cycle-dot long"></i> 31+ день</span></div>
@@ -119,7 +119,7 @@
           <div class="cycle-timeline-head"><span>Договор / ответственный</span><span>Длительность цикла</span><span>Дней</span><span>Сумма</span></div>
           <div id="cycleTimeline" class="cycle-timeline-body"></div>
         </div>
-        <div class="cycle-timeline-footer"><span id="cycleTimelineSummary">Показано 10 договоров с известными датами</span><span>Максимальная длительность: <b id="cycleMax">44 дня</b></span></div>
+        <div class="cycle-timeline-footer"><span id="cycleTimelineSummary">Показано 13 договоров</span><span>Максимальная длительность: <b id="cycleMax">44 дня</b></span></div>
       </section>
 
       <section class="cycle-bottom-grid">
@@ -136,18 +136,29 @@
       </section>
 
       <section class="cycle-panel missing-panel" aria-labelledby="cycleMissingTitle">
-        <div class="cycle-panel-heading"><div><span class="cycle-eyebrow">НЕПОЛНЫЕ ДАННЫЕ</span><h2 id="cycleMissingTitle">Договоры без даты первого обращения</h2><p>Их продажи учтены в общей выручке, но длительность цикла пока не рассчитывается</p></div><span class="cycle-panel-badge" id="cycleMissingCount">3 договора</span></div>
+        <div class="cycle-panel-heading">
+          <div><span class="cycle-eyebrow">ПРОВЕРКА ИСХОДНЫХ ДАННЫХ</span><h2 id="cycleMissingTitle">Даты и длительность каждого договора</h2><p>Полная анонимизированная расшифровка сентября, включая три сделки из выгрузки CRM</p></div>
+          <span class="cycle-panel-badge" id="cycleMissingCount">13 договоров</span>
+        </div>
         <div class="cycle-table-scroll">
           <table class="cycle-missing-table">
-            <thead><tr><th scope="col">Дата договора</th><th scope="col">Ответственный</th><th scope="col">Источник</th><th scope="col">Сумма договора</th><th scope="col">Дата первого обращения</th></tr></thead>
+            <thead><tr>
+              <th scope="col">Начало цикла</th>
+              <th scope="col">Договор</th>
+              <th scope="col">Ответственный</th>
+              <th scope="col">Источник</th>
+              <th scope="col">Цикл</th>
+              <th scope="col">Сумма договора</th>
+              <th scope="col">Источник даты начала</th>
+            </tr></thead>
             <tbody id="cycleMissingRows"></tbody><tfoot id="cycleMissingTotal"></tfoot>
           </table>
         </div>
-        <p class="cycle-panel-footer">Когда получим нужные даты из CRM, строки автоматически перейдут в аналитический расчёт. Неизвестную дату мы не заменяем датой договора.</p>
+        <p class="cycle-panel-footer">По 10 договорам начало взято из сентябрьского отчёта («Заявка»), по трём добавленным — из даты создания сделки в CRM. Имена клиентов и идентификаторы сделок не публикуются.</p>
       </section>
 
-      <div class="cycle-insight"><span class="cycle-insight-icon">↗</span><div><strong id="cycleInsightLabel">2 договора по обращениям до сентября</strong><p id="cycleInsightText">В сентябре заключены 2 договора на 1 061 000 ₽ по клиентам, впервые обратившимся в августе. Месяц привлечения и месяц продажи важно учитывать отдельно.</p></div></div>
-      <div class="cycle-method"><strong>Методика:</strong> цикл продажи = дата заключения договора − дата первого обращения, в календарных днях. Для будущей автоматизации необходимы точные даты обращения и перехода на стадию договора в Битрикс24. В публичном прототипе нет контактов покупателей, API-ключей и истории CRM; активные «зависшие» сделки и время внутри стадий добавим после подключения API.</div>
+      <div class="cycle-insight"><span class="cycle-insight-icon">↗</span><div><strong id="cycleInsightLabel">4 договора по обращениям до сентября</strong><p id="cycleInsightText">В сентябре заключены 4 договора на 1 934 000 ₽ по обращениям, зарегистрированным в августе. Месяц привлечения и месяц продажи важно учитывать отдельно.</p></div></div>
+      <div class="cycle-method"><strong>Методика:</strong> цикл продажи = дата заключения договора − дата обращения из отчёта либо дата создания сделки в CRM, в календарных днях. Для будущей автоматизации необходимы точные даты обращения и перехода на стадию договора в Битрикс24. Даты создания CRM могут отличаться от первого контакта. В публичном прототипе нет контактов покупателей, API-ключей и истории CRM; активные «зависшие» сделки и время внутри стадий добавим после подключения API.</div>
       <footer>© Bani Vyatki Analytics · Раздел 05 · Демонстрационный прототип</footer>
     </main>
   </div>

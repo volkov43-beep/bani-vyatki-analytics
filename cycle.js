@@ -83,6 +83,106 @@
       throw new Error("Сумма сделок из августовских обращений отличается от отчёта");
   }
 
+
+  /** Mobile and desktop views share the same verified duration and deal records. */
+  const metricBox=(name,value)=>{
+    const box=el("div","cycle-card-metric");
+    box.append(el("span","",name),el("b","",value));
+    return box;
+  };
+  const revenueBox=value=>{
+    const box=el("div","cycle-card-revenue");
+    box.append(el("span","","Выручка по договору"),el("strong","",rub(value)));
+    return box;
+  };
+  const headerBox=(headline,subtitle,days)=>{
+    const head=el("div","cycle-card-head");
+    const title=el("div");
+    title.append(el("strong","",headline),el("small","",subtitle));
+    const badge=el("span","cycle-card-days"+(days===null?"":(" "+bucket(days))),days===null?"—":days+" дн.");
+    head.append(title,badge);
+    return head;
+  };
+  const durationRail=days=>{
+    const track=el("div","cycle-card-track");
+    if(days!==null){
+      const fill=el("i",bucket(days));
+      fill.style.width=Math.max(3,days/44*100)+"%";
+      track.appendChild(fill);
+    }
+    return track;
+  };
+
+  function drawTimelineCards(sorted){
+    const root=$("cycleTimelineCards");root.replaceChildren();
+    if(!sorted.length){
+      root.appendChild(el("p","cycle-no-data","По выбранным фильтрам нет договоров с известной датой обращения."));
+      return;
+    }
+    sorted.forEach(d=>{
+      const card=el("article","cycle-contract-card");
+      card.append(
+        headerBox(d.contractDate+" · "+names[d.manager],sources[d.source],d.days),
+        durationRail(d.days),
+        revenueBox(d.revenue)
+      );
+      const metrics=el("div","cycle-card-metrics");
+      metrics.append(
+        metricBox("Дата начала",d.firstInquiry??"—"),
+        metricBox("Дата договора",d.contractDate)
+      );
+      card.appendChild(metrics);
+      root.appendChild(card);
+    });
+    const total=el("div","cycle-cards-total");
+    total.append(el("strong","","Итого по отфильтрованным договорам"),
+      el("span","",titleCount(sorted.length)+" · "+rub(sum(sorted.map(d=>d.revenue)))));
+    root.appendChild(total);
+  }
+
+  function drawDateCards(items){
+    const root=$("cycleDateCards");root.replaceChildren();
+    if(!items.length){
+      root.appendChild(el("p","cycle-no-data","По выбранным фильтрам договоров нет."));
+      return;
+    }
+    items.forEach(d=>{
+      const card=el("article","cycle-contract-card");
+      card.append(
+        headerBox(names[d.manager],sources[d.source]+" · "+d.contractDate,d.days),
+        revenueBox(d.revenue)
+      );
+      const metrics=el("div","cycle-card-metrics");
+      metrics.append(
+        metricBox("Начало цикла",d.firstInquiry??"—"),
+        metricBox("Дата договора",d.contractDate)
+      );
+      card.appendChild(metrics);
+      const basisText=d.dateBasis==="crm_created"
+        ? "Начало: дата создания сделки в CRM"
+        : "Начало: дата обращения из маркетингового отчёта";
+      card.appendChild(el("div","cycle-card-basis",basisText));
+      root.appendChild(card);
+    });
+    const total=el("div","cycle-cards-total");
+    total.append(el("strong","","Итого по отфильтрованным договорам"),
+      el("span","",titleCount(items.length)+" · "+rub(sum(items.map(d=>d.revenue)))));
+    root.appendChild(total);
+  }
+  function updateReset(){
+    $("cycleReset").disabled=state.manager==="all"&&state.source==="all"&&state.sort==="longest";
+  }
+  function updateScrollHints(){
+    for(const [regionId,hintId] of [
+      ["cycleTimeline","cycleTimelineHint"],["cycleMissingRows","cycleTableHint"]
+    ]){
+      const region=$(regionId).parentElement;
+      const hint=$(hintId);
+      const visible=region && window.getComputedStyle(region).display!=="none";
+      hint.classList.toggle("is-visible",Boolean(visible&&region.scrollWidth>region.clientWidth+2));
+    }
+  }
+
   function renderKpis(allRows,rows){
     const durations=rows.map(d=>d.days),mean=avg(durations),med=median(durations);
     const quick=rows.filter(d=>d.days<=7).length;
@@ -148,6 +248,7 @@
       row.append(person,rail,el("span","cycle-days",item.days),el("span","cycle-money",rub(item.revenue)));
       wrap.appendChild(row);
     }
+    drawTimelineCards(sorted);
     $("cycleTimelineSummary").textContent="Показано "+titleCount(sorted.length)+" с известными датами";
     const max=sorted.length?Math.max(...sorted.map(d=>d.days)):null;
     $("cycleMax").textContent=max===null?"—":max+" "+(max===1?"день":max>=2&&max<=4?"дня":"дней");
@@ -206,6 +307,7 @@
     const label=el("th","","Итого");label.colSpan=5;label.scope="row";
     foot.append(label,el("td","",rub(sum(items.map(d=>d.revenue)))),el("td","",titleCount(items.length)));
     $("cycleMissingTotal").replaceChildren(foot);
+    drawDateCards(items);
   }
 
   function insight(rows){
@@ -225,6 +327,8 @@
     breakdown(full,"source","cycleSourceBars");
     dateDetails(full);
     insight(full);
+    updateReset();
+    updateScrollHints();
   }
   function clear(){
     state.manager="all";state.source="all";state.sort="longest";
@@ -235,6 +339,11 @@
   $("cycleSource").addEventListener("change",e=>{state.source=e.target.value;render();});
   $("cycleSort").addEventListener("change",e=>{state.sort=e.target.value;render();});
   $("cycleReset").addEventListener("click",clear);
+  window.addEventListener("resize",updateScrollHints,{passive:true});
+  window.addEventListener("load",updateScrollHints);
   validate();
   render();
+  // Only replace the wide table after mobile cards have actually rendered.
+  document.documentElement.classList.add("bv-cycle-ready");
+  updateScrollHints();
 })();

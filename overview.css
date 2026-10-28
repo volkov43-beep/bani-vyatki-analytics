@@ -164,7 +164,7 @@
     display: block;
     min-width: 0;
     width: 100%;
-    min-height: 40px;
+    min-height: 44px;
     margin-top: 2px;
     padding: 4px 20px 4px 0;
     color: #234b36;
@@ -330,13 +330,15 @@
   #overview .minikpis {
     grid-template-columns: minmax(0, 1fr);
   }
-  #overview .detail-panel .table-scroll {
+  /* Progressive enhancement: no working JS -> retain scrollable table.
+     The card-only layout activates after app.js has rendered both versions. */
+  .bv-overview-ready #overview .detail-panel .table-scroll {
     display: none;
   }
   #overview .table-scroll-hint {
     display: none;
   }
-  #overview .plan-card-list {
+  .bv-overview-ready #overview .plan-card-list {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 10px;

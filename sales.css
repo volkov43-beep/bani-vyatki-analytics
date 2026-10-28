@@ -1,14 +1,14 @@
 /* Bani Vyatki Analytics — 03: Продажи и воронка.
    Дополнительные стили; базовая оболочка — styles.css */
-.sales-main{max-width:1650px;padding:30px 36px 25px}
+.sales-main{max-width:var(--bv-layout-max-width);padding:30px var(--bv-gutter-desktop) 25px}
 .sales-heading{display:flex;justify-content:space-between;gap:20px;align-items:flex-end;margin-bottom:23px}
-.sales-heading h1{font-family:Georgia,serif;font-size:clamp(33px,3vw,43px);color:#193f2f;letter-spacing:-.035em;margin:0 0 6px}
+.sales-heading h1{font-family:var(--bv-font-heading);font-size:clamp(33px,3vw,43px);color:#193f2f;letter-spacing:-.035em;margin:0 0 6px}
 .sales-heading .subtitle{max-width:750px}
-.sales-month{min-width:178px;border:1px solid #e8e5dc;background:#fffefa;border-radius:12px;padding:11px 17px;display:grid;gap:2px;white-space:nowrap}
+.sales-month{min-width:178px;border:1px solid #e8e5dc;background:var(--bv-color-surface-bright);border-radius:12px;padding:11px 17px;display:grid;gap:2px;white-space:nowrap}
 .sales-month span{font-size:10px;color:#88998c}
 .sales-month b{font-size:13px;color:#284935}
 .sales-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:18px}
-.sales-kpi{min-width:0;background:#fffefa;border:1px solid #e8e7df;border-radius:16px;box-shadow:0 8px 24px rgba(32,51,38,.035);padding:20px 18px;min-height:203px;display:flex;flex-direction:column}
+.sales-kpi{min-width:0;background:var(--bv-color-surface-bright);border:1px solid #e8e7df;border-radius:16px;box-shadow:0 8px 24px rgba(32,51,38,.035);padding:20px 18px;min-height:203px;display:flex;flex-direction:column}
 .sales-kpi-top{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:14px}
 .sales-glyph{width:39px;height:39px;flex:none;border-radius:11px;display:grid;place-items:center;color:#fff9ef;font-size:23px;font-weight:800}
 .sales-glyph.green{background:linear-gradient(140deg,#207047,#124a35)}
@@ -24,7 +24,7 @@
 .sales-kpi p{margin:auto 0 0;padding-top:13px;font-size:10px;color:#899689}
 .sales-grid-top{display:grid;grid-template-columns:minmax(0,1.52fr) minmax(350px,1fr);gap:16px;margin-bottom:18px}
 .sales-grid-bottom{display:grid;grid-template-columns:minmax(350px,.85fr) minmax(0,1.15fr);gap:16px;margin-top:18px}
-.sales-panel{min-width:0;border-radius:17px;padding:23px;background:#fffefa;border:1px solid #e9e5dd;box-shadow:0 12px 30px rgba(28,54,34,.045)}
+.sales-panel{min-width:0;border-radius:17px;padding:23px;background:var(--bv-color-surface-bright);border:1px solid #e9e5dd;box-shadow:0 12px 30px rgba(28,54,34,.045)}
 .sales-panel-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:17px}
 .panel-kicker{display:block;letter-spacing:.15em;color:#b18b54;font-weight:800;font-size:9px;margin-bottom:6px}
 .sales-panel-header h2{color:#214733;font-size:18px;line-height:1.25;margin:0 0 4px}
@@ -101,7 +101,7 @@
 .sales-method-summary{background:#f4efe3;border:1px solid #e7ddc7;border-radius:12px;color:#897b62;padding:15px 18px;margin-top:18px;line-height:1.65;font-size:11px}
 .sales-method-summary strong{color:#705931}
 @media(max-width:1450px){
- .sales-main{padding:28px 26px 25px}.sales-kpi{padding:17px 13px}.sales-kpi strong{font-size:clamp(24px,2vw,31px)}
+ .sales-main{padding:28px var(--bv-gutter-compact) 25px}.sales-kpi{padding:17px 13px}.sales-kpi strong{font-size:clamp(24px,2vw,31px)}
  .sales-grid-top{grid-template-columns:minmax(0,1.4fr) minmax(330px,1fr)}.sales-panel{padding:19px}
 }
 @media(max-width:1160px){
@@ -114,7 +114,7 @@
  .stage-donut{grid-row:2 / 4;grid-column:1;margin:12px auto}.stage-legend{grid-column:2;grid-row:2}.warning-note{grid-column:1 / -1;margin-top:10px}
 }
 @media(max-width:720px){
- .sales-main{padding:20px 12px}.sales-heading{flex-direction:column;align-items:stretch}.sales-heading h1{font-size:34px}.sales-month{align-self:flex-start}
+ .sales-main{padding:20px var(--bv-gutter-mobile)}.sales-heading{flex-direction:column;align-items:stretch}.sales-heading h1{font-size:34px}.sales-month{align-self:flex-start}
  .sales-kpis{gap:9px}.sales-kpi{min-height:169px;padding:13px 10px}.sales-glyph{height:31px;width:31px;font-size:18px}.sales-trend{font-size:8px;padding:5px}
  .sales-kpi h2{font-size:10px}.sales-kpi strong{font-size:clamp(19px,4.9vw,29px)}.sales-kpi p{font-size:9px}
  .sales-panel{padding:16px}.sales-panel-header{flex-direction:column}.monthly-bars{gap:8px;height:190px}

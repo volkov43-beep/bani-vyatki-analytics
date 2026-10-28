@@ -1,0 +1,53 @@
+name: Adaptive navigation browser QA
+
+on:
+  pull_request:
+    paths:
+      - "*.html"
+      - "navigation.css"
+      - "navigation.js"
+      - "scripts/check-navigation.mjs"
+      - "scripts/test-navigation-browser.py"
+      - ".github/workflows/responsive-navigation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  chromium:
+    name: Mobile, tablet and desktop navigation (Chromium)
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - name: Checkout exact PR state
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Structural checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check navigation.js
+          node scripts/check-navigation.mjs
+      - name: Install pinned test-only Playwright in venv
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv .venv
+          .venv/bin/python -m pip install --disable-pip-version-check playwright==1.56.0
+          .venv/bin/python -m playwright install --with-deps chromium
+      - name: Test real pages and capture viewport screenshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/bv-nav-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" || true' EXIT
+          .venv/bin/python scripts/test-navigation-browser.py
+      - name: Upload screenshots for review
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: navigation-iteration-02-screenshots
+          path: artifacts/navigation/*.png
+          if-no-files-found: warn
+          retention-days: 7

@@ -120,6 +120,33 @@ with sync_playwright() as pw:
                 ensure(abs(first["x"] - second["x"]) > 20,
                        f"{width}: expected two KPI columns")
 
+        # Only show the horizontal-scroll instruction when the table truly overflows.
+        if width > 600:
+            region = page.locator(".table-scroll").first
+            hint = page.locator(".table-scroll-hint").first
+            dimensions = region.evaluate("""e => ({
+              scrollWidth: e.scrollWidth,
+              clientWidth: e.clientWidth
+            })""")
+            needs_hint = dimensions["scrollWidth"] > dimensions["clientWidth"] + 2
+            ensure(hint.is_visible() == needs_hint,
+                   f"{width}: scroll hint visibility disagrees with actual overflow: {dimensions}")
+
+        if width == 1440:
+            panels = page.locator(".detail-grid > .detail-panel")
+            boxes = [panels.nth(i).bounding_box() for i in range(2)]
+            ensure(boxes[1]["y"] > boxes[0]["y"] + 40,
+                   "1440px: financial tables should be stacked rather than clipped")
+            ensure(all(panel.evaluate("(el)=>el.querySelector('table').scrollWidth <= el.querySelector('.table-scroll').clientWidth + 2")
+                       for panel in [panels.nth(0), panels.nth(1)]),
+                   "1440px: table columns still clipped after stacking")
+
+        if width == 1920:
+            panels = page.locator(".detail-grid > .detail-panel")
+            boxes = [panels.nth(i).bounding_box() for i in range(2)]
+            ensure(abs(boxes[1]["y"] - boxes[0]["y"]) < 2,
+                   "1920px: expected both detail panels side-by-side")
+
         check_scenario(page, width, "realistic")
         if width in (320, 390, 600, 768, 1024, 1440, 1920):
             page.screenshot(path=str(SCREENSHOTS / f"overview-{width}-realistic.png"),

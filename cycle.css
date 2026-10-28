@@ -1,9 +1,9 @@
 /* Bani Vyatki Analytics · 05 Цикл сделки. Общая оболочка в styles.css. */
-.cycle-main{max-width:1650px;padding:31px 36px 26px}
+.cycle-main{max-width:var(--bv-layout-max-width);padding:31px var(--bv-gutter-desktop) 26px}
 .cycle-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:22px;margin-bottom:24px}
 .cycle-heading h1{font:700 clamp(32px,3vw,43px)/1.12 Georgia,serif;letter-spacing:-.045em;margin:0 0 7px;color:#193e2d}
 .cycle-heading .subtitle{max-width:800px}
-.cycle-period{background:#fffefa;border:1px solid #e8e6da;border-radius:12px;min-width:174px;padding:10px 16px;display:grid;gap:2px}
+.cycle-period{background:var(--bv-color-surface-bright);border:1px solid #e8e6da;border-radius:12px;min-width:174px;padding:10px 16px;display:grid;gap:2px}
 .cycle-period span,.cycle-period small{font-size:10px;color:#8a9b8e}
 .cycle-period b{font-size:13px;color:#2b503a;white-space:nowrap}
 .cycle-filter-row{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:17px}
@@ -11,11 +11,11 @@
 .filter-kicker{color:#ad8a57;font-size:10px;font-weight:850;letter-spacing:.13em}
 .cycle-filters{display:flex;gap:10px;align-items:flex-end}
 .cycle-filters label,.cycle-sort-control label{display:grid;gap:5px;font-size:10px;color:#7f9082;font-weight:750}
-.cycle-filters select,.cycle-sort-control select{border:1px solid #e4e6db;background:#fffefa;border-radius:9px;color:#29523a;padding:10px 16px;font-size:12px;font-weight:760;min-width:165px;cursor:pointer}
+.cycle-filters select,.cycle-sort-control select{border:1px solid #e4e6db;background:var(--bv-color-surface-bright);border-radius:9px;color:#29523a;padding:10px 16px;font-size:12px;font-weight:760;min-width:165px;cursor:pointer}
 .cycle-reset{height:40px;border:1px solid #e6e2d6;border-radius:9px;background:#f9f8f2;color:#6d866e;cursor:pointer;font-weight:760;font-size:11px;padding:0 15px}
 .cycle-reset:hover{background:#ebf2e9}
 .cycle-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
-.cycle-kpi{min-width:0;min-height:190px;display:flex;flex-direction:column;padding:18px;background:#fffefa;border:1px solid #e9e8df;border-radius:16px;box-shadow:0 9px 24px rgba(30,50,36,.045)}
+.cycle-kpi{min-width:0;min-height:190px;display:flex;flex-direction:column;padding:18px;background:var(--bv-color-surface-bright);border:1px solid #e9e8df;border-radius:16px;box-shadow:0 9px 24px rgba(30,50,36,.045)}
 .cycle-kpi-top{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:13px}
 .cycle-glyph{width:39px;height:39px;flex:none;display:grid;place-items:center;border-radius:11px;color:#fff7e9;font-size:23px;font-weight:850}
 .cycle-glyph.green{background:linear-gradient(135deg,#338257,#174c36)}
@@ -34,7 +34,7 @@
 .cycle-note p{margin:0;font-size:11px;color:#8f806b;line-height:1.6}
 .cycle-note strong{color:#715a38}
 .cycle-upper-grid,.cycle-bottom-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:16px;margin-bottom:18px}
-.cycle-panel{min-width:0;background:#fffefa;border:1px solid #e9e7dc;border-radius:17px;padding:23px;box-shadow:0 12px 29px rgba(34,54,37,.045)}
+.cycle-panel{min-width:0;background:var(--bv-color-surface-bright);border:1px solid #e9e7dc;border-radius:17px;padding:23px;box-shadow:0 12px 29px rgba(34,54,37,.045)}
 .cycle-panel-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:13px;margin-bottom:19px}
 .cycle-panel-heading h2{font-size:18px;color:#244b36;line-height:1.28;margin:0 0 5px}
 .cycle-panel-heading p{color:#8d9b8e;margin:0;font-size:11px;line-height:1.5}
@@ -115,9 +115,9 @@
 .cycle-insight b{color:#286a44}
 .cycle-method{font-size:11px;border:1px solid #e7ddc8;border-radius:11px;padding:14px 16px;background:#f7f2e8;color:#8f806d;line-height:1.6}
 .cycle-method strong{color:#765c37}
-@media(max-width:1450px){.cycle-main{padding:27px 26px}.cycle-kpi{padding:15px 13px}.cycle-big{font-size:clamp(26px,2.3vw,34px)}.cycle-panel{padding:18px}}
+@media(max-width:1450px){.cycle-main{padding:27px var(--bv-gutter-compact)}.cycle-kpi{padding:15px 13px}.cycle-big{font-size:clamp(26px,2.3vw,34px)}.cycle-panel{padding:18px}}
 @media(max-width:1190px){.cycle-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.cycle-upper-grid,.cycle-bottom-grid{grid-template-columns:1fr}}
-@media(max-width:760px){.cycle-main{padding:20px 12px}.cycle-heading{flex-direction:column;align-items:start}.cycle-heading h1{font-size:34px}.cycle-filter-row{flex-direction:column;align-items:stretch}
+@media(max-width:760px){.cycle-main{padding:20px var(--bv-gutter-mobile)}.cycle-heading{flex-direction:column;align-items:start}.cycle-heading h1{font-size:34px}.cycle-filter-row{flex-direction:column;align-items:stretch}
 .cycle-filters{flex-wrap:wrap}.cycle-filters label{flex:1;min-width:145px}.cycle-filters select{width:100%;min-width:0}.cycle-reset{align-self:end}
 .cycle-kpis{gap:9px}.cycle-kpi{min-height:172px;padding:12px}.cycle-big{font-size:clamp(22px,5vw,30px)}.cycle-glyph{width:30px;height:30px;font-size:18px}.cycle-kpi-context{font-size:8px;padding:4px}
 .cycle-panel{padding:16px}.cycle-panel-heading{flex-direction:column}.cycle-panel-heading h2{font-size:17px}.cycle-group{padding:11px;min-height:132px}.cycle-group b{font-size:27px}.cycle-group span{font-size:11px}.cycle-group small,.cycle-group em{font-size:9px}

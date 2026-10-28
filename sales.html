@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="./styles.css">
 <link rel="stylesheet" href="./sales.css">
 <link rel="stylesheet" href="./navigation.css">
+<link rel="stylesheet" href="./sales-responsive.css">
 <script src="./sales-data.js" defer></script>
 <script src="./sales.js" defer></script>
 <script src="./navigation.js" defer></script>
@@ -57,12 +58,15 @@
               <button type="button" id="metricRevenue" aria-pressed="false">Выручка</button>
             </div>
           </div>
-          <div id="salesTrend" class="monthly-bars" role="img" aria-label="Диаграмма продаж за июнь, июль, август и сентябрь 2026"></div>
+          <div class="sales-trend-viewport" id="salesTrendViewport" role="region" tabindex="0" aria-label="Динамика продаж за четыре месяца — график с горизонтальной прокруткой">
+            <div id="salesTrend" class="monthly-bars" role="img" aria-label="Диаграмма продаж за июнь, июль, август и сентябрь 2026"></div>
+          </div>
+          <p id="salesTrendScrollHint" class="sales-scroll-hint">Прокрутите график горизонтально, чтобы увидеть все месяцы</p>
           <div class="trend-footer"><span>Сентябрь против августа</span><strong id="trendDiff">+6 договоров</strong></div>
         </article>
         <article class="sales-panel channels-panel" aria-labelledby="salesChannelsTitle">
           <div class="sales-panel-header"><div><span class="panel-kicker">ИСТОЧНИКИ ПРОДАЖ</span><h2 id="salesChannelsTitle">Договоры по каналам</h2><p>Нажми на источник, чтобы посмотреть его стадии</p></div></div>
-          <div id="contractSources" class="contract-sources"></div>
+          <div id="contractSources" class="contract-sources" aria-label="Выбор источника для изучения стадий"></div>
           <div class="sales-pie-note"><span>Всего договоров</span><strong>13</strong><span>8 из них пришли с Авито</span></div>
           <p class="sales-caption">Это продажи, состоявшиеся в сентябре. Они могут относиться к обращениям более ранних месяцев.</p>
         </article>
@@ -70,12 +74,15 @@
       <section class="sales-panel pipeline-panel" aria-labelledby="pipelineTitle">
         <div class="sales-panel-header pipeline-header">
           <div><span class="panel-kicker">СНИМОК CRM · СЕНТЯБРЬСКАЯ КОГОРТА</span><h2 id="pipelineTitle">На каких стадиях находятся заявки</h2><p>222 сделки, созданные 1–30 сентября 2026. Это распределение по статусам, а не последовательная конверсионная воронка.</p></div>
-          <label class="stage-filter" for="pipelineSource">Источник обращения<select id="pipelineSource"><option value="all">Все источники</option><option value="avito">Авито</option><option value="vk">ВКонтакте</option><option value="calls">Входящие звонки</option><option value="other">Прочие</option></select></label>
+          <div class="stage-filter-actions">
+            <label class="stage-filter" for="pipelineSource">Источник обращения<select id="pipelineSource"><option value="all">Все источники</option><option value="avito">Авито</option><option value="vk">ВКонтакте</option><option value="calls">Входящие звонки</option><option value="other">Прочие</option></select></label>
+            <button id="resetPipelineSource" type="button" disabled>Сбросить</button>
+          </div>
         </div>
         <div class="pipeline-body">
           <div class="stage-chart">
             <div class="stage-chart-heading"><strong id="cohortTotal">222 обращения</strong><span id="cohortSubtitle">Все источники · срез выгрузки</span></div>
-            <div id="stageBars" class="stage-bars"></div>
+            <div id="stageBars" class="stage-bars" role="list" aria-label="Количество сделок по текущим стадиям CRM"></div>
           </div>
           <aside class="stage-side">
             <div class="stage-side-title"><h3>Состав обращений</h3><span>По методике отчёта</span></div>
@@ -96,11 +103,11 @@
         </article>
         <article class="sales-panel losses-panel" aria-labelledby="lossesTitle">
           <div class="sales-panel-header"><div><span class="panel-kicker">КЛАССИФИКАЦИЯ ОБРАЩЕНИЙ</span><h2 id="lossesTitle">Причины потерь и исключений</h2><p>Стадии сентябрьской когорты на момент выгрузки</p></div><span id="reasonsTotal" class="losses-count">114 обращений</span></div>
-          <div id="lossRows" class="loss-bars"></div>
+          <div id="lossRows" class="loss-bars" role="list" aria-label="Причины отказов и исключений из целевых обращений"></div>
           <p class="sales-caption">«Игнорит» не обязательно означает нецелевого клиента; здесь отражена классификация, принятая в текущем отчёте компании.</p>
         </article>
       </section>
-      <div class="sales-method-summary"><strong>Ограничения первого прототипа:</strong> 13 договоров и 5 643 000 ₽ — уточнённые итоги сентября; 222 обращения и стадии — срез CRM по дате создания. Полной истории смены стадий и дат всех 13 договоров в предоставленных данных нет. Данные статические, без API и персональных данных.</div>
+      <div class="sales-method-summary"><strong>Ограничения первого прототипа:</strong> 13 договоров и 5 643 000 ₽ — итоги сентября; 222 обращения и стадии — срез CRM по дате создания. Даты 13 сентябрьских договоров отражены в разделе «Цикл сделки», но полной истории переходов между стадиями CRM пока нет. Данные статические, без API и персональных данных.</div>
       <footer>© Bani Vyatki Analytics · Раздел 03 · Прототип для согласования</footer>
     </main>
   </div>

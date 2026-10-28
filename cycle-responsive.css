@@ -341,6 +341,33 @@
   }
   #cycle .cycle-card-track i.mid { background:linear-gradient(90deg,#b98b4b,#e0bc85); }
   #cycle .cycle-card-track i.long { background:linear-gradient(90deg,#af715d,#daaaa0); }
+  /* The timeline stays concise; the full seven-field audit is below. */
+  #cycle .cycle-timeline-cards .cycle-contract-card {
+    padding:12px;
+    gap:10px;
+  }
+  #cycle .cycle-timeline-compact {
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:6px 12px;
+    padding:10px 11px;
+    border-radius:9px;
+    background:#eef5ed;
+  }
+  #cycle .cycle-timeline-compact span {
+    font-size:12px;
+    color:var(--bv-color-secondary-ink);
+    line-height:1.4;
+    overflow-wrap:anywhere;
+  }
+  #cycle .cycle-timeline-compact strong {
+    font-size:18px;
+    color:#20573a;
+    font-variant-numeric:tabular-nums;
+    overflow-wrap:anywhere;
+  }
   #cycle .cycle-card-revenue {
     display:grid;
     gap:3px;

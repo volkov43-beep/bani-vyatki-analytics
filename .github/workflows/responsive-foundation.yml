@@ -7,6 +7,7 @@ on:
       - "*.css"
       - "*.js"
       - "scripts/check-responsive-foundation.mjs"
+      - "scripts/check-navigation.mjs"
       - ".github/workflows/responsive-foundation.yml"
   push:
     branches: [main]
@@ -15,6 +16,7 @@ on:
       - "*.css"
       - "*.js"
       - "scripts/check-responsive-foundation.mjs"
+      - "scripts/check-navigation.mjs"
       - ".github/workflows/responsive-foundation.yml"
   workflow_dispatch:
 
@@ -36,6 +38,8 @@ jobs:
           node --version
           node --check scripts/check-responsive-foundation.mjs
           node scripts/check-responsive-foundation.mjs
-          for file in app.js sources.js sales.js managers.js cycle.js; do
+          node --check scripts/check-navigation.mjs
+          node scripts/check-navigation.mjs
+          for file in app.js sources.js sales.js managers.js cycle.js navigation.js; do
             node --check "$file"
           done

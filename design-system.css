@@ -1,0 +1,129 @@
+/*
+ * Bani Vyatki Analytics · Design System v0.1 · Iteration 01
+ *
+ * Basis: NeuroLab Web R01 (composition), R02 (design tokens),
+ * R03 (action semantics), R12 (focus and motion); Q4-05–Q4-12.
+ *
+ * This layer is loaded BEFORE styles.css and any page-specific stylesheet.
+ * It introduces a single semantic token source, not a new visual theme.
+ * Existing desktop appearance is intentionally preserved by legacy aliases.
+ *
+ * Breakpoint contract (CSS custom properties cannot be used in @media):
+ *   Wide            : > 1460px
+ *   Compact desktop : 1141–1460px
+ *   Tablet / rail   : 721–1140px
+ *   Mobile shell    : <= 720px
+ *   Narrow mobile   : <= 390px
+ *
+ * Individual complex charts/tables retain their current content-specific
+ * breakpoints until iterations 03–07. The mobile navigation is iteration 02.
+ */
+:root {
+  color-scheme: light;
+
+  /* Semantic brand and surfaces (do not use decorative gold as body text). */
+  --bv-color-forest: #0f352a;
+  --bv-color-forest-light: #174b39;
+  --bv-color-forest-sidebar-top: #123d2f;
+  --bv-color-forest-sidebar-bottom: #0d2e25;
+  --bv-color-sidebar-ink: #f7f0de;
+  --bv-color-page: #f4f3ef;
+  --bv-color-surface: #fffefb;
+  --bv-color-warm-cream: #f6f3ed;
+  --bv-color-ink: #18362a;
+  --bv-color-secondary-ink: #536a59;
+  --bv-color-legacy-muted: #7f8e84;
+  --bv-color-border: #e9e6dd;
+  --bv-color-gold-decorative: #d0ac72;
+  --bv-color-gold-light: #ecd2a6;
+  --bv-color-gold-nav-start: #ead6aa;
+  --bv-color-gold-nav-end: #cda56b;
+  --bv-color-success: #26704b;
+  --bv-color-focus: #d6a958;
+
+  /* Brand typography. Small-data labels are audited per page later. */
+  --bv-font-body: Inter, "Segoe UI", Arial, sans-serif;
+  --bv-font-heading: Georgia, serif;
+  --bv-font-size-body: 14px;
+  --bv-font-size-secondary: 12px;
+  --bv-font-size-label: 12px;
+  --bv-font-size-heading: clamp(32px, 3vw, 43px);
+  --bv-line-height-body: 1.55;
+
+  /* Rhythm and geometry. Desktop sizes preserve the approved layout. */
+  --bv-space-1: 4px;
+  --bv-space-2: 8px;
+  --bv-space-3: 12px;
+  --bv-space-4: 16px;
+  --bv-space-5: 20px;
+  --bv-space-6: 24px;
+  --bv-space-8: 32px;
+  --bv-space-9: 36px;
+  --bv-space-12: 48px;
+  --bv-layout-max-width: 1650px;
+  --bv-sidebar-width: 240px;
+  --bv-sidebar-width-compact: 215px;
+  --bv-sidebar-width-rail: 70px;
+  --bv-gutter-desktop: 36px;
+  --bv-gutter-compact: 26px;
+  --bv-gutter-mobile: 12px;
+  --bv-header-gutter-mobile: 14px;
+  --bv-radius-control: 10px;
+  --bv-radius-card: 16px;
+  --bv-radius-panel: 17px;
+  --bv-shadow-panel: 0 15px 38px rgba(30, 57, 40, .055);
+  --bv-focus-outline-width: 3px;
+  --bv-control-target-min: 44px;
+
+  /* Compatibility aliases for existing CSS; remove only after modules migrate. */
+  --forest: var(--bv-color-forest);
+  --forest2: var(--bv-color-forest-light);
+  --gold: var(--bv-color-gold-decorative);
+  --gold2: var(--bv-color-gold-light);
+  --cream: var(--bv-color-warm-cream);
+  --panel: var(--bv-color-surface);
+  --ink: var(--bv-color-ink);
+  --muted: var(--bv-color-legacy-muted);
+  --border: var(--bv-color-border);
+  --green: var(--bv-color-success);
+  --shadow: var(--bv-shadow-panel);
+}
+
+/* Non-destructive baseline for responsive media and consistent sizing. */
+*, *::before, *::after { box-sizing: border-box; }
+img, svg { max-width: 100%; }
+.brand-mark img { width: 52px; height: 52px; object-fit: contain; }
+
+/* Common opt-in primitives for the next iterations (not forced on old UI). */
+.bv-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+.bv-scroll-region {
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.bv-truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bv-wrap-anywhere { overflow-wrap: anywhere; }
+.bv-num { font-variant-numeric: tabular-nums; }
+.bv-focusable:focus-visible {
+  outline: var(--bv-focus-outline-width) solid var(--bv-color-focus);
+  outline-offset: 3px;
+}
+
+/* The default applies only to opting-in links/buttons, avoiding UI regressions. */
+.bv-touch-target { min-width: var(--bv-control-target-min); min-height: var(--bv-control-target-min); }
+
+@media (prefers-reduced-motion: reduce) {
+  .bv-motion { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

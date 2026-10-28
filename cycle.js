@@ -86,8 +86,8 @@
     const quick=rows.filter(d=>d.days<=7).length;
     const durationText=mean===null?"—":num(mean);
     const medianText=med===null?"—":num(med);
-    $("cycleAverage").replaceChildren(durationText+" ",el("small","",mean===null?"":"дня"));
-    $("cycleMedian").replaceChildren(medianText+" ",el("small","",med===null?"":"дней"));
+    $("cycleAverage").replaceChildren(durationText+" ",el("small","",mean===null?"":"дн."));
+    $("cycleMedian").replaceChildren(medianText+" ",el("small","",med===null?"":"дн."));
     $("cycleQuickShare").replaceChildren(rows.length?num(quick/rows.length*100):"—",el("small","",rows.length?" %":""));
     $("cycleAverageHint").textContent="По "+titleCount(rows.length)+" с известными датами";
     $("cycleQuickNote").textContent=rows.length?quick+" из "+rows.length+" известных продаж:"+" до 7 дней":"Нет циклов с двумя датами";
@@ -164,7 +164,7 @@
     for(const group of groups){
       const row=el("div","cycle-breakdown-row");
       const head=el("div","cycle-breakdown-head");
-      head.append(el("span","",group.name),el("b","",group.average===null?"—":num(group.average)+" дня"));
+      head.append(el("span","",group.name),el("b","",group.average===null?"—":num(group.average)+" дн."));
       const track=el("div","cycle-breakdown-track");
       const fill=el("i");
       fill.style.width=group.average===null?"0%":Math.max(2,group.average/ceiling*100)+"%";
@@ -201,7 +201,7 @@
 
   function insight(rows){
     const cross=known(rows).filter(d=>d.firstInquiry.slice(3)!=="09.2026");
-    $("cycleInsightLabel").textContent=cross.length+" "+(cross.length===1?"договор":"договора")+" по обращениям до сентября";
+    $("cycleInsightLabel").textContent=titleCount(cross.length)+" по обращениям до сентября";
     $("cycleInsightText").textContent=cross.length
       ? "В сентябре заключены "+titleCount(cross.length)+" на "+rub(sum(cross.map(d=>d.revenue)))+" по клиентам, впервые обратившимся ранее. Месяц привлечения и месяц продажи важно учитывать отдельно."
       : "В выбранном наборе нет известных продаж по обращениям, поступившим раньше сентября. Для неизвестных дат вывод сделать нельзя.";

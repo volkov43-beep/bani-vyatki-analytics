@@ -91,7 +91,7 @@
     $("cycleAverage").replaceChildren(durationText+" ",el("small","",mean===null?"":"дн."));
     $("cycleMedian").replaceChildren(medianText+" ",el("small","",med===null?"":"дн."));
     $("cycleQuickShare").replaceChildren(rows.length?num(quick/rows.length*100):"—",el("small","",rows.length?" %":""));
-    $("cycleAverageHint").textContent="По "+titleCount(rows.length)+" с известными датами";
+    $("cycleAverageHint").textContent=rows.length?"Учтено: "+titleCount(rows.length)+" с известными датами":"Нет договоров с известным циклом";
     $("cycleQuickNote").textContent=rows.length?quick+" из "+rows.length+" известных продаж:"+" до 7 дней":"Нет циклов с двумя датами";
     $("cycleCoverage").replaceChildren(String(rows.length)+" ",el("small","","из "+allRows.length));
     const share=allRows.length?rows.length/allRows.length*100:0;
@@ -212,7 +212,7 @@
     const cross=known(rows).filter(d=>d.firstInquiry.slice(3)!=="09.2026");
     $("cycleInsightLabel").textContent=titleCount(cross.length)+" по обращениям до сентября";
     $("cycleInsightText").textContent=cross.length
-      ? "В сентябре заключены "+titleCount(cross.length)+" на "+rub(sum(cross.map(d=>d.revenue)))+" по клиентам, впервые обратившимся ранее. Месяц привлечения и месяц продажи важно учитывать отдельно."
+      ? "В сентябре "+(cross.length===1?"заключён ":"заключено ")+titleCount(cross.length)+" на "+rub(sum(cross.map(d=>d.revenue)))+" по обращениям, датированным до сентября. Месяц привлечения и месяц продажи важно учитывать отдельно."
       : "В выбранном наборе нет известных продаж по обращениям, поступившим раньше сентября. Для неизвестных дат вывод сделать нельзя.";
   }
 

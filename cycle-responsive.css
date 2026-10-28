@@ -1,0 +1,423 @@
+/*
+ * Bani Vyatki Analytics · Iteration 07/08: Цикл сделки
+ * NeuroLab Web R01/R02/R03/R12, Q4-05–Q4-07, Q4-09, Q4-12.
+ * Component styles scoped to #cycle. No change to source data or cycle formula.
+ */
+#cycle,
+#cycle .cycle-heading,
+#cycle .cycle-heading > div,
+#cycle .cycle-filter-row,
+#cycle .cycle-filters,
+#cycle .cycle-panel,
+#cycle .cycle-panel-heading,
+#cycle .cycle-upper-grid,
+#cycle .cycle-bottom-grid,
+#cycle .cycle-distribution,
+#cycle .cycle-timeline-wrap,
+#cycle .cycle-table-scroll { min-width:0; }
+
+#cycle .subtitle,
+#cycle .cycle-panel-heading p,
+#cycle .cycle-panel-footer,
+#cycle .cycle-method,
+#cycle .cycle-note p,
+#cycle .cycle-insight p { overflow-wrap:break-word; }
+
+#cycle .subtitle,
+#cycle .cycle-period > span,
+#cycle .cycle-period > small,
+#cycle .cycle-filter-label,
+#cycle .cycle-filters label,
+#cycle .cycle-sort-control label,
+#cycle .cycle-kpi h2,
+#cycle .cycle-kpi p,
+#cycle .cycle-panel-heading p,
+#cycle .cycle-panel-footer,
+#cycle .cycle-timeline-footer,
+#cycle .cycle-deal small,
+#cycle .cycle-breakdown-foot,
+#cycle .cycle-legend,
+#cycle .cycle-timeline-legend {
+  color:var(--bv-color-secondary-ink);
+}
+#cycle .cycle-filter-label,
+#cycle .cycle-period > span,
+#cycle .cycle-period > small,
+#cycle .cycle-filters label,
+#cycle .cycle-sort-control label,
+#cycle .cycle-panel-heading p,
+#cycle .cycle-panel-footer,
+#cycle .cycle-kpi p,
+#cycle .cycle-breakdown-foot,
+#cycle .cycle-timeline-footer,
+#cycle .cycle-legend {
+  font-size:12px;
+  line-height:1.5;
+}
+#cycle .cycle-period b { font-size:14px; }
+#cycle .filter-kicker,
+#cycle .cycle-eyebrow {
+  font-size:11px;
+  letter-spacing:.1em;
+  color:#87643a;
+}
+#cycle .cycle-filters select,
+#cycle .cycle-sort-control select {
+  font-size:13px;
+  min-height:44px;
+  min-width:0;
+  max-width:100%;
+  width:100%;
+  cursor:pointer;
+}
+#cycle .cycle-filters label { flex:1 1 175px; min-width:0; }
+#cycle .cycle-reset {
+  height:auto;
+  min-height:44px;
+  min-width:94px;
+  font-size:12px;
+  color:#2b6144;
+  border-color:#d8e5d8;
+  background:#edf5ea;
+  touch-action:manipulation;
+}
+#cycle .cycle-reset:hover:not(:disabled) { background:#e1f0e0; }
+#cycle .cycle-reset:disabled { opacity:.55; cursor:not-allowed; }
+#cycle :is(.cycle-reset,.cycle-filters select,.cycle-sort-control select,
+  .cycle-timeline-wrap,.cycle-table-scroll):focus-visible {
+  outline:var(--bv-focus-outline-width) solid var(--bv-color-focus);
+  outline-offset:2px;
+}
+#cycle .cycle-kpi h2 { font-size:12px; }
+#cycle .cycle-kpi .cycle-kpi-context {
+  color:#356646;
+  font-size:11px;
+  line-height:1.35;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+#cycle .cycle-big { white-space:normal; overflow-wrap:anywhere; }
+#cycle .cycle-big small { white-space:nowrap; }
+#cycle .cycle-kpi p { line-height:1.55; }
+#cycle .cycle-note { align-items:flex-start; }
+#cycle .cycle-note p {
+  font-size:12px;
+  line-height:1.6;
+  min-width:0;
+  color:#365d44;
+}
+#cycle .cycle-note-icon { margin-top:2px; }
+#cycle .cycle-panel-heading h2 { font-size:18px; }
+#cycle .cycle-panel-badge {
+  color:#356647;
+  font-size:12px;
+  white-space:normal;
+  text-align:center;
+}
+#cycle .cycle-group small,
+#cycle .cycle-group em {
+  font-size:12px;
+  line-height:1.3;
+}
+#cycle .cycle-group { min-width:0; }
+#cycle .cycle-group > span { font-size:14px; }
+#cycle .cycle-group b { font-variant-numeric:tabular-nums; }
+#cycle .cycle-period-row > div:first-child {
+  gap:9px;
+  flex-wrap:wrap;
+}
+#cycle .cycle-period-row span { font-size:12px; color:#486a50; }
+#cycle .cycle-period-row b {
+  font-size:13px;
+  white-space:normal;
+  color:#275a3f;
+}
+#cycle .cycle-period-row b small { color:#826945; }
+#cycle .cycle-legend { gap:10px 17px; }
+#cycle .cycle-timeline-legend {
+  font-size:12px;
+  gap:9px 15px;
+}
+#cycle .cycle-timeline-legend span { min-width:0; }
+#cycle .cycle-sort-control { min-width:0; }
+#cycle .cycle-timeline-wrap,
+#cycle .cycle-table-scroll {
+  max-width:100%;
+  overscroll-behavior-inline:contain;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-color:#9fb6a3 #f2f3eb;
+}
+#cycle .cycle-timeline-head { font-size:11px; color:var(--bv-color-secondary-ink); }
+#cycle .cycle-deal { font-size:12px; }
+#cycle .cycle-deal small { font-size:11px; }
+#cycle .cycle-money { color:#375d44; font-size:12px; }
+#cycle .cycle-breakdown-head span { font-size:12px; }
+#cycle .cycle-breakdown-head b { font-size:13px; }
+#cycle .cycle-breakdown-foot { flex-wrap:wrap; gap:3px 10px; }
+#cycle .cycle-missing-table th,
+#cycle .cycle-missing-table td { font-size:12px; }
+#cycle .cycle-missing-table thead th { color:var(--bv-color-secondary-ink); }
+#cycle .cycle-basis-crm,
+#cycle .cycle-basis-report { font-size:11px; }
+#cycle .cycle-insight { min-width:0; }
+#cycle .cycle-insight > div { flex:1; min-width:0; }
+#cycle .cycle-insight strong { font-size:13px; }
+#cycle .cycle-insight p { font-size:12px; color:#386147; }
+#cycle .cycle-method { font-size:12px; color:#6b573d; }
+#cycle .cycle-scroll-hint {
+  display:none;
+  margin:9px 0 0;
+  color:var(--bv-color-secondary-ink);
+  font-size:12px;
+  font-weight:650;
+  line-height:1.45;
+}
+#cycle .cycle-scroll-hint.is-visible { display:block; }
+#cycle .cycle-timeline-cards,
+#cycle .cycle-date-cards { display:none; }
+
+/* Avoid cramped side-by-side charts at smaller laptop widths. */
+@media (max-width:1400px) {
+  #cycle .cycle-upper-grid,
+  #cycle .cycle-bottom-grid { grid-template-columns:minmax(0,1fr); }
+}
+@media (max-width:1190px) {
+  #cycle .cycle-kpis { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:900px) {
+  #cycle .cycle-heading,
+  #cycle .cycle-filter-row { flex-wrap:wrap; align-items:flex-start; }
+  #cycle .cycle-filters { width:100%; }
+  #cycle .cycle-timeline-head,
+  #cycle .cycle-timeline-row {
+    min-width:760px;
+  }
+}
+@media (max-width:720px) {
+  #cycle.cycle-main { padding:20px var(--bv-gutter-mobile); }
+  #cycle .cycle-heading {
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+    gap:15px;
+  }
+  #cycle .cycle-heading h1 {
+    font-size:clamp(30px,7vw,38px);
+    line-height:1.2;
+  }
+  #cycle .cycle-heading .subtitle { font-size:13px; line-height:1.55; }
+  #cycle .cycle-period {
+    min-width:0;
+    width:min(100%,240px);
+    padding:11px 14px;
+  }
+  #cycle .cycle-filter-row {
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+    gap:12px;
+  }
+  #cycle .cycle-filter-label { font-size:12px; }
+  #cycle .cycle-filters {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+  }
+  #cycle .cycle-filters label { flex:none; min-width:0; }
+  #cycle .cycle-reset { grid-column:1/-1; justify-self:stretch; }
+  #cycle .cycle-kpis { gap:10px; }
+  #cycle .cycle-kpi {
+    min-height:175px;
+    padding:15px;
+  }
+  #cycle .cycle-kpi-top { align-items:flex-start; gap:9px; }
+  #cycle .cycle-kpi .cycle-glyph { width:36px; height:36px; font-size:20px; }
+  #cycle .cycle-kpi .cycle-kpi-context { font-size:11px; }
+  #cycle .cycle-kpi h2 { font-size:13px; line-height:1.4; }
+  #cycle .cycle-big { font-size:clamp(26px,5.5vw,34px); }
+  #cycle .cycle-kpi p { font-size:12px; }
+  #cycle .cycle-panel {
+    padding:16px;
+    border-radius:14px;
+  }
+  #cycle .cycle-panel-heading {
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:16px;
+  }
+  #cycle .cycle-panel-heading h2 { font-size:18px; }
+  #cycle .cycle-panel-heading p { font-size:12px; }
+  #cycle .cycle-distribution { gap:9px; }
+  #cycle .cycle-group { padding:13px; min-height:142px; }
+  #cycle .cycle-group b { font-size:30px; }
+  #cycle .cycle-period-row b { font-size:13px; }
+  #cycle .cycle-note { padding:13px; }
+  #cycle .cycle-sort-control { width:100%; }
+  #cycle .cycle-sort-control select {
+    width:100%;
+    max-width:none;
+    min-width:0;
+  }
+  #cycle .cycle-timeline-footer { font-size:12px; }
+  #cycle .cycle-timeline-legend { font-size:12px; }
+  #cycle .cycle-breakdown { margin-top:17px; }
+  #cycle .cycle-breakdown-head { align-items:baseline; }
+  #cycle .cycle-breakdown-head span { overflow-wrap:anywhere; }
+  #cycle .cycle-breakdown-head b { white-space:normal; }
+  #cycle .cycle-insight { padding:13px; }
+  #cycle .cycle-insight-icon { width:30px; height:30px; }
+}
+/* At <=600 px we show timeline/contract details as cards, rather than
+   requiring the user to pan a dense 7-column table. */
+@media (max-width:600px) {
+  #cycle .cycle-kpis { grid-template-columns:minmax(0,1fr); }
+  #cycle .cycle-kpi { min-height:0; }
+  #cycle .cycle-big { font-size:clamp(31px,8vw,39px); }
+  #cycle .cycle-filters { grid-template-columns:minmax(0,1fr); }
+  #cycle .cycle-distribution { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  #cycle .cycle-group.cycle-long { grid-column:1/-1; min-height:118px; }
+  #cycle .cycle-group { min-height:125px; }
+  .bv-cycle-ready #cycle .cycle-timeline-wrap,
+  .bv-cycle-ready #cycle .cycle-table-scroll { display:none; }
+  .bv-cycle-ready #cycle .cycle-timeline-cards,
+  .bv-cycle-ready #cycle .cycle-date-cards {
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+    gap:10px;
+  }
+  #cycle .cycle-scroll-hint { display:none!important; }
+  #cycle .cycle-contract-card {
+    display:grid;
+    gap:11px;
+    min-width:0;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #e1e8df;
+    background:#fff;
+  }
+  #cycle .cycle-card-head {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:8px 12px;
+  }
+  #cycle .cycle-card-head strong {
+    color:#234e38;
+    font-size:15px;
+    line-height:1.4;
+    overflow-wrap:anywhere;
+  }
+  #cycle .cycle-card-head small {
+    display:block;
+    color:var(--bv-color-secondary-ink);
+    font-size:12px;
+    line-height:1.4;
+  }
+  #cycle .cycle-card-days {
+    display:inline-block;
+    flex:none;
+    padding:5px 9px;
+    border-radius:7px;
+    background:#eaf4e9;
+    color:#236645;
+    font-size:13px;
+    font-weight:850;
+    font-variant-numeric:tabular-nums;
+  }
+  #cycle .cycle-card-days.mid { background:#f8eedb; color:#806039; }
+  #cycle .cycle-card-days.long { background:#f7e7e2; color:#985640; }
+  #cycle .cycle-card-track {
+    height:11px;
+    width:100%;
+    background:#edf1e9;
+    border-radius:10px;
+    overflow:hidden;
+  }
+  #cycle .cycle-card-track i {
+    display:block;
+    height:100%;
+    border-radius:10px;
+    background:linear-gradient(90deg,#41855b,#98bba0);
+    min-width:3px;
+  }
+  #cycle .cycle-card-track i.mid { background:linear-gradient(90deg,#b98b4b,#e0bc85); }
+  #cycle .cycle-card-track i.long { background:linear-gradient(90deg,#af715d,#daaaa0); }
+  #cycle .cycle-card-revenue {
+    display:grid;
+    gap:3px;
+    border-radius:9px;
+    padding:12px;
+    background:#f0f6ee;
+  }
+  #cycle .cycle-card-revenue span {
+    color:var(--bv-color-secondary-ink);
+    font-size:12px;
+  }
+  #cycle .cycle-card-revenue strong {
+    color:#20583a;
+    font-size:clamp(20px,6vw,26px);
+    line-height:1.25;
+    font-variant-numeric:tabular-nums;
+    overflow-wrap:anywhere;
+  }
+  #cycle .cycle-card-metrics {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+  }
+  #cycle .cycle-card-metric {
+    display:grid;
+    align-content:start;
+    gap:5px;
+    padding:10px;
+    min-width:0;
+    border-radius:8px;
+    background:#f7f7f2;
+  }
+  #cycle .cycle-card-metric span {
+    color:var(--bv-color-secondary-ink);
+    font-size:12px;
+    line-height:1.35;
+  }
+  #cycle .cycle-card-metric b {
+    color:#2b5d40;
+    font-size:14px;
+    line-height:1.35;
+    overflow-wrap:anywhere;
+    font-variant-numeric:tabular-nums;
+  }
+  #cycle .cycle-card-basis {
+    border:1px solid #e7e2d3;
+    border-radius:7px;
+    padding:9px 10px;
+    color:#755d3d;
+    font-size:12px;
+    line-height:1.4;
+  }
+  #cycle .cycle-cards-total {
+    display:grid;
+    gap:5px;
+    padding:13px;
+    border-radius:11px;
+    background:#ecf3e9;
+    border:1px solid #dce8d7;
+    color:#285d40;
+  }
+  #cycle .cycle-cards-total strong { font-size:14px; }
+  #cycle .cycle-cards-total span {
+    font-size:19px;
+    font-weight:850;
+    overflow-wrap:anywhere;
+    font-variant-numeric:tabular-nums;
+  }
+}
+@media (max-width:359px) {
+  #cycle .cycle-distribution { grid-template-columns:minmax(0,1fr); }
+  #cycle .cycle-group.cycle-long { grid-column:auto; }
+  #cycle .cycle-card-metrics { grid-template-columns:minmax(0,1fr); }
+}
+@media (prefers-reduced-motion:reduce) {
+  #cycle .cycle-card-track i,
+  #cycle .cycle-coverage-track i,
+  #cycle .cycle-period-bar i,
+  #cycle .cycle-group-track span { transition:none!important; }
+}

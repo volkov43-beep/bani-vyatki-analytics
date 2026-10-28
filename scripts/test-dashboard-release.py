@@ -91,8 +91,13 @@ def common(page, route, width):
     chk(page.locator("#bv-primary-nav a[href]").count()==5, f"{route}/{width}: 5 live page links")
     chk(page.locator('#bv-primary-nav a[aria-current="page"]').count()==1,
         f"{route}/{width}: one active navigation item")
-    chk(page.locator('#bv-primary-nav a[aria-current="page"]').get_attribute("href")=="./"+route,
-        f"{route}/{width}: active page link points to wrong route")
+    active_href=page.locator('#bv-primary-nav a[aria-current="page"]').get_attribute("href")
+    allowed_active={"./"+route}
+    if route=="index.html":
+        # The home item is an in-page anchor in the existing approved layout.
+        allowed_active.add("#overview")
+    chk(active_href in allowed_active,
+        f"{route}/{width}: active page link points to wrong route: {active_href}")
     chk(page.locator("#bv-primary-nav .nav-link.pending").count()==1,
         f"{route}/{width}: one disabled future section")
     chk(page.locator("#bv-primary-nav .nav-link.pending").get_attribute("href") is None,

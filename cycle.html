@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#123d2f">
+<title>Цикл сделки | Bani Vyatki Analytics</title>
+<link rel="icon" type="image/webp" href="./assets/logo-bani-vyatki.webp">
+<link rel="stylesheet" href="./styles.css">
+<link rel="stylesheet" href="./cycle.css">
+<script src="./managers-data.js" defer></script>
+<script src="./cycle-data.js" defer></script>
+<script src="./cycle.js" defer></script>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark"><img src="./assets/logo-bani-vyatki.webp" width="52" height="52" alt="Логотип Бани Вятки"></span><span class="brand-text"><b>Бани Вятки</b><small>ANALYTICS</small></span></div>
+    <div class="sidebar-caption">АНАЛИТИКА БИЗНЕСА</div>
+    <nav aria-label="Разделы дашборда">
+      <a class="nav-link" href="./index.html"><span class="nav-icon">▦</span> Общие показатели</a>
+      <a class="nav-link" href="./sources.html"><span class="nav-icon">◈</span> Источники обращений</a>
+      <a class="nav-link" href="./sales.html"><span class="nav-icon">▽</span> Продажи и воронка</a>
+      <a class="nav-link" href="./managers.html"><span class="nav-icon">♙</span> Менеджеры</a>
+      <a class="nav-link current" aria-current="page" href="./cycle.html"><span class="nav-icon">◷</span> Цикл сделки</a>
+      <span class="nav-link pending"><span class="nav-icon">▥</span> Расходы <i>позже</i></span>
+    </nav>
+    <div class="sidebar-bottom">Время от обращения<br><strong>до подписания договора.</strong><small>Прототип · раздел 05</small></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><span>УПРАВЛЕНЧЕСКАЯ АНАЛИТИКА <b>/ ЦИКЛ СДЕЛКИ</b></span><span class="demo-status"><span class="status-dot"></span> Сентябрь 2026 · по данным отчёта</span></header>
+    <main class="cycle-main" id="cycle">
+      <section class="cycle-heading">
+        <div><p class="eyebrow">BANI VYATKI ANALYTICS / 05</p><h1>Цикл сделки</h1><p class="subtitle">Сколько времени проходит от первого обращения клиента до заключения договора — в разрезе источников и менеджеров.</p></div>
+        <div class="cycle-period"><span>Период продаж</span><b>Сентябрь 2026</b><small>По дате договора</small></div>
+      </section>
+
+      <div class="cycle-filter-row">
+        <div class="cycle-filter-label"><span class="filter-kicker">ФИЛЬТРЫ АНАЛИТИКИ</span><span>Все показатели ниже пересчитываются при выборе</span></div>
+        <div class="cycle-filters">
+          <label for="cycleManager">Ответственный
+            <select id="cycleManager">
+              <option value="all">Все менеджеры</option>
+              <option value="danil">Данил Шиляев</option>
+              <option value="ilya">Илья Блинов</option>
+              <option value="german">Герман Рожнев</option>
+              <option value="mikhail">Михаил Русинов</option>
+            </select>
+          </label>
+          <label for="cycleSource">Источник
+            <select id="cycleSource">
+              <option value="all">Все источники</option>
+              <option value="avito">Авито</option>
+              <option value="vk">ВКонтакте</option>
+              <option value="calls">Входящие звонки</option>
+              <option value="other">Прочие</option>
+            </select>
+          </label>
+          <button class="cycle-reset" id="cycleReset" type="button">Сбросить</button>
+        </div>
+      </div>
+
+      <section class="cycle-kpis" aria-label="Длительность сентябрьских продаж">
+        <article class="cycle-kpi">
+          <div class="cycle-kpi-top"><span class="cycle-glyph green">◷</span><span class="cycle-kpi-context" id="cycleAvgCompare">+4,8 дня к июлю–августу</span></div>
+          <h2>Средний цикл продажи</h2><div class="cycle-big" id="cycleAverage">11,8 <small>дня</small></div><p id="cycleAverageHint">По 10 договорам с известными датами</p>
+        </article>
+        <article class="cycle-kpi">
+          <div class="cycle-kpi-top"><span class="cycle-glyph gold">↗</span><span class="cycle-kpi-context">Устойчивее среднего</span></div>
+          <h2>Медианный цикл</h2><div class="cycle-big" id="cycleMedian">8 <small>дней</small></div><p>Половина известных продаж совершена не дольше указанного срока</p>
+        </article>
+        <article class="cycle-kpi">
+          <div class="cycle-kpi-top"><span class="cycle-glyph brown">⚡</span><span class="cycle-kpi-context">До 7 календарных дней</span></div>
+          <h2>Быстрые сделки</h2><div class="cycle-big" id="cycleQuickShare">50,0 <small>%</small></div><p id="cycleQuickNote">5 из 10 договоров с известным циклом</p>
+        </article>
+        <article class="cycle-kpi">
+          <div class="cycle-kpi-top"><span class="cycle-glyph olive">◉</span><span class="cycle-kpi-context">Полнота истории</span></div>
+          <h2>Известна дата обращения</h2><div class="cycle-big" id="cycleCoverage">10 <small>из 13</small></div><div class="cycle-coverage-track"><i id="cycleCoverageFill" style="width:76.9%"></i></div><p id="cycleCoverageHint">76,9% договоров выбранного набора</p>
+        </article>
+      </section>
+
+      <div class="cycle-note">
+        <span class="cycle-note-icon" aria-hidden="true">i</span>
+        <p><strong>Цикл рассчитан не для всех продаж.</strong> Для 10 сентябрьских договоров известна дата первого обращения; ещё 3 договора добавлены позднее без этих дат. Неизвестные циклы не включаем в среднее, медиану и распределение.</p>
+      </div>
+
+      <section class="cycle-upper-grid">
+        <article class="cycle-panel distribution-panel" aria-labelledby="cycleDistributionTitle">
+          <div class="cycle-panel-heading"><div><span class="cycle-eyebrow">СТРУКТУРА ЦИКЛА</span><h2 id="cycleDistributionTitle">Как долго клиенты принимают решение</h2><p>Распределение завершённых продаж с известной датой обращения</p></div><span class="cycle-panel-badge" id="cycleKnownCount">10 договоров</span></div>
+          <div class="cycle-distribution" id="cycleDistribution">
+            <div class="cycle-group cycle-fast"><span>Быстрые</span><small>0–7 дней</small><b>5</b><em>50%</em></div>
+            <div class="cycle-group cycle-mid"><span>Средние</span><small>8–30 дней</small><b>4</b><em>40%</em></div>
+            <div class="cycle-group cycle-long"><span>Долгие</span><small>31+ день</small><b>1</b><em>10%</em></div>
+          </div>
+          <div class="cycle-group-track" id="cycleDistributionTrack" role="img" aria-label="Доли быстрых, средних и долгих сделок"></div>
+          <p class="cycle-panel-footer">Для анализа используем длительность в календарных днях, включая обращения, поступившие в августе.</p>
+        </article>
+
+        <article class="cycle-panel period-panel" aria-labelledby="cyclePeriodTitle">
+          <div class="cycle-panel-heading"><div><span class="cycle-eyebrow">СРАВНЕНИЕ ПЕРИОДОВ</span><h2 id="cyclePeriodTitle">Продажи стали длиннее</h2><p>Июль–август против сентября 2026 года</p></div></div>
+          <div class="cycle-period-grid">
+            <div class="cycle-period-row"><div><span>Средний цикл</span><b>7 дней <small>→</small> 11,8 дня</b></div><div class="cycle-period-bar"><i style="width:59.3%"></i><i class="current" style="width:100%"></i></div></div>
+            <div class="cycle-period-row"><div><span>Медианный цикл</span><b>4 дня <small>→</small> 8 дней</b></div><div class="cycle-period-bar"><i style="width:50%"></i><i class="current" style="width:100%"></i></div></div>
+            <div class="cycle-period-row"><div><span>Быстрые сделки</span><b>85% <small>→</small> 50%</b></div><div class="cycle-period-bar"><i style="width:85%"></i><i class="current" style="width:50%"></i></div></div>
+          </div>
+          <div class="cycle-legend"><span><i class="prior"></i> Июль–август (13)</span><span><i class="current"></i> Сентябрь (10 с известным циклом)</span></div>
+          <p class="cycle-panel-footer">Сравнение из исходного отчёта. Сентябрьская выборка неполная: три новых договора могут изменить показатели.</p>
+        </article>
+      </section>
+
+      <section class="cycle-panel timeline-panel" aria-labelledby="cycleTimelineTitle">
+        <div class="cycle-panel-heading">
+          <div><span class="cycle-eyebrow">ИНДИВИДУАЛЬНЫЕ ЦИКЛЫ</span><h2 id="cycleTimelineTitle">От первого обращения до договора</h2><p>Каждая строка — одна анонимизированная продажа. Чем длиннее полоса, тем дольше длился цикл.</p></div>
+          <div class="cycle-sort-control"><label for="cycleSort">Порядок сортировки</label><select id="cycleSort"><option value="longest">По длительности — сначала долгие</option><option value="shortest">Сначала быстрые</option><option value="date">По дате договора</option></select></div>
+        </div>
+        <div class="cycle-timeline-legend"><span><i class="cycle-dot fast"></i> 0–7 дней</span><span><i class="cycle-dot mid"></i> 8–30 дней</span><span><i class="cycle-dot long"></i> 31+ день</span></div>
+        <div class="cycle-timeline-wrap">
+          <div class="cycle-timeline-head"><span>Договор / ответственный</span><span>Длительность цикла</span><span>Дней</span><span>Сумма</span></div>
+          <div id="cycleTimeline" class="cycle-timeline-body"></div>
+        </div>
+        <div class="cycle-timeline-footer"><span id="cycleTimelineSummary">Показано 10 договоров с известными датами</span><span>Максимальная длительность: <b id="cycleMax">44 дня</b></span></div>
+      </section>
+
+      <section class="cycle-bottom-grid">
+        <article class="cycle-panel breakdown-panel" aria-labelledby="cycleManagersTitle">
+          <div class="cycle-panel-heading"><div><span class="cycle-eyebrow">РАЗРЕЗ ПО СОТРУДНИКАМ</span><h2 id="cycleManagersTitle">Скорость продаж менеджеров</h2><p>Средний цикл только по договорам, для которых известна дата первого обращения</p></div></div>
+          <div id="cycleManagerBars" class="cycle-breakdown"></div>
+          <p class="cycle-panel-footer">Сравнение скорости не учитывает разницу источников, сложности заказов и малый размер выборки.</p>
+        </article>
+        <article class="cycle-panel breakdown-panel" aria-labelledby="cycleSourcesTitle">
+          <div class="cycle-panel-heading"><div><span class="cycle-eyebrow">РАЗРЕЗ ПО КАНАЛАМ</span><h2 id="cycleSourcesTitle">Цикл по источникам</h2><p>Средняя длительность продажи в разрезе рекламных каналов</p></div></div>
+          <div id="cycleSourceBars" class="cycle-breakdown"></div>
+          <p class="cycle-panel-footer">У источников с одним-двумя договорами среднее может сильно меняться при появлении новых данных.</p>
+        </article>
+      </section>
+
+      <section class="cycle-panel missing-panel" aria-labelledby="cycleMissingTitle">
+        <div class="cycle-panel-heading"><div><span class="cycle-eyebrow">НЕПОЛНЫЕ ДАННЫЕ</span><h2 id="cycleMissingTitle">Договоры без даты первого обращения</h2><p>Их продажи учтены в общей выручке, но длительность цикла пока не рассчитывается</p></div><span class="cycle-panel-badge" id="cycleMissingCount">3 договора</span></div>
+        <div class="cycle-table-scroll">
+          <table class="cycle-missing-table">
+            <thead><tr><th scope="col">Дата договора</th><th scope="col">Ответственный</th><th scope="col">Источник</th><th scope="col">Сумма договора</th><th scope="col">Дата первого обращения</th></tr></thead>
+            <tbody id="cycleMissingRows"></tbody><tfoot id="cycleMissingTotal"></tfoot>
+          </table>
+        </div>
+        <p class="cycle-panel-footer">Когда получим нужные даты из CRM, строки автоматически перейдут в аналитический расчёт. Неизвестную дату мы не заменяем датой договора.</p>
+      </section>
+
+      <div class="cycle-insight"><span class="cycle-insight-icon">↗</span><div><strong>Полезное наблюдение по сентябрю</strong><p>Два договора на <b>1 061 000 ₽</b> заключены в сентябре по обращениям, поступившим ещё в августе. Поэтому при оценке маркетинга важно разделять месяц привлечения клиента и месяц продажи.</p></div></div>
+      <div class="cycle-method"><strong>Методика:</strong> цикл продажи = дата заключения договора − дата первого обращения, в календарных днях. Для будущей автоматизации необходимы точные даты обращения и перехода на стадию договора в Битрикс24. В публичном прототипе нет контактов покупателей, API-ключей и истории CRM; активные «зависшие» сделки и время внутри стадий добавим после подключения API.</div>
+      <footer>© Bani Vyatki Analytics · Раздел 05 · Демонстрационный прототип</footer>
+    </main>
+  </div>
+</div>
+</body>
+</html>

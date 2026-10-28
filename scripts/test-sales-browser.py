@@ -34,11 +34,18 @@ def state_metrics(page):
         "reasons":text(page.locator("#reasonsTotal"))
     }
 
+def declension(n):
+    last100=n%100
+    last10=n%10
+    suffix=("обращений" if 11<=last100<=14 or last10 in (0,5,6,7,8,9)
+            else "обращение" if last10==1 else "обращения")
+    return f"{n} {suffix}"
+
 def choose(page,value,total,qualified,excluded,share,reasons):
     page.locator("#pipelineSource").select_option(value)
     actual=state_metrics(page)
-    expected=dict(total=f"{total} обращений",qualified=str(qualified),
-                  excluded=str(excluded),share=share,reasons=f"{reasons} обращений")
+    expected=dict(total=declension(total),qualified=str(qualified),
+                  excluded=str(excluded),share=share,reasons=declension(reasons))
     ensure(actual==expected,f"{value}: wrong CRM stage metrics: {actual}; expected {expected}")
     ensure(page.locator("#stageBars .stage-row").count()==8,
            f"{value}: 8 stage groups required")

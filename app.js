@@ -137,11 +137,65 @@ function buildTable(rows, elementId, name) {
   });
 }
 
+/**
+ * The mobile cards and desktop table share REPORT, format() and performance().
+ * The semantic HTML table is preserved for desktop/tablet users; only its
+ * presentation differs at narrow widths. No duplicate financial fixtures.
+ */
+function buildMobileCards(rows, elementId, scenarioName) {
+  const root = document.getElementById(elementId);
+  root.replaceChildren();
+  const options = [
+    {id:"realistic",label:"Реалистичный план"},
+    {id:"optimistic",label:"Оптимистичный план"}
+  ];
+  rows.forEach(metric => {
+    const card = document.createElement("article");
+    card.className = "plan-mobile-card";
+
+    const header = document.createElement("div");
+    header.className = "plan-mobile-header";
+    const title = createCell("h3", metric.title);
+    const status = performance(metric, scenarioName);
+    const badge = createCell(
+      "span",
+      status.label,
+      "result plan-mobile-status " + status.status
+    );
+    header.append(title, badge);
+
+    const fact = document.createElement("div");
+    fact.className = "plan-mobile-fact";
+    fact.append(
+      createCell("span", "Факт"),
+      createCell("strong", format(REPORT.actual[metric.id], metric.unit))
+    );
+
+    const targets = document.createElement("div");
+    targets.className = "plan-mobile-targets";
+    options.forEach(option => {
+      const target = document.createElement("div");
+      target.className = "plan-mobile-target";
+      if (scenarioName === option.id) target.classList.add("is-selected");
+      target.append(
+        createCell("span", option.label),
+        createCell("strong", format(REPORT.plans[option.id][metric.id], metric.unit))
+      );
+      targets.appendChild(target);
+    });
+
+    card.append(header, fact, targets);
+    root.appendChild(card);
+  });
+}
+
 function render() {
   const name = scenario.value === "optimistic" ? "optimistic":"realistic";
   updateKpis(name);
   buildTable(GLOBAL_METRICS,"company-table",name);
   buildTable(AVITO_METRICS,"avito-table",name);
+  buildMobileCards(GLOBAL_METRICS,"company-cards",name);
+  buildMobileCards(AVITO_METRICS,"avito-cards",name);
   document.querySelectorAll("[data-scenario-label]").forEach(node => {
     node.textContent = name === "realistic" ? "Реалистичный прогноз" : "Оптимистичный прогноз";
   });

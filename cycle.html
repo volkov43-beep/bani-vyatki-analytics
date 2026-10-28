@@ -64,11 +64,11 @@
       <section class="cycle-kpis" aria-label="Длительность сентябрьских продаж">
         <article class="cycle-kpi">
           <div class="cycle-kpi-top"><span class="cycle-glyph green">◷</span><span class="cycle-kpi-context" id="cycleAvgCompare">+4,8 дня к июлю–августу</span></div>
-          <h2>Средний цикл продажи</h2><div class="cycle-big" id="cycleAverage">11,8 <small>дня</small></div><p id="cycleAverageHint">По 10 договорам с известными датами</p>
+          <h2>Средний цикл продажи</h2><div class="cycle-big" id="cycleAverage">11,8 <small>дн.</small></div><p id="cycleAverageHint">По 10 договорам с известными датами</p>
         </article>
         <article class="cycle-kpi">
           <div class="cycle-kpi-top"><span class="cycle-glyph gold">↗</span><span class="cycle-kpi-context">Устойчивее среднего</span></div>
-          <h2>Медианный цикл</h2><div class="cycle-big" id="cycleMedian">8 <small>дней</small></div><p>Половина известных продаж совершена не дольше указанного срока</p>
+          <h2>Медианный цикл</h2><div class="cycle-big" id="cycleMedian">8 <small>дн.</small></div><p>Половина известных продаж совершена не дольше указанного срока</p>
         </article>
         <article class="cycle-kpi">
           <div class="cycle-kpi-top"><span class="cycle-glyph brown">⚡</span><span class="cycle-kpi-context">До 7 календарных дней</span></div>
@@ -105,7 +105,7 @@
             <div class="cycle-period-row"><div><span>Быстрые сделки</span><b>85% <small>→</small> 50%</b></div><div class="cycle-period-bar"><i style="width:85%"></i><i class="current" style="width:50%"></i></div></div>
           </div>
           <div class="cycle-legend"><span><i class="prior"></i> Июль–август (13)</span><span><i class="current"></i> Сентябрь (10 с известным циклом)</span></div>
-          <p class="cycle-panel-footer">Сравнение из исходного отчёта. Сентябрьская выборка неполная: три новых договора могут изменить показатели.</p>
+          <p class="cycle-panel-footer">Сравнение полных исходных периодов (без фильтра по менеджеру/источнику). Сентябрьская выборка неполная: три новых договора могут изменить показатели.</p>
         </article>
       </section>
 
@@ -146,7 +146,7 @@
         <p class="cycle-panel-footer">Когда получим нужные даты из CRM, строки автоматически перейдут в аналитический расчёт. Неизвестную дату мы не заменяем датой договора.</p>
       </section>
 
-      <div class="cycle-insight"><span class="cycle-insight-icon">↗</span><div><strong>Полезное наблюдение по сентябрю</strong><p>Два договора на <b>1 061 000 ₽</b> заключены в сентябре по обращениям, поступившим ещё в августе. Поэтому при оценке маркетинга важно разделять месяц привлечения клиента и месяц продажи.</p></div></div>
+      <div class="cycle-insight"><span class="cycle-insight-icon">↗</span><div><strong id="cycleInsightLabel">2 договора по обращениям до сентября</strong><p id="cycleInsightText">В сентябре заключены 2 договора на 1 061 000 ₽ по клиентам, впервые обратившимся в августе. Месяц привлечения и месяц продажи важно учитывать отдельно.</p></div></div>
       <div class="cycle-method"><strong>Методика:</strong> цикл продажи = дата заключения договора − дата первого обращения, в календарных днях. Для будущей автоматизации необходимы точные даты обращения и перехода на стадию договора в Битрикс24. В публичном прототипе нет контактов покупателей, API-ключей и истории CRM; активные «зависшие» сделки и время внутри стадий добавим после подключения API.</div>
       <footer>© Bani Vyatki Analytics · Раздел 05 · Демонстрационный прототип</footer>
     </main>

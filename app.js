@@ -189,6 +189,17 @@ function buildMobileCards(rows, elementId, scenarioName) {
   });
 }
 
+/** Reveal horizontal scroll hints only when a visible table actually overflows. */
+function updateTableHints() {
+  document.querySelectorAll("#overview .table-scroll").forEach(region => {
+    const hint = region.nextElementSibling;
+    if (!hint || !hint.classList.contains("table-scroll-hint")) return;
+    const visible = window.getComputedStyle(region).display !== "none";
+    const overflowing = visible && region.scrollWidth > region.clientWidth + 2;
+    hint.classList.toggle("is-visible", overflowing);
+  });
+}
+
 function render() {
   const name = scenario.value === "optimistic" ? "optimistic":"realistic";
   updateKpis(name);
@@ -199,8 +210,11 @@ function render() {
   document.querySelectorAll("[data-scenario-label]").forEach(node => {
     node.textContent = name === "realistic" ? "Реалистичный прогноз" : "Оптимистичный прогноз";
   });
+  updateTableHints();
 }
 
 scenario.addEventListener("change",render);
 render();
 document.documentElement.classList.add("bv-overview-ready");
+window.addEventListener("resize", updateTableHints, {passive:true});
+window.addEventListener("load", updateTableHints);

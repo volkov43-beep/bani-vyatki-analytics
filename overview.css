@@ -1,0 +1,450 @@
+/*
+ * Bani Vyatki Analytics · Section 01 responsive layout · iteration 03/08
+ * NeuroLab Web: R01/R02/R03/R12; Q4-05, Q4-06, Q4-09, Q4-12.
+ * Loaded after styles.css and navigation.css, limited to #overview.
+ *
+ * The desktop 4-card arrangement and financial model are preserved.
+ * At <=600 CSS px wide tables are replaced by cards rendered from the
+ * same data as their desktop table, rather than making values unreadable.
+ */
+#overview,
+#overview .page-heading,
+#overview .page-heading > div,
+#overview .controls,
+#overview .card-section,
+#overview .detail-panel,
+#overview .detail-grid {
+  min-width: 0;
+}
+#overview .page-heading .subtitle,
+#overview .panel-note,
+#overview .disclaimer {
+  overflow-wrap: break-word;
+}
+
+/* Use the previously established legible semantic text color. */
+#overview .subtitle,
+#overview .section-hint,
+#overview .mini span,
+#overview .mini small,
+#overview .metric-meta,
+#overview .kpi-foot,
+#overview .panel-top p:last-child,
+#overview .panel-note,
+#overview .source-summary > div:first-child > span {
+  color: var(--bv-color-secondary-ink);
+}
+#overview .kpi h3 {
+  color: var(--bv-color-secondary-ink);
+}
+#overview .table-scroll {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-color: #a9b8a8 #f5f3ec;
+}
+#overview .table-scroll:focus-visible {
+  outline: var(--bv-focus-outline-width) solid var(--bv-color-focus);
+  outline-offset: 2px;
+}
+#overview .detail-panel table {
+  min-width: 595px;
+  font-size: 12px;
+}
+#overview .detail-panel table th,
+#overview .detail-panel table td {
+  padding: 12px 10px;
+}
+#overview .detail-panel thead th {
+  font-size: 11px;
+  color: var(--bv-color-secondary-ink);
+  white-space: nowrap;
+}
+#overview .detail-panel tbody th {
+  min-width: 160px;
+  white-space: normal;
+  line-height: 1.35;
+}
+#overview .detail-panel .result {
+  font-size: 11px;
+}
+#overview .table-scroll-hint,
+#overview .plan-card-list {
+  display: none;
+}
+#overview .table-scroll-hint {
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--bv-color-secondary-ink);
+  line-height: 1.4;
+  margin: 9px 0 0;
+}
+#overview .source-pills > span {
+  color: #365943;
+}
+#overview .disclaimer {
+  color: #68593f;
+  line-height: 1.65;
+}
+
+/* Two half-width tables cannot display five complete columns at 1440px.
+   Stack them until their side-by-side minimum fits without clipping. */
+@media (min-width: 1141px) and (max-width: 1599px) {
+  #overview .detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Content-first tablet layout: financial blocks stack, labels stay visible. */
+@media (max-width: 1140px) {
+  #overview .page-heading {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  #overview .page-heading > div:first-child {
+    flex: 1 1 330px;
+  }
+  #overview .controls {
+    flex: 0 1 auto;
+  }
+  #overview .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #overview .big-number {
+    font-size: clamp(27px, 3.4vw, 36px);
+  }
+  #overview .detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* This hint is revealed only when JavaScript measures actual table overflow. */
+#overview .table-scroll-hint.is-visible {
+  display: block;
+}
+
+@media (max-width: 720px) {
+  #overview .page-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    margin-bottom: 19px;
+  }
+  #overview .page-heading h1 {
+    font-size: clamp(30px, 7vw, 37px);
+    letter-spacing: -.035em;
+  }
+  #overview .page-heading .subtitle {
+    font-size: 13px;
+    line-height: 1.55;
+    max-width: none;
+  }
+  #overview .controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+    width: 100%;
+  }
+  #overview .controls .month,
+  #overview .controls label {
+    width: 100%;
+    min-width: 0;
+    min-height: 70px;
+    padding: 10px 13px;
+    white-space: normal;
+    align-content: center;
+  }
+  #overview .controls .month > span,
+  #overview .controls label {
+    font-size: 12px;
+    color: var(--bv-color-secondary-ink);
+  }
+  #overview .controls .month b,
+  #overview .controls label select {
+    font-size: 14px;
+    font-weight: 780;
+  }
+  #overview .controls label select {
+    display: block;
+    min-width: 0;
+    width: 100%;
+    min-height: 44px;
+    margin-top: 2px;
+    padding: 4px 20px 4px 0;
+    color: #234b36;
+    cursor: pointer;
+  }
+  #overview .card-section {
+    padding: 15px;
+    border-radius: 16px;
+  }
+  #overview .section-title {
+    margin-bottom: 16px;
+  }
+  #overview .section-title h2 {
+    font-size: 18px;
+  }
+  #overview .kpi-grid {
+    gap: 10px;
+  }
+  #overview .kpi {
+    padding: 15px;
+    min-height: 214px;
+    border-radius: 13px;
+  }
+  #overview .kpi-head {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  #overview .kpi .glyph {
+    height: 38px;
+    width: 38px;
+    font-size: 22px;
+  }
+  #overview .kpi .trend {
+    font-size: 11px;
+    line-height: 1.35;
+    padding: 5px 8px;
+    white-space: normal;
+    text-align: right;
+  }
+  #overview .kpi h3 {
+    font-size: 13px;
+    min-height: 0;
+    margin-bottom: 6px;
+    line-height: 1.45;
+  }
+  #overview .big-number {
+    font-size: clamp(25px, 5.1vw, 33px);
+    line-height: 1.2;
+    letter-spacing: -.045em;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  #overview .metric-meta {
+    font-size: 12px;
+    gap: 10px;
+    padding-top: 16px;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+  #overview .metric-meta strong {
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  #overview .kpi-foot {
+    font-size: 12px;
+    margin-top: 10px;
+    line-height: 1.4;
+    min-height: 0;
+  }
+  #overview .minikpis {
+    margin-top: 16px;
+    padding-top: 16px;
+    gap: 9px;
+  }
+  #overview .mini {
+    padding: 12px 14px;
+  }
+  #overview .mini span,
+  #overview .mini small {
+    font-size: 12px;
+  }
+  #overview .mini b {
+    font-size: 21px;
+  }
+  #overview .detail-grid {
+    margin-top: 15px;
+    gap: 13px;
+  }
+  #overview .detail-panel {
+    padding: 16px;
+    border-radius: 14px;
+  }
+  #overview .panel-top {
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  #overview .panel-top > div:first-child {
+    flex: 1 1 180px;
+    min-width: 0;
+  }
+  #overview .panel-top h2 {
+    font-size: 18px;
+    line-height: 1.35;
+  }
+  #overview .panel-top p:last-child {
+    font-size: 12px;
+  }
+  #overview .scenario-pill {
+    font-size: 11px;
+    padding: 7px 10px;
+    white-space: normal;
+    text-align: center;
+  }
+  #overview .panel-note,
+  #overview .disclaimer,
+  #overview .source-summary > div:first-child > span {
+    font-size: 12px;
+  }
+  #overview .source-summary {
+    padding: 16px;
+    border-radius: 14px;
+    gap: 13px;
+  }
+  #overview .source-summary h2 {
+    font-size: 17px;
+  }
+  #overview .source-pills {
+    width: 100%;
+    gap: 8px;
+  }
+  #overview .source-pills > span {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  /* For touch users the two plan scenarios and fact are all visible at once. */
+  #overview .controls {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #overview .controls .month,
+  #overview .controls label {
+    min-height: 64px;
+  }
+  #overview .kpi-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+  #overview .kpi {
+    min-height: 0;
+    padding: 16px;
+  }
+  #overview .big-number {
+    font-size: clamp(30px, 8vw, 38px);
+    overflow-wrap: normal;
+  }
+  #overview .metric-meta {
+    margin-top: 8px;
+  }
+  #overview .minikpis {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* Progressive enhancement: no working JS -> retain scrollable table.
+     The card-only layout activates after app.js has rendered both versions. */
+  .bv-overview-ready #overview .detail-panel .table-scroll {
+    display: none;
+  }
+  #overview .table-scroll-hint {
+    display: none;
+  }
+  .bv-overview-ready #overview .plan-card-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+  #overview .plan-mobile-card {
+    background: #fff;
+    border: 1px solid var(--bv-color-border);
+    border-radius: 12px;
+    padding: 15px;
+    min-width: 0;
+    display: grid;
+    gap: 13px;
+    box-shadow: 0 3px 13px rgba(25, 50, 31, .035);
+  }
+  #overview .plan-mobile-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 0;
+  }
+  #overview .plan-mobile-header h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.45;
+    color: #244d37;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  #overview .plan-mobile-status {
+    flex: 0 1 auto;
+    font-size: 11px;
+    line-height: 1.3;
+    text-align: center;
+    white-space: normal;
+    max-width: 48%;
+    padding: 6px 8px;
+  }
+  #overview .plan-mobile-fact {
+    border-radius: 9px;
+    background: #f1f5ef;
+    border: 1px solid #e0e9de;
+    padding: 12px;
+    display: grid;
+    gap: 3px;
+  }
+  #overview .plan-mobile-fact span,
+  #overview .plan-mobile-target span {
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--bv-color-secondary-ink);
+  }
+  #overview .plan-mobile-fact strong {
+    color: #1b4e32;
+    font-size: clamp(19px, 5.8vw, 25px);
+    line-height: 1.2;
+    letter-spacing: -.02em;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+  #overview .plan-mobile-targets {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  #overview .plan-mobile-target {
+    min-width: 0;
+    display: grid;
+    align-content: center;
+    gap: 6px;
+    padding: 10px;
+    background: #f8f7f2;
+    border: 1px solid #eeeae1;
+    border-radius: 9px;
+  }
+  #overview .plan-mobile-target strong {
+    font-size: clamp(13px, 3.75vw, 16px);
+    line-height: 1.3;
+    color: #45614e;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+  #overview .plan-mobile-target.is-selected {
+    background: #faf0dc;
+    border-color: #dcc69b;
+  }
+  #overview .plan-mobile-target.is-selected strong {
+    color: #7a572e;
+  }
+  #overview .plan-mobile-target.is-selected span {
+    color: #785e37;
+    font-weight: 750;
+  }
+}
+
+/* Controls continue to be usable when zoom increases: no fixed height. */
+@media (prefers-reduced-motion: reduce) {
+  #overview .progress-fill {
+    transition: none !important;
+  }
+}

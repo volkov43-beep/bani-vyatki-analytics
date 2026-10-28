@@ -1,0 +1,56 @@
+name: Responsive overview browser QA
+
+on:
+  pull_request:
+    paths:
+      - "index.html"
+      - "overview.css"
+      - "app.js"
+      - "styles.css"
+      - "design-system.css"
+      - "navigation.css"
+      - "scripts/test-overview-browser.py"
+      - ".github/workflows/responsive-overview.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  overview:
+    name: KPI cards and plan tables across 15 screen widths
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - name: Checkout PR contents
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Check JavaScript syntax and September data
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check app.js
+          node scripts/check-responsive-foundation.mjs
+          node scripts/check-navigation.mjs
+      - name: Install pinned browser test tool
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv .venv
+          .venv/bin/python -m pip install --disable-pip-version-check playwright==1.56.0
+          .venv/bin/python -m playwright install --with-deps chromium
+      - name: Test actual pages and generate screenshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/bv-overview-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" || true' EXIT
+          .venv/bin/python scripts/test-overview-browser.py
+      - name: Upload overview screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: overview-iteration-03-screenshots
+          path: artifacts/overview/*.png
+          retention-days: 7
+          if-no-files-found: warn

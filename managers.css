@@ -122,3 +122,47 @@
 
 /* Кнопки строк диаграммы не наследуют браузерные границы и заливки. */
 .mgr-bar-line{width:100%;background:transparent;border:0;padding:4px 0;text-align:left;font:inherit}
+
+/* Обновление октября: все 13 договоров атрибутированы; финансы и маржа по сделкам. */
+.mgr-notice-success{background:#edf5ec;border-color:#d5e6d5}
+.mgr-notice-success .mgr-notice-symbol{border-color:#55966e;background:#e2f0e2;color:#287048}
+.mgr-notice-success strong{color:#286245}
+.mgr-notice-success p{color:#718874}
+.mgr-revenue-bars{display:grid;gap:17px;margin-top:22px}
+.mgr-revenue-row{display:grid;gap:7px}
+.mgr-revenue-head,.mgr-revenue-foot{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mgr-revenue-head span{color:#56755f;font-size:12px;font-weight:760}
+.mgr-revenue-head b{color:#244d36;font-size:13px;letter-spacing:-.015em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.mgr-revenue-track{height:11px;border-radius:15px;background:#ecf0e8;overflow:hidden}
+.mgr-revenue-track i{display:block;height:100%;border-radius:15px;background:linear-gradient(90deg,#226343,#68a47c);transition:width .18s ease}
+.mgr-revenue-foot span{color:#98a397;font-size:10px}
+.mgr-revenue-foot strong{color:#528463;font-size:11px}
+.mgr-revenue-total{border-top:1px solid #ecede5;margin-top:21px;padding-top:16px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.mgr-revenue-total span{font-size:11px;color:#7a8d7f}
+.mgr-revenue-total strong{font-size:20px;color:#1e5135;white-space:nowrap;font-variant-numeric:tabular-nums}
+.mgr-table{min-width:1120px}
+.mgr-table thead th:first-child{text-align:left}
+.mgr-table .mgr-financial-share{font-weight:800;color:#537a56}
+.mgr-table tfoot tr{background:#edf4ea}
+.mgr-table tfoot th,.mgr-table tfoot td{border-top:1px solid #d8e3d7;color:#245637;font-size:11px;font-weight:850}
+.mgr-table tfoot th{text-align:left}
+.mgr-margin-missing{color:#a7aca4;font-weight:700;display:inline-block}
+.mgr-deals-panel{margin-bottom:18px}
+.mgr-deals-table{border-collapse:collapse;width:100%;min-width:750px;white-space:nowrap;font-size:11px}
+.mgr-deals-table th,.mgr-deals-table td{padding:12px 15px;border-bottom:1px solid #f0eee9;text-align:left;font-variant-numeric:tabular-nums}
+.mgr-deals-table th:nth-child(4),.mgr-deals-table td:nth-child(4),.mgr-deals-table th:nth-child(5),.mgr-deals-table td:nth-child(5){text-align:right}
+.mgr-deals-table thead th{background:#f5f3ec;color:#829383;font-size:10px;font-weight:750}
+.mgr-deals-table tbody tr:hover{background:#faf9f5}
+.mgr-deals-table .mgr-deal-date{font-weight:750;color:#587760}
+.mgr-deals-table .known-sales{font-weight:850;color:#245637}
+.mgr-deals-table tfoot tr{background:#edf4ea}
+.mgr-deals-table tfoot th,.mgr-deals-table tfoot td{font-weight:850;color:#245637;border-top:1px solid #dbe4d8}
+.mgr-deals-table .mgr-deal-empty{color:#95a196;text-align:center;padding:26px 15px}
+.mgr-margin-placeholder{display:inline-block;border:1px dashed #d9caae;background:#faf6ed;border-radius:5px;padding:4px 10px;color:#968466;font-size:10px;font-weight:700}
+.mgr-deals-note{background:#f8f5ee;border:1px solid #ede2ce;border-radius:9px;padding:12px 14px;font-size:11px;color:#8d806b;line-height:1.65;margin-top:14px}
+.mgr-deals-note strong{color:#735a38}
+@media(max-width:720px){
+  .mgr-revenue-head b{font-size:12px}
+  .mgr-revenue-total strong{font-size:17px}
+  .mgr-deals-note{font-size:10px}
+}

@@ -11,6 +11,10 @@
   const oneDecimal=new Intl.NumberFormat("ru-RU",{minimumFractionDigits:1,maximumFractionDigits:1});
   const money=n=>rubles.format(n)+" ₽";
   const pct=n=>oneDecimal.format(n)+"%";
+  const dealLabel=n=>{
+    const tens=n%100,units=n%10;
+    return n+" "+(tens>=11&&tens<=14?"договоров":units===1?"договор":units>=2&&units<=4?"договора":"договоров");
+  };
   const sourceIds=D.sources.map(s=>s.id);
   const state={manager:"all",source:"all"};
   const sumObject=o=>Object.values(o).reduce((x,y)=>x+y,0);
@@ -101,7 +105,7 @@
       const fill=make("i");fill.style.width=share+"%";
       track.appendChild(fill);
       const foot=make("div","mgr-revenue-foot");
-      foot.append(make("span","",row.deals+" "+(row.deals===1?"договор":row.deals<5?"договора":"договоров")),make("strong","",pct(share)));
+      foot.append(make("span","",dealLabel(row.deals)),make("strong","",pct(share)));
       wrapper.append(head,track,foot);root.appendChild(wrapper);
     }
     $("mgrRevenueTotal").textContent=money(total);
@@ -153,7 +157,7 @@
   function dealRows(){
     const group=selectedDeals();
     const root=$("mgrDeals");root.replaceChildren();
-    $("mgrDealsCount").textContent=group.length+" "+(group.length===1?"договор":group.length<5?"договора":"договоров");
+    $("mgrDealsCount").textContent=dealLabel(group.length);
     const sourceNames=Object.fromEntries(D.sources.map(s=>[s.id,s.title]));
     const managerNames=Object.fromEntries(D.managers.map(m=>[m.id,m.name]));
     if(!group.length){

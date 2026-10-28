@@ -10,21 +10,28 @@
 <link rel="stylesheet" href="./design-system.css">
 <link rel="stylesheet" href="./styles.css">
 <link rel="stylesheet" href="./sales.css">
+<link rel="stylesheet" href="./navigation.css">
 <script src="./sales-data.js" defer></script>
 <script src="./sales.js" defer></script>
+<script src="./navigation.js" defer></script>
 </head>
 <body>
 <div class="app-shell">
   <aside class="sidebar">
-    <div class="brand"><span class="brand-mark"><img src="./assets/logo-bani-vyatki.webp" alt="Логотип Бани Вятки" width="52" height="52"></span><span class="brand-text"><b>Бани Вятки</b><small>ANALYTICS</small></span></div>
+    <div class="brand"><span class="brand-mark"><img src="./assets/logo-bani-vyatki.webp" alt="Логотип Бани Вятки" width="52" height="52"></span><span class="brand-text"><b>Бани Вятки</b><small>ANALYTICS</small></span>
+      <button class="bv-menu-toggle" type="button" aria-controls="bv-primary-nav" aria-expanded="false" aria-label="Открыть меню разделов">
+        <span class="bv-menu-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="bv-menu-toggle-text" aria-hidden="true">Меню</span>
+      </button>
+    </div>
     <div class="sidebar-caption">АНАЛИТИКА БИЗНЕСА</div>
-    <nav aria-label="Разделы дашборда">
-      <a class="nav-link" href="./index.html"><span class="nav-icon">▦</span> Общие показатели</a>
-      <a class="nav-link" href="./sources.html"><span class="nav-icon">◈</span> Источники обращений</a>
-      <a class="nav-link current" aria-current="page" href="./sales.html"><span class="nav-icon">▽</span> Продажи и воронка</a>
-      <a class="nav-link" href="./managers.html"><span class="nav-icon">♙</span> Менеджеры</a>
-      <a class="nav-link" href="./cycle.html"><span class="nav-icon">◷</span> Цикл сделки</a>
-      <span class="nav-link pending"><span class="nav-icon">▥</span> Расходы <i>позже</i></span>
+    <nav id="bv-primary-nav" aria-label="Разделы дашборда">
+      <a class="nav-link" href="./index.html" aria-label="Общие показатели" data-bv-label="Общие показатели"><span class="nav-icon" aria-hidden="true">▦</span><span class="bv-nav-label">Общие показатели</span></a>
+      <a class="nav-link" href="./sources.html" aria-label="Источники обращений" data-bv-label="Источники обращений"><span class="nav-icon" aria-hidden="true">◈</span><span class="bv-nav-label">Источники обращений</span></a>
+      <a class="nav-link current" aria-current="page" href="./sales.html" aria-label="Продажи и воронка" data-bv-label="Продажи и воронка"><span class="nav-icon" aria-hidden="true">▽</span><span class="bv-nav-label">Продажи и воронка</span></a>
+      <a class="nav-link" href="./managers.html" aria-label="Менеджеры" data-bv-label="Менеджеры"><span class="nav-icon" aria-hidden="true">♙</span><span class="bv-nav-label">Менеджеры</span></a>
+      <a class="nav-link" href="./cycle.html" aria-label="Цикл сделки" data-bv-label="Цикл сделки"><span class="nav-icon" aria-hidden="true">◷</span><span class="bv-nav-label">Цикл сделки</span></a>
+      <span class="nav-link pending" data-bv-label="Расходы · позже" aria-label="Раздел «Расходы» пока не готов"><span class="nav-icon" aria-hidden="true">▥</span><span class="bv-nav-label">Расходы</span> <i>позже</i></span>
     </nav>
     <div class="sidebar-bottom">От первого обращения<br><strong>до заключения договора.</strong><small>Прототип · раздел 03</small></div>
   </aside>

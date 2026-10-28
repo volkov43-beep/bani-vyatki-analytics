@@ -8,6 +8,7 @@ on:
       - "*.js"
       - "scripts/test-dashboard-release.py"
       - "scripts/check-responsive-foundation.mjs"
+      - "scripts/check-public-dashboard.mjs"
       - "scripts/check-navigation.mjs"
       - ".github/workflows/full-dashboard-qa.yml"
   push:
@@ -41,6 +42,7 @@ jobs:
           set -euo pipefail
           node scripts/check-responsive-foundation.mjs
           node scripts/check-navigation.mjs
+          node scripts/check-public-dashboard.mjs
           for name in app.js sources.js sales.js managers.js cycle.js navigation.js; do
             node --check "$name"
           done

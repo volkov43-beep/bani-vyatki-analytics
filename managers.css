@@ -98,7 +98,7 @@
 .mgr-plan-message strong{color:#316b45}
 .mgr-method{border:1px solid #e4dac5;background:#f5f0e6;border-radius:12px;color:#8a7e66;font-size:11px;padding:14px 17px;line-height:1.65;margin-top:18px}
 .mgr-method strong{color:#715c38}
-@media(max-width:1450px){
+@media(max-width:1460px){
 .mgr-main{padding:28px var(--bv-gutter-compact)}.mgr-kpi{padding:16px 13px}
 .mgr-kpi strong{font-size:clamp(24px,2vw,30px)}.mgr-panel{padding:20px}
 }

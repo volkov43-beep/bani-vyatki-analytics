@@ -163,7 +163,7 @@ with sync_playwright() as pw:
             verify(page,"all",width,13,"11,5","9","46,2","100%","5 643 000 ₽")
 
             page.locator("#cycleSource").select_option("avito")
-            verify(page,"avito",width,8,"13,1","9,5","50","100%","3 349 000 ₽")
+            verify(page,"avito",width,8,"13,1","9,5","37,5","100%","3 349 000 ₽")
             page.locator("#cycleReset").click()
 
             page.locator("#cycleSource").select_option("other")

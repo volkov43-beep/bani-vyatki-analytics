@@ -48,6 +48,8 @@ def verify(page,context,width,num_deals,avg,median,quick,coverage,revenue):
        f"{width}/{context}: mobile date cards")
     ok(total_cards(page,"#cycleTimelineCards")==num_deals,
        f"{width}/{context}: mobile timeline cards")
+    ok(page.locator("#cycleTimelineCards .cycle-timeline-compact").count()==num_deals,
+       f"{width}/{context}: compact timeline rows must preserve date and revenue")
     ok(txt(page.locator("#cycleMissingTotal tr td").first)==revenue,
        f"{width}/{context}: source date table sum")
     if num_deals:

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#123d2f">
+<title>Результативность менеджеров | Bani Vyatki Analytics</title>
+<link rel="icon" type="image/webp" href="./assets/logo-bani-vyatki.webp">
+<link rel="stylesheet" href="./styles.css">
+<link rel="stylesheet" href="./managers.css">
+<script src="./managers-data.js" defer></script>
+<script src="./managers.js" defer></script>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark"><img src="./assets/logo-bani-vyatki.webp" alt="Логотип Бани Вятки" width="52" height="52"></span><span class="brand-text"><b>Бани Вятки</b><small>ANALYTICS</small></span></div>
+    <div class="sidebar-caption">АНАЛИТИКА БИЗНЕСА</div>
+    <nav aria-label="Разделы дашборда">
+      <a class="nav-link" href="./index.html"><span class="nav-icon">▦</span> Общие показатели</a>
+      <a class="nav-link" href="./sources.html"><span class="nav-icon">◈</span> Источники обращений</a>
+      <a class="nav-link" href="./sales.html"><span class="nav-icon">▽</span> Продажи и воронка</a>
+      <a class="nav-link current" aria-current="page" href="./managers.html"><span class="nav-icon">♙</span> Менеджеры</a>
+      <span class="nav-link pending"><span class="nav-icon">◷</span> Цикл сделки <i>позже</i></span>
+      <span class="nav-link pending"><span class="nav-icon">▥</span> Расходы <i>позже</i></span>
+    </nav>
+    <div class="sidebar-bottom">Команда продаж<br><strong>в цифрах и динамике.</strong><small>Прототип · раздел 04</small></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><span>УПРАВЛЕНЧЕСКАЯ АНАЛИТИКА <b>/ РЕЗУЛЬТАТИВНОСТЬ МЕНЕДЖЕРОВ</b></span><span class="demo-status"><span class="status-dot"></span> Отчёт + срез CRM · сентябрь 2026</span></header>
+    <main id="managerDashboard" class="mgr-main">
+      <section class="mgr-heading">
+        <div><p class="eyebrow">BANI VYATKI ANALYTICS / 04</p><h1>Результативность менеджеров</h1><p class="subtitle">Нагрузка, выручка по договорам и качество обращений по сотрудникам. Маржа по каждой сделке появится после заполнения полей в CRM.</p></div>
+        <div class="mgr-month"><span>Период отчёта</span><b>Сентябрь 2026</b></div>
+      </section>
+
+      <section class="mgr-kpis" aria-label="Показатели всей компании за сентябрь">
+        <article class="mgr-kpi">
+          <div class="mgr-kpi-top"><span class="mgr-icon green">♧</span><span class="mgr-micro">Срез CRM</span></div>
+          <h2>Обращения</h2><strong>222</strong><p>Сделки, созданные в сентябре</p>
+        </article>
+        <article class="mgr-kpi">
+          <div class="mgr-kpi-top"><span class="mgr-icon olive">✓</span><span class="mgr-micro">55,0% от всех</span></div>
+          <h2>Целевые обращения</h2><strong>122</strong><p>По методике маркетингового отчёта</p>
+        </article>
+        <article class="mgr-kpi">
+          <div class="mgr-kpi-top"><span class="mgr-icon gold">▤</span><span class="mgr-micro">13 из 13 распределены</span></div>
+          <h2>Договоры за месяц</h2><strong>13 <small>шт.</small></strong><p>По дате заключения договора</p>
+        </article>
+        <article class="mgr-kpi">
+          <div class="mgr-kpi-top"><span class="mgr-icon brown">₽</span><span class="mgr-micro">13 договоров</span></div>
+          <h2>Выручка по договорам</h2><strong>5 643 000 <small>₽</small></strong><p>По заключённым договорам, не по оплатам</p>
+        </article>
+      </section>
+
+      <div class="mgr-notice mgr-notice-success" role="note">
+        <span class="mgr-notice-symbol">✓</span>
+        <div><strong>Все сентябрьские продажи распределены по менеджерам</strong><p>Добавлены три договора от 2, 4 и 5 сентября на 1 325 000 ₽. Теперь персональная выручка по 13 договорам в сумме составляет 5 643 000 ₽. Данные маржи по каждой сделке пока отсутствуют.</p></div>
+      </div>
+
+      <section class="mgr-tools" aria-label="Фильтрация данных менеджеров">
+        <div><span class="mgr-tools-label">ДЕТАЛИЗАЦИЯ CRM</span><h2>Обращения и результаты команды</h2></div>
+        <div class="mgr-tools-controls">
+          <label for="mgrSource">Источник<select id="mgrSource">
+            <option value="all">Все источники</option>
+            <option value="avito">Авито</option>
+            <option value="vk">ВКонтакте</option>
+            <option value="calls">Входящие звонки</option>
+            <option value="other">Прочие</option>
+          </select></label>
+          <label for="mgrPerson">Ответственный<select id="mgrPerson">
+            <option value="all">Все сотрудники</option>
+            <option value="german">Герман Рожнев</option>
+            <option value="danil">Данил Шиляев</option>
+            <option value="ilya">Илья Блинов</option>
+            <option value="mikhail">Михаил Русинов</option>
+          </select></label>
+        </div>
+      </section>
+
+      <section class="mgr-analytics-grid">
+        <article class="mgr-panel mgr-volume-panel" aria-labelledby="mgrVolumeTitle">
+          <div class="mgr-panel-heading"><div><span class="mgr-kicker">РАСПРЕДЕЛЕНИЕ НАГРУЗКИ</span><h2 id="mgrVolumeTitle">Обращения у менеджеров</h2><p>Количество заявок и целевых обращений по текущему ответственному</p></div><div class="mgr-chart-legend"><span><i class="dot-total"></i> Все</span><span><i class="dot-target"></i> Целевые</span></div></div>
+          <div class="mgr-bar-chart" id="mgrBars" aria-live="polite"></div>
+          <p class="mgr-panel-note">Ответственный взят из выгрузки CRM на дату экспорта. Это не обязательно сотрудник, который первоначально получил обращение.</p>
+        </article>
+
+        <article class="mgr-panel mgr-attribution-panel" aria-labelledby="mgrCoverageTitle">
+          <div class="mgr-panel-heading"><div><span class="mgr-kicker">ФИНАНСОВЫЕ РЕЗУЛЬТАТЫ</span><h2 id="mgrCoverageTitle">Выручка по менеджерам</h2><p>Кто сколько принёс компании по договорам сентября</p></div></div>
+          <div id="mgrRevenueBars" class="mgr-revenue-bars" aria-live="polite"></div>
+          <div class="mgr-revenue-total"><span>Общая выручка по выбранным фильтрам</span><strong id="mgrRevenueTotal">5 643 000 ₽</strong></div>
+          <p class="mgr-panel-note">Выручка — сумма заключённых договоров. Поступления денег на счёт и маржа учитываются отдельно.</p>
+        </article>
+      </section>
+
+      <section class="mgr-panel mgr-table-panel" aria-labelledby="mgrTableTitle">
+        <div class="mgr-panel-heading"><div><span class="mgr-kicker">СОТРУДНИКИ</span><h2 id="mgrTableTitle">Вклад менеджеров в выручку</h2><p>Все 13 договоров сентября, включая три добавленных; обращения — отдельная когорта CRM</p></div><span id="mgrTableCount" class="mgr-panel-badge">4 сотрудника</span></div>
+        <div class="mgr-table-scroll"><table class="mgr-table">
+          <thead><tr>
+            <th scope="col">Ответственный</th><th scope="col">Договоры</th><th scope="col">Выручка по договорам</th><th scope="col">Доля выручки</th><th scope="col">Средний чек</th><th scope="col">Маржа, ₽</th><th scope="col">Обращения</th><th scope="col">Целевые</th><th scope="col">Доля целевых</th>
+          </tr></thead>
+          <tbody id="mgrTable"></tbody><tfoot id="mgrTableTotal"></tfoot>
+        </table></div>
+        <p class="mgr-panel-note">Договоры и выручка — результаты по дате заключения в сентябре. Обращения и целевые — сделки, созданные в сентябре. Это разные когорты, поэтому персональную конверсию между ними пока не считаем. «—» в марже означает отсутствие данных, а не нулевую прибыль.</p>
+      </section>
+
+      <section class="mgr-panel mgr-deals-panel" aria-labelledby="mgrDealsTitle">
+        <div class="mgr-panel-heading">
+          <div><span class="mgr-kicker">ДЕТАЛИЗАЦИЯ ПРОДАЖ</span><h2 id="mgrDealsTitle">Договоры сентября — по каждой сделке</h2><p>Дата, ответственный, источник, сумма продажи и поле будущего учёта маржи</p></div>
+          <span class="mgr-panel-badge" id="mgrDealsCount">13 договоров</span>
+        </div>
+        <div class="mgr-table-scroll">
+          <table class="mgr-deals-table">
+            <thead><tr><th scope="col">Дата договора</th><th scope="col">Менеджер</th><th scope="col">Источник</th><th scope="col">Выручка по договору, ₽</th><th scope="col">Маржа по сделке, ₽</th></tr></thead>
+            <tbody id="mgrDeals"></tbody>
+            <tfoot id="mgrDealsTotals"></tfoot>
+          </table>
+        </div>
+        <div class="mgr-deals-note"><strong>Маржа по сделке:</strong> поле пока пустое. После настройки Битрикс24 менеджеры будут заполнять его в карточке сделки, а наш дашборд будет автоматически суммировать маржу по каждому сотруднику. Здесь сохранение значений пока не реализовано.</div>
+        <p class="mgr-panel-note">Покупатели обезличены: в публичной демонстрации нет их имён, телефонов и идентификаторов CRM. Фильтры по менеджеру и источнику сверху действуют также на эту таблицу.</p>
+      </section>
+
+      <section class="mgr-bottom-grid">
+        <article class="mgr-panel mgr-heat-panel" aria-labelledby="mgrMatrixTitle">
+          <div class="mgr-panel-heading"><div><span class="mgr-kicker">ИСТОЧНИКИ И НАГРУЗКА</span><h2 id="mgrMatrixTitle">Обращения по каналам</h2><p>Как распределяются сентябрьские обращения между менеджерами</p></div></div>
+          <div class="mgr-matrix-scroll"><table class="mgr-matrix"><thead><tr><th scope="col">Сотрудник</th><th scope="col">Авито</th><th scope="col">ВКонтакте</th><th scope="col">Звонки</th><th scope="col">Прочие</th></tr></thead><tbody id="mgrMatrix"></tbody></table></div>
+          <p class="mgr-panel-note">Числа в матрице — созданные сделки, закреплённые за сотрудником на момент выгрузки.</p>
+        </article>
+        <article class="mgr-panel mgr-plan-panel" aria-labelledby="mgrPlanTitle">
+          <div class="mgr-panel-heading"><div><span class="mgr-kicker">ПРЕДВАРИТЕЛЬНЫЕ ПЛАНЫ</span><h2 id="mgrPlanTitle">План по марже, ₽</h2><p>Уточнённые значения, которые ты сообщил после отчёта</p></div></div>
+          <div id="mgrPlans" class="mgr-plan-rows"></div>
+          <div class="mgr-plan-message"><strong>Маржа компании за сентябрь — 1 240 000 ₽.</strong> Маржа 13 отдельных сделок в исходных данных не заполнена. В таблице договоров поле предусмотрено; персональные фактические показатели и выполнение планов появятся после получения значений из Битрикс24.</div>
+          <p class="mgr-panel-note">План 500 000 ₽ ещё не привязан к конкретному сотруднику. Планы Ильи и Михаила необходимо сверить с их учётными записями в CRM. Сумма показанных персональных планов не равна общему плану компании.</p>
+        </article>
+      </section>
+
+      <div class="mgr-method"><strong>Методика:</strong> выручка менеджера = сумма договоров, заключённых в сентябре под его ответственностью; доля выручки считается относительно выбранных фильтров. Качество обращений = целевые / всего созданных обращений. Маржа по каждому договору пока отсутствует и не заменяется общей маржой компании. История переходов появится после интеграции с Битрикс24.</div>
+      <footer>© Bani Vyatki Analytics · Раздел 04 · Статический прототип для согласования</footer>
+    </main>
+  </div>
+</div>
+</body>
+</html>

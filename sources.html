@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#123d2f">
+<title>Источники обращений | Bani Vyatki Analytics</title>
+<link rel="icon" type="image/webp" href="./assets/logo-bani-vyatki.webp">
+<link rel="stylesheet" href="./styles.css">
+<link rel="stylesheet" href="./sources.css">
+<script src="./sources-data.js" defer></script>
+<script src="./sources.js" defer></script>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark"><img src="./assets/logo-bani-vyatki.webp" width="52" height="52" alt="Логотип Бани Вятки"></span><span class="brand-text"><b>Бани Вятки</b><small>ANALYTICS</small></span></div>
+    <div class="sidebar-caption">АНАЛИТИКА БИЗНЕСА</div>
+    <nav aria-label="Разделы дашборда">
+      <a class="nav-link" href="./index.html"><span class="nav-icon">▦</span> Общие показатели</a>
+      <a class="nav-link current" href="./sources.html" aria-current="page"><span class="nav-icon">◈</span> Источники обращений</a>
+      <span class="nav-link pending"><span class="nav-icon">▽</span> Воронка продаж <i>позже</i></span>
+      <span class="nav-link pending"><span class="nav-icon">♙</span> Менеджеры <i>позже</i></span>
+      <span class="nav-link pending"><span class="nav-icon">◷</span> Цикл сделки <i>позже</i></span>
+      <span class="nav-link pending"><span class="nav-icon">▥</span> Расходы <i>позже</i></span>
+    </nav>
+    <div class="sidebar-bottom">Знать, откуда приходят.<br><strong>Понимать, кто покупает.</strong><small>Прототип · раздел 02</small></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><span>УПРАВЛЕНЧЕСКАЯ АНАЛИТИКА <b>/ ИСТОЧНИКИ ОБРАЩЕНИЙ</b></span><span class="demo-status"><span class="status-dot"></span> Выгрузка CRM · сентябрь 2026</span></header>
+    <main class="sources-main" id="sources">
+      <section class="sources-heading">
+        <div><p class="eyebrow">BANI VYATKI ANALYTICS / 02</p><h1>Источники обращений</h1><p class="subtitle">Ежедневная динамика, состав каналов и качество заявок. Данные по дате создания сделки в CRM.</p></div>
+        <div class="sources-filters"><div class="month"><span>Период отчёта</span><b>Сентябрь 2026</b></div><label for="sourceFilter">Источник<select id="sourceFilter"><option value="all">Все источники</option><option value="avito">Авито</option><option value="vk">ВКонтакте</option><option value="calls">Входящие звонки</option><option value="other">Прочие</option></select></label></div>
+      </section>
+      <section class="sources-kpis" aria-label="Ключевые показатели источников">
+        <article class="s-kpi"><div class="s-kpi-head"><span class="s-icon">◈</span><span class="s-kpi-footnote">За 30 дней</span></div><h3>Всего обращений</h3><strong class="s-number" id="totalKpi">222</strong><p>Все новые сделки месяца</p></article>
+        <article class="s-kpi"><div class="s-kpi-head"><span class="s-icon green">✓</span><span class="s-kpi-footnote">По состоянию выгрузки</span></div><h3>Целевые заявки</h3><strong class="s-number" id="qualifiedKpi">122</strong><p>Без исключённых категорий</p></article>
+        <article class="s-kpi"><div class="s-kpi-head"><span class="s-icon gold">%</span><span class="s-kpi-footnote">Доля от обращений</span></div><h3>Доля целевых</h3><strong class="s-number" id="shareKpi">55,0%</strong><p>Качество входящего потока</p></article>
+        <article class="s-kpi"><div class="s-kpi-head"><span class="s-icon brown">−</span><span class="s-kpi-footnote">Три исключаемые стадии</span></div><h3>Исключено из целевых</h3><strong class="s-number" id="excludedKpi">100</strong><p>Спам, нет диалога, нет ответа</p></article>
+      </section>
+      <section class="s-grid-main">
+        <article class="s-panel daily-panel" aria-labelledby="dailyTitle">
+          <div class="s-panel-header"><div><p class="s-overline">ЕЖЕДНЕВНАЯ ДИНАМИКА</p><h2 id="dailyTitle">Заявки по дням сентября</h2><p>Нажми на столбец, чтобы увидеть состав выбранного дня</p></div><div class="s-toggle" role="group" aria-label="Тип обращений"><button id="viewAll" class="is-active" aria-pressed="true">Все</button><button id="viewQualified" aria-pressed="false">Целевые</button></div></div>
+          <div class="chart-wrap"><svg id="dailyChart" viewBox="0 0 920 305" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Столбчатый график количества обращений по дням с разбивкой по источникам"></svg><div class="chart-tooltip" id="chartTooltip" role="status" hidden></div></div>
+          <div class="chart-legend" id="sourceLegend" aria-label="Выбор источника"></div>
+          <div class="selected-day"><span id="selectedDayLabel">14 сентября</span><span id="selectedDayDetails">37 обращений · 16 целевых</span><button id="resetDay" type="button">Сбросить выделение</button></div>
+        </article>
+        <article class="s-panel share-panel" aria-labelledby="shareTitle">
+          <div class="s-panel-header"><div><p class="s-overline">СТРУКТУРА КАНАЛОВ</p><h2 id="shareTitle">Откуда приходят</h2><p>Доля источника в общем потоке</p></div></div>
+          <div class="share-visual"><div class="share-donut" id="shareDonut"><div><strong>222</strong><small>обращения</small></div></div></div>
+          <div id="sharesList" class="share-list"></div>
+          <p class="s-muted-note">«Звонок» — способ поступления заявки, не всегда первоначальный рекламный канал.</p>
+        </article>
+      </section>
+      <section class="s-grid-secondary">
+        <article class="s-panel quality-panel" aria-labelledby="qualityTitle">
+          <div class="s-panel-header"><div><p class="s-overline">КАЧЕСТВО ТРАФИКА</p><h2 id="qualityTitle">Целевые и исключённые заявки</h2><p>Качество обращений по текущим стадиям сентябрьских сделок</p></div><span class="quality-badge">122 из 222</span></div>
+          <div id="qualityRows" class="quality-rows"></div>
+          <div class="quality-legend"><span><i class="q-dot yes"></i> Целевые</span><span><i class="q-dot no"></i> Исключённые</span></div>
+        </article>
+        <article class="s-panel loss-panel" aria-labelledby="lossTitle">
+          <div class="s-panel-header"><div><p class="s-overline">ПРИЧИНЫ ИСКЛЮЧЕНИЯ</p><h2 id="lossTitle">Где теряем заявки</h2><p id="lossSubtitle">Все источники, по снимку CRM</p></div></div>
+          <div id="lossReasons" class="loss-reasons"></div>
+          <p class="s-muted-note">«Игнорит» трактуем по методике сентябрьского отчёта. Это не обязательно нецелевой клиент.</p>
+        </article>
+      </section>
+      <section class="s-panel table-panel" aria-labelledby="tableTitle">
+        <div class="s-panel-header"><div><p class="s-overline">ДЕТАЛИЗАЦИЯ ПО КАНАЛАМ</p><h2 id="tableTitle">Сводная таблица за месяц</h2><p>Источник, количество, качество и заключённые договоры</p></div></div>
+        <div class="s-table-scroll"><table class="s-table"><thead><tr><th scope="col">Источник</th><th scope="col">Обращения</th><th scope="col">Целевые</th><th scope="col">Исключены</th><th scope="col">Доля целевых</th><th scope="col">Договоры сентября</th></tr></thead><tbody id="sourcesTable"></tbody></table></div>
+        <p class="s-muted-note">Договоры — результат закрытия в сентябре, в том числе по обращениям прошлых месяцев. Не делим договоры на новые обращения месяца как когортную конверсию.</p>
+      </section>
+      <section class="s-insight" aria-label="Основные наблюдения"><div class="s-insight-icon">i</div><div><strong>Что заметили в сентябре</strong><p>14 сентября поступило 37 обращений, 28 сентября — 34. За два дня пришло 71 обращение (32% месячного потока), из них 67 — с Авито. Эти всплески стоит отдельно проверить на связь с рассылками и автоматическими обращениями.</p></div></section>
+      <p class="s-method">Методика: целевые = все обращения − «Спам.Различные предложения» − «Игнорит» − «не ответили после рассылки». Даты на графике — даты создания сделки; классификация качества взята из текущих стадий выгрузки, а не из исторических снимков на каждый день. Данные статические, без API Битрикс24 и персональных данных.</p>
+      <footer>© Bani Vyatki Analytics · Раздел 02 · Прототип для согласования</footer>
+    </main>
+  </div>
+</div>
+</body>
+</html>

@@ -80,7 +80,7 @@ for(const file of cssFiles){
  for(const ch of cleaned){
   if(ch==="{")depth++;
   if(ch==="}")depth--;
-  check(depth>=0,"Unexpected closing CSS brace: "+file);
+  if(depth<0)throw new Error("Unexpected closing CSS brace: "+file);
  }
  check(depth===0,"Unbalanced CSS braces: "+file);
 }

@@ -173,12 +173,14 @@
     $("cycleReset").disabled=state.manager==="all"&&state.source==="all"&&state.sort==="longest";
   }
   function updateScrollHints(){
-    for(const [regionId,hintId] of [
-      ["cycleTimeline","cycleTimelineHint"],["cycleMissingRows","cycleTableHint"]
+    for(const [selector,hintId] of [
+      [".cycle-timeline-wrap","cycleTimelineHint"],
+      [".cycle-table-scroll","cycleTableHint"]
     ]){
-      const region=$(regionId).parentElement;
+      const region=document.querySelector("#cycle "+selector);
       const hint=$(hintId);
-      const visible=region && window.getComputedStyle(region).display!=="none";
+      const visible=region && region.getClientRects().length>0 &&
+        window.getComputedStyle(region).display!=="none";
       hint.classList.toggle("is-visible",Boolean(visible&&region.scrollWidth>region.clientWidth+2));
     }
   }

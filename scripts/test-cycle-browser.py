@@ -28,8 +28,9 @@ def total_cards(page,which):
     return page.locator(which+" .cycle-contract-card").count()
 
 def verify(page,context,width,num_deals,avg,median,quick,coverage,revenue):
-    ok(txt(page.locator("#cycleKnownCount"))==
-       (str(num_deals)+" "+("договоров" if num_deals==0 or num_deals in (11,12,13) else "договор" if num_deals==1 else "договора")),
+    ending = ("договоров" if num_deals % 100 in (11,12,13,14) or num_deals % 10 in (0,5,6,7,8,9)
+              else "договор" if num_deals % 10 == 1 else "договора")
+    ok(txt(page.locator("#cycleKnownCount"))==f"{num_deals} {ending}",
        f"{width}/{context}: known count")
     ok(txt(page.locator("#cycleAverage"))==(avg+" дн." if num_deals else "—"),
        f"{width}/{context}: average: {txt(page.locator('#cycleAverage'))}")

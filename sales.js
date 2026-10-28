@@ -6,6 +6,12 @@
   const fmt = n => new Intl.NumberFormat("ru-RU", {maximumFractionDigits:0}).format(n);
   const fmtPct = n => new Intl.NumberFormat("ru-RU", {minimumFractionDigits:1,maximumFractionDigits:1}).format(n) + "%";
   const sum = values => values.reduce((acc,n) => acc+n,0);
+  // Russian plural forms must depend on the last digits, not total < 5.
+  const countLabel=(n,one,few,many)=>{
+    const mod100=n%100,mod10=n%10;
+    return n+" "+(mod100>=11&&mod100<=14?many:mod10===1?one:
+      mod10>=2&&mod10<=4?few:many);
+  };
   const ids = data.sources.map(s=>s.id);
   const sourcePos = id => ids.indexOf(id);
   const state = {metric:"contracts",source:"all"};
@@ -102,7 +108,7 @@
     const excluded=counts.at(-1);
     const qualified=total-excluded;
     if(sum(counts)!==total)throw Error("CRM stages must sum to selected source cohort: "+sum(counts)+" vs "+total);
-    $("cohortTotal").textContent=fmt(total)+" "+(total===1?"обращение":total<5?"обращения":"обращений");
+    $("cohortTotal").textContent=countLabel(total,"обращение","обращения","обращений");
     $("cohortSubtitle").textContent=(currentSource()?.name||"Все источники")+" · срез выгрузки";
     $("qualifiedStageCount").textContent=fmt(qualified);
     $("excludedStageCount").textContent=fmt(excluded);
@@ -136,7 +142,7 @@
     const rows=data.reasons.map(reason=>({title:reason.title,count:countFor(reason),type:reason.type}))
       .filter(row=>row.count>0).sort((a,b)=>b.count-a.count);
     const total=sum(rows.map(r=>r.count));
-    $("reasonsTotal").textContent=fmt(total)+" обращений";
+    $("reasonsTotal").textContent=countLabel(total,"обращение","обращения","обращений");
     const max=rows.length?rows[0].count:1;
     const container=$("lossRows");container.replaceChildren();
     if(!rows.length){container.appendChild(create("p","sales-caption","В выбранном источнике причин потерь не зафиксировано."));return;}

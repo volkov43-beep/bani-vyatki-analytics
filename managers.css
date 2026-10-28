@@ -119,3 +119,6 @@
 .mgr-unmapped{padding:12px}.mgr-employee-cell{gap:5px}
 }
 @media(max-width:390px){.mgr-kpis{grid-template-columns:1fr}.mgr-kpi{min-height:140px}.mgr-kpi strong{font-size:31px}}
+
+/* Кнопки строк диаграммы не наследуют браузерные границы и заливки. */
+.mgr-bar-line{width:100%;background:transparent;border:0;padding:4px 0;text-align:left;font:inherit}

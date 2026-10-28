@@ -203,3 +203,4 @@ function render() {
 
 scenario.addEventListener("change",render);
 render();
+document.documentElement.classList.add("bv-overview-ready");

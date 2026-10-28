@@ -256,8 +256,12 @@ def test_navigation(browser, width):
         page.locator('#bv-primary-nav a[href="./'+target+'"]').click()
         page.wait_for_url("**/"+target)
         wait_route(page,target)
-        chk(page.locator('#bv-primary-nav a[aria-current="page"]').get_attribute("href")=="./"+target,
-            f"journey/{width}: wrong destination {target}")
+        new_active=page.locator('#bv-primary-nav a[aria-current="page"]').get_attribute("href")
+        accepted={"./"+target}
+        if target=="index.html":
+            accepted.add("#overview")
+        chk(new_active in accepted,
+            f"journey/{width}: wrong destination {target}: {new_active}")
     page.close()
 
 

@@ -1,0 +1,17 @@
+# Netlify = ONLY the private visual preview of Bani Vyatki Analytics.
+# Do not use the preview for CRM tokens, PHP or the production API.
+# IMPORTANT: Configure project visibility as PRIVATE (production AND previews)
+# in Netlify before publishing or sharing a site URL.
+[build]
+  command = "mkdir -p preview-dist/assets && cp index.html app.js styles.css preview-dist/ && cp -R assets/. preview-dist/assets/"
+  publish = "preview-dist"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "no-referrer"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Cache-Control = "no-store"

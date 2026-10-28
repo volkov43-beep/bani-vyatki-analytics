@@ -9,6 +9,8 @@ on:
       - "scripts/test-dashboard-release.py"
       - "scripts/check-responsive-foundation.mjs"
       - "scripts/check-public-dashboard.mjs"
+      - "docs/responsive-iteration-08.md"
+      - "README.md"
       - "scripts/check-navigation.mjs"
       - ".github/workflows/full-dashboard-qa.yml"
   push:

@@ -117,7 +117,7 @@ with sync_playwright() as pw:
                f"{width}: revenue toggle aria-pressed")
         ensure(text(page.locator("#trendDiff"))=="+2 000 100 ₽",
                f"{width}: revenue trend changed")
-        ensure("5 643 000 ₽" in page.locator("#salesTrend").get_attribute("aria-label"),
+        ensure("5 643 000 ₽" in " ".join(page.locator("#salesTrend").get_attribute("aria-label").split()),
                f"{width}: monthly revenue graph not accessible")
         page.locator("#metricContracts").click()
         ensure(text(page.locator("#trendDiff"))=="+6 договоров",

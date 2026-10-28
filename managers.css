@@ -1,13 +1,13 @@
 /* Bani Vyatki Analytics · Раздел 04 · Результативность менеджеров */
-.mgr-main{max-width:1650px;padding:31px 36px 26px}
+.mgr-main{max-width:var(--bv-layout-max-width);padding:31px var(--bv-gutter-desktop) 26px}
 .mgr-heading{display:flex;justify-content:space-between;gap:18px;align-items:end;margin-bottom:25px}
 .mgr-heading h1{font:700 clamp(30px,3vw,42px)/1.15 Georgia,serif;letter-spacing:-.043em;color:#193d2c;margin:0 0 8px}
 .mgr-heading .subtitle{max-width:760px}
-.mgr-month{border:1px solid #e7e6db;background:#fffefa;border-radius:12px;padding:10px 16px;display:grid;gap:1px;min-width:164px}
+.mgr-month{border:1px solid #e7e6db;background:var(--bv-color-surface-bright);border-radius:12px;padding:10px 16px;display:grid;gap:1px;min-width:164px}
 .mgr-month span{font-size:10px;color:#849485}
 .mgr-month b{color:#2b533c;font-size:13px;white-space:nowrap}
 .mgr-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:18px}
-.mgr-kpi{min-height:186px;display:flex;flex-direction:column;background:#fffefa;border:1px solid #e9e6de;border-radius:16px;padding:18px;box-shadow:0 8px 24px rgba(32,54,39,.04)}
+.mgr-kpi{min-height:186px;display:flex;flex-direction:column;background:var(--bv-color-surface-bright);border:1px solid #e9e6de;border-radius:16px;padding:18px;box-shadow:0 8px 24px rgba(32,54,39,.04)}
 .mgr-kpi-top{display:flex;align-items:center;justify-content:space-between;gap:5px;margin-bottom:13px}
 .mgr-icon{display:grid;place-items:center;width:37px;height:37px;border-radius:11px;font-size:22px;font-weight:850;color:#fff9eb;flex:none}
 .mgr-icon.green{background:linear-gradient(135deg,#2b8053,#174b35)}
@@ -28,9 +28,9 @@
 .mgr-tools-label{color:#a48453;font-weight:850;letter-spacing:.13em;font-size:9px}
 .mgr-tools-controls{display:flex;gap:9px}
 .mgr-tools-controls label{font-size:10px;color:#849588;font-weight:650;display:grid;gap:4px}
-.mgr-tools-controls select{font-size:12px;color:#254e37;padding:10px 32px 10px 13px;border:1px solid #e3e7dd;background:#fffefa;border-radius:9px;font-weight:760;min-width:165px;max-width:220px;outline-offset:2px}
+.mgr-tools-controls select{font-size:12px;color:#254e37;padding:10px 32px 10px 13px;border:1px solid #e3e7dd;background:var(--bv-color-surface-bright);border-radius:9px;font-weight:760;min-width:165px;max-width:220px;outline-offset:2px}
 .mgr-analytics-grid{display:grid;grid-template-columns:minmax(0,1.38fr) minmax(330px,.83fr);gap:16px;margin-bottom:17px}
-.mgr-panel{min-width:0;background:#fffefa;border:1px solid #e8e6dc;border-radius:17px;padding:23px;box-shadow:0 12px 28px rgba(31,54,37,.04)}
+.mgr-panel{min-width:0;background:var(--bv-color-surface-bright);border:1px solid #e8e6dc;border-radius:17px;padding:23px;box-shadow:0 12px 28px rgba(31,54,37,.04)}
 .mgr-panel-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:19px}
 .mgr-kicker{letter-spacing:.15em;color:#b08c55;font-size:9px;font-weight:850;display:block;margin-bottom:6px}
 .mgr-panel-heading h2{font-size:18px;color:#234a35;margin:0 0 4px;line-height:1.35}
@@ -99,7 +99,7 @@
 .mgr-method{border:1px solid #e4dac5;background:#f5f0e6;border-radius:12px;color:#8a7e66;font-size:11px;padding:14px 17px;line-height:1.65;margin-top:18px}
 .mgr-method strong{color:#715c38}
 @media(max-width:1450px){
-.mgr-main{padding:28px 26px}.mgr-kpi{padding:16px 13px}
+.mgr-main{padding:28px var(--bv-gutter-compact)}.mgr-kpi{padding:16px 13px}
 .mgr-kpi strong{font-size:clamp(24px,2vw,30px)}.mgr-panel{padding:20px}
 }
 @media(max-width:1170px){
@@ -108,7 +108,7 @@
 .mgr-bottom-grid{grid-template-columns:1fr}
 }
 @media(max-width:720px){
-.mgr-main{padding:20px 12px}.mgr-heading{flex-direction:column;align-items:flex-start}.mgr-heading h1{font-size:33px}
+.mgr-main{padding:20px var(--bv-gutter-mobile)}.mgr-heading{flex-direction:column;align-items:flex-start}.mgr-heading h1{font-size:33px}
 .mgr-kpis{gap:9px}.mgr-kpi{min-height:155px;padding:13px 10px}.mgr-kpi strong{font-size:clamp(20px,4.5vw,29px)}
 .mgr-kpi h2{font-size:10px}.mgr-icon{width:31px;height:31px;font-size:17px}.mgr-micro{font-size:8px;padding:4px 5px}.mgr-kpi p{font-size:9px}
 .mgr-notice{padding:12px;align-items:flex-start}.mgr-tools{align-items:stretch;flex-direction:column}

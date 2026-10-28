@@ -68,6 +68,15 @@ with sync_playwright() as pw:
         })""")
         ensure(doc["page"]<=doc["viewport"]+1,f"{width}: document x-overflow {doc}")
         ensure(doc["body"]<=doc["viewport"]+1,f"{width}: body x-overflow {doc}")
+        # The methodology paragraph must be a single flex child, not
+        # multiple anonymous narrow flex items (visual bug found at 320px).
+        note=page.locator(".stage-method")
+        note_text=note.locator(".stage-method-text")
+        ensure(note_text.count()==1,f"{width}: stage methodology paragraph missing")
+        note_box,note_text_box=note.bounding_box(),note_text.bounding_box()
+        ensure(note_box and note_text_box and
+               note_text_box["width"] >= max(140,note_box["width"]*0.68),
+               f"{width}: stage methodology text collapsed to narrow columns")
         ensure(page.locator(".sales-kpi").count()==4,f"{width}: 4 KPI cards")
         ensure(page.locator(".monthly-bars .month-col").count()==4,
                f"{width}: expected 4 month bars")

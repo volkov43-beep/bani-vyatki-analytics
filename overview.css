@@ -89,6 +89,14 @@
   line-height: 1.65;
 }
 
+/* Two half-width tables cannot display five complete columns at 1440px.
+   Stack them until their side-by-side minimum fits without clipping. */
+@media (min-width: 1141px) and (max-width: 1599px) {
+  #overview .detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 /* Content-first tablet layout: financial blocks stack, labels stay visible. */
 @media (max-width: 1140px) {
   #overview .page-heading {
@@ -112,11 +120,9 @@
   }
 }
 
-/* Tablet tables may scroll inside their own bounded panel. */
-@media (min-width: 601px) and (max-width: 900px) {
-  #overview .table-scroll-hint {
-    display: block;
-  }
+/* This hint is revealed only when JavaScript measures actual table overflow. */
+#overview .table-scroll-hint.is-visible {
+  display: block;
 }
 
 @media (max-width: 720px) {

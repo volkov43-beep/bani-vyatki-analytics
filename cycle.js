@@ -49,14 +49,16 @@
   for(const row of INPUT.knownStarts){
     const k=key(row);
     if(dateMap.has(k))throw new Error("Повторный ключ исходных данных: "+k);
-    dateMap.set(k,row.firstInquiry);
+    dateMap.set(k,{firstInquiry:row.firstInquiry,basis:row.basis||"report"});
   }
   const deals=SALES.deals.map((d,index)=>{
     const found=dateMap.get(key(d))??null;
     const end=d.date+".2026";
-    const days=found===null?null:Math.round((UTC(end)-UTC(found))/86400000);
+    const first=found?.firstInquiry??null;
+    const basis=found?.basis??null;
+    const days=first===null?null:Math.round((UTC(end)-UTC(first))/86400000);
     if(days!==null&&(days<0||days>3650))throw new Error("Ошибка диапазона цикла договора");
-    return {...d,firstInquiry:found,contractDate:end,days,anonymousIndex:index+1};
+    return {...d,firstInquiry:first,dateBasis:basis,contractDate:end,days,anonymousIndex:index+1};
   });
 
   const filtered=()=>deals.filter(d=>(state.manager==="all"||d.manager===state.manager)&&(state.source==="all"||d.source===state.source));
@@ -67,17 +69,17 @@
   function validate(){
     if(deals.length!==13||sum(deals.map(d=>d.revenue))!==5643000)throw new Error("Не сошлись договоры сентября");
     const k=known(deals);
-    if(k.length!==INPUT.knownStarts.length||k.length!==10)throw new Error("Неверное число сделок с известным циклом");
+    if(k.length!==INPUT.knownStarts.length||k.length!==13)throw new Error("Неверное число сделок с известным циклом");
     for(const row of INPUT.knownStarts)if(!deals.some(d=>key(d)===key(row)&&d.firstInquiry===row.firstInquiry))
       throw new Error("Дата обращения не сопоставлена с договором");
     const days=k.map(d=>d.days);
-    if(Math.abs(avg(days)-11.8)>1e-10||median(days)!==8||Math.max(...days)!==44)
+    if(Math.abs(avg(days)-(150/13))>1e-10||median(days)!==9||Math.max(...days)!==44)
       throw new Error("Контроль цикла из сентябрьского отчёта не пройден");
     const group={fast:0,mid:0,long:0};
     k.forEach(d=>group[bucket(d.days)]++);
-    if(group.fast!==5||group.mid!==4||group.long!==1)throw new Error("Неверное распределение циклов");
+    if(group.fast!==6||group.mid!==6||group.long!==1)throw new Error("Неверное распределение циклов");
     const cross=k.filter(d=>d.firstInquiry.slice(3)!=="09.2026");
-    if(cross.length!==2||sum(cross.map(d=>d.revenue))!==1061000)
+    if(cross.length!==4||sum(cross.map(d=>d.revenue))!==1934000)
       throw new Error("Сумма сделок из августовских обращений отличается от отчёта");
   }
 
@@ -95,7 +97,7 @@
     const share=allRows.length?rows.length/allRows.length*100:0;
     $("cycleCoverageFill").style.width=share+"%";
     $("cycleCoverageHint").textContent=allRows.length?percent(share)+" договоров выбранного набора":"Нет договоров по фильтру";
-    $("cycleAvgCompare").textContent=state.manager==="all"&&state.source==="all"?"+4,8 дня к июлю–августу":"По выбранному фильтру";
+    $("cycleAvgCompare").textContent=state.manager==="all"&&state.source==="all"?"+4,5 дня к июлю–августу":"По выбранному фильтру";
     $("cycleKnownCount").textContent=titleCount(rows.length);
   }
 
@@ -134,10 +136,10 @@
     }
     for(const item of sorted){
       const row=el("div","cycle-timeline-row");
-      row.title=names[item.manager]+" · "+sources[item.source]+" · "+item.firstInquiry+" → "+item.contractDate+" · "+item.days+" дней";
+      row.title=names[item.manager]+" · "+sources[item.source]+" · "+item.firstInquiry+" → "+item.contractDate+" · "+item.days+" дней"+(item.dateBasis==="crm_created"?" (начало — дата создания сделки CRM)":"");
       const person=el("div","cycle-deal");
       person.append(el("span","",item.contractDate+" · "+names[item.manager]),
-        el("small","",sources[item.source]+" · обращение "+item.firstInquiry));
+        el("small","",sources[item.source]+(item.dateBasis==="crm_created"?" · создано в CRM ":" · обращение ")+item.firstInquiry));
       const rail=el("div","cycle-duration-track");
       const fill=el("i",bucket(item.days));
       // Общая ось 44 дня, не меняется при фильтрации.
@@ -177,24 +179,31 @@
     }
   }
 
-  function missing(rows){
-    const items=unknown(rows).sort((a,b)=>UTC(a.contractDate)-UTC(b.contractDate));
+  function dateDetails(rows){
+    const items=[...rows].sort((a,b)=>UTC(a.contractDate)-UTC(b.contractDate)||a.revenue-b.revenue);
     const wrap=$("cycleMissingRows");wrap.replaceChildren();
     $("cycleMissingCount").textContent=titleCount(items.length);
     if(!items.length){
-      const tr=el("tr"),td=el("td","empty","Все даты первых обращений для выбранных договоров известны");
-      td.colSpan=5;tr.appendChild(td);wrap.appendChild(tr);
+      const tr=el("tr");
+      const td=el("td","empty","Нет договоров по выбранным фильтрам");
+      td.colSpan=7;tr.appendChild(td);wrap.appendChild(tr);
     }
     for(const d of items){
       const tr=el("tr");
-      tr.append(el("td","",d.contractDate),el("td","",names[d.manager]),
-        el("td","",sources[d.source]),el("td","",rub(d.revenue)));
-      const td=el("td");
-      td.appendChild(el("span","missing","Нет данных"));
-      tr.appendChild(td);wrap.appendChild(tr);
+      tr.append(el("td","",d.firstInquiry??"—"),
+        el("td","",d.contractDate),
+        el("td","",names[d.manager]),
+        el("td","",sources[d.source]),
+        el("td","cycle-table-days",d.days===null?"—":d.days+" дн."),
+        el("td","",rub(d.revenue)));
+      const basis=el("td");
+      const basisText=d.dateBasis==="crm_created"?"Дата создания CRM":"Маркетинговый отчёт";
+      basis.appendChild(el("span",d.dateBasis==="crm_created"?"cycle-basis-crm":"cycle-basis-report",basisText));
+      tr.appendChild(basis);
+      wrap.appendChild(tr);
     }
     const foot=el("tr");
-    const label=el("th","","Итого");label.colSpan=3;label.scope="row";
+    const label=el("th","","Итого");label.colSpan=5;label.scope="row";
     foot.append(label,el("td","",rub(sum(items.map(d=>d.revenue)))),el("td","",titleCount(items.length)));
     $("cycleMissingTotal").replaceChildren(foot);
   }
@@ -214,7 +223,7 @@
     timeline(rows);
     breakdown(full,"manager","cycleManagerBars");
     breakdown(full,"source","cycleSourceBars");
-    missing(full);
+    dateDetails(full);
     insight(full);
   }
   function clear(){

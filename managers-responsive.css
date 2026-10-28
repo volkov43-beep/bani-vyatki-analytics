@@ -1,0 +1,591 @@
+/*
+ * Bani Vyatki Analytics · Responsive managers · iteration 06/08
+ * NeuroLab Web R01/R02/R03/R12; Q4-05–Q4-07, Q4-09, Q4-12.
+ * Loaded after navigation.css; scoped to #managerDashboard.
+ * Existing source data, margins and 13 contracts are not modified.
+ */
+#managerDashboard,
+#managerDashboard .mgr-heading,
+#managerDashboard .mgr-heading > div,
+#managerDashboard .mgr-tools,
+#managerDashboard .mgr-tools-controls,
+#managerDashboard .mgr-panel,
+#managerDashboard .mgr-analytics-grid,
+#managerDashboard .mgr-bottom-grid {
+  min-width: 0;
+}
+#managerDashboard .subtitle,
+#managerDashboard .mgr-notice p,
+#managerDashboard .mgr-panel-heading p,
+#managerDashboard .mgr-panel-note,
+#managerDashboard .mgr-deals-note,
+#managerDashboard .mgr-plan-message,
+#managerDashboard .mgr-method {
+  overflow-wrap: break-word;
+}
+/* Semantic text role from the established NeuroLab-based design system. */
+#managerDashboard .subtitle,
+#managerDashboard .mgr-kpi h2,
+#managerDashboard .mgr-kpi p,
+#managerDashboard .mgr-panel-heading p,
+#managerDashboard .mgr-panel-note,
+#managerDashboard .mgr-month span,
+#managerDashboard .mgr-tools-controls label,
+#managerDashboard .mgr-bar-name,
+#managerDashboard .mgr-chart-legend span,
+#managerDashboard .mgr-revenue-head span,
+#managerDashboard .mgr-revenue-foot span,
+#managerDashboard .mgr-revenue-total span,
+#managerDashboard .mgr-employee-text small,
+#managerDashboard .mgr-plan-item small {
+  color: var(--bv-color-secondary-ink);
+}
+#managerDashboard .mgr-month span,
+#managerDashboard .mgr-kpi h2,
+#managerDashboard .mgr-panel-heading p,
+#managerDashboard .mgr-panel-note,
+#managerDashboard .mgr-tools-controls label,
+#managerDashboard .mgr-chart-legend span,
+#managerDashboard .mgr-plan-item small {
+  font-size: 12px;
+  line-height: 1.5;
+}
+#managerDashboard .mgr-kpi .mgr-micro {
+  font-size: 11px;
+  line-height: 1.3;
+  color: #356547;
+  white-space: normal;
+  text-align: right;
+}
+#managerDashboard .mgr-kpi strong {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+#managerDashboard .mgr-kpi strong small {
+  white-space: nowrap;
+}
+#managerDashboard .mgr-kpi p {
+  font-size: 12px;
+}
+#managerDashboard .mgr-kicker,
+#managerDashboard .mgr-tools-label {
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: #82603a;
+}
+#managerDashboard .mgr-notice {
+  align-items: flex-start;
+}
+#managerDashboard .mgr-notice p {
+  color: #45644a;
+  font-size: 12px;
+  line-height: 1.6;
+}
+#managerDashboard .mgr-tools-controls {
+  align-items: end;
+}
+#managerDashboard .mgr-tools-controls label {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+#managerDashboard .mgr-tools-controls select {
+  min-height: 44px;
+  font-size: 13px;
+  max-width: 230px;
+  cursor: pointer;
+}
+#managerDashboard .mgr-reset-filters {
+  min-height: 44px;
+  min-width: 90px;
+  padding: 10px 13px;
+  border: 1px solid #d7e4d5;
+  border-radius: 9px;
+  background: #eef6ec;
+  color: #286040;
+  font: 750 12px/1.35 var(--bv-font-body);
+  cursor: pointer;
+}
+#managerDashboard .mgr-reset-filters:disabled {
+  opacity: .52;
+  cursor: not-allowed;
+}
+#managerDashboard .mgr-reset-filters:hover:not(:disabled) {
+  background: #e0f0de;
+}
+#managerDashboard :is(.mgr-tools-controls select, .mgr-reset-filters,
+  .mgr-bar-line, .mgr-table-scroll, .mgr-matrix-scroll,
+  .mgr-deals-table, .mgr-source-card):focus-visible {
+  outline: var(--bv-focus-outline-width) solid var(--bv-color-focus);
+  outline-offset: 2px;
+}
+#managerDashboard .mgr-bar-line {
+  min-height: 44px;
+  padding: 7px 5px;
+  touch-action: manipulation;
+  border-radius: 9px;
+}
+#managerDashboard .mgr-bar-line:hover {
+  background: #f2f7f0;
+}
+#managerDashboard .mgr-bar-line[aria-pressed="true"] {
+  background: #eef6eb;
+}
+#managerDashboard .mgr-bar-name,
+#managerDashboard .mgr-bar-line b,
+#managerDashboard .mgr-bar-line b small {
+  font-size: 12px;
+}
+#managerDashboard .mgr-chart-legend {
+  flex-wrap: wrap;
+  white-space: normal;
+}
+#managerDashboard .mgr-revenue-head span {
+  font-size: 13px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+#managerDashboard .mgr-revenue-head b {
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+#managerDashboard .mgr-revenue-foot span,
+#managerDashboard .mgr-revenue-foot strong {
+  font-size: 12px;
+}
+#managerDashboard .mgr-revenue-total {
+  flex-wrap: wrap;
+}
+#managerDashboard .mgr-revenue-total strong {
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+#managerDashboard .mgr-table-scroll,
+#managerDashboard .mgr-matrix-scroll {
+  min-width: 0;
+  max-width: 100%;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-color: #9bad9a #eef1e9;
+}
+#managerDashboard .mgr-table thead th,
+#managerDashboard .mgr-deals-table thead th,
+#managerDashboard .mgr-matrix thead th {
+  color: var(--bv-color-secondary-ink);
+  font-size: 11px;
+}
+#managerDashboard :is(.mgr-table, .mgr-deals-table, .mgr-matrix) td,
+#managerDashboard :is(.mgr-table, .mgr-deals-table, .mgr-matrix) tbody th {
+  font-size: 12px;
+}
+#managerDashboard .mgr-table .mgr-employee-text strong,
+#managerDashboard .mgr-table .mgr-employee-text small {
+  font-size: 12px;
+}
+#managerDashboard .mgr-margin-placeholder,
+#managerDashboard .mgr-quality-pill,
+#managerDashboard .mgr-panel-badge {
+  font-size: 12px;
+}
+#managerDashboard .mgr-deals-note {
+  color: #6e5b3e;
+  font-size: 12px;
+}
+#managerDashboard .mgr-plan-item b {
+  font-size: 13px;
+}
+#managerDashboard .mgr-plan-item strong {
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+#managerDashboard .mgr-plan-message {
+  color: #45644c;
+  font-size: 12px;
+}
+#managerDashboard .mgr-method {
+  color: #6e5a40;
+  font-size: 12px;
+}
+#managerDashboard .mgr-scroll-hint {
+  display: none;
+  margin: 9px 0 5px;
+  font-size: 12px;
+  color: var(--bv-color-secondary-ink);
+  font-weight: 650;
+  line-height: 1.45;
+}
+#managerDashboard .mgr-scroll-hint.is-visible {
+  display: block;
+}
+#managerDashboard .mgr-summary-cards,
+#managerDashboard .mgr-deal-cards,
+#managerDashboard .mgr-matrix-cards {
+  display: none;
+}
+/* On smaller desktop panels, avoid a compressed revenue chart beside
+   another densely populated chart. */
+@media (max-width: 1420px) {
+  #managerDashboard .mgr-analytics-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #managerDashboard .mgr-bar-chart,
+  #managerDashboard .mgr-revenue-bars {
+    max-width: 900px;
+  }
+}
+/* Tablet: two KPI columns, one panel per row, readable interaction. */
+@media (max-width: 1170px) {
+  #managerDashboard .mgr-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #managerDashboard .mgr-bottom-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #managerDashboard .mgr-analytics-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+/* Layout remains readable at the 768px tablet breakpoint. */
+@media (max-width: 900px) {
+  #managerDashboard .mgr-heading,
+  #managerDashboard .mgr-tools {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  #managerDashboard .mgr-tools-controls {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+}
+@media (max-width: 720px) {
+  #managerDashboard.mgr-main {
+    padding: 20px var(--bv-gutter-mobile);
+  }
+  #managerDashboard .mgr-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 15px;
+    margin-bottom: 19px;
+  }
+  #managerDashboard .mgr-heading h1 {
+    font-size: clamp(30px, 7vw, 38px);
+    line-height: 1.19;
+  }
+  #managerDashboard .mgr-heading .subtitle {
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  #managerDashboard .mgr-month {
+    min-width: 0;
+    width: min(100%, 230px);
+    padding: 11px 14px;
+  }
+  #managerDashboard .mgr-month b {
+    font-size: 14px;
+  }
+  #managerDashboard .mgr-kpis {
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  #managerDashboard .mgr-kpi {
+    min-height: 173px;
+    padding: 15px;
+  }
+  #managerDashboard .mgr-kpi h2 {
+    font-size: 13px;
+  }
+  #managerDashboard .mgr-kpi strong {
+    font-size: clamp(24px, 5vw, 31px);
+    line-height: 1.2;
+  }
+  #managerDashboard .mgr-kpi p {
+    font-size: 12px;
+  }
+  #managerDashboard .mgr-kpi .mgr-micro {
+    font-size: 11px;
+  }
+  #managerDashboard .mgr-notice {
+    padding: 13px;
+    gap: 11px;
+    margin-bottom: 19px;
+  }
+  #managerDashboard .mgr-tools {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 13px;
+  }
+  #managerDashboard .mgr-tools h2 {
+    font-size: 19px;
+  }
+  #managerDashboard .mgr-tools-controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    gap: 10px;
+  }
+  #managerDashboard .mgr-tools-controls label {
+    font-size: 12px;
+    min-width: 0;
+  }
+  #managerDashboard .mgr-tools-controls select {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding: 10px 28px 10px 11px;
+  }
+  #managerDashboard .mgr-reset-filters {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+  }
+  #managerDashboard .mgr-panel {
+    padding: 16px;
+    border-radius: 14px;
+  }
+  #managerDashboard .mgr-panel-heading {
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 17px;
+  }
+  #managerDashboard .mgr-panel-heading h2 {
+    font-size: 18px;
+  }
+  #managerDashboard .mgr-panel-heading p {
+    font-size: 12px;
+  }
+  #managerDashboard .mgr-bar-chart {
+    margin: 17px 0 19px;
+    gap: 9px;
+  }
+  #managerDashboard .mgr-bar-line {
+    grid-template-columns: minmax(95px, 140px) minmax(0, 1fr) 72px;
+    gap: 8px;
+    min-height: 46px;
+  }
+  #managerDashboard .mgr-bar-name {
+    font-size: 12px;
+    overflow-wrap: anywhere;
+  }
+  #managerDashboard .mgr-bar-graph {
+    height: 19px;
+  }
+  #managerDashboard .mgr-revenue-bars {
+    margin-top: 17px;
+    gap: 19px;
+  }
+  #managerDashboard .mgr-revenue-head {
+    flex-wrap: wrap;
+  }
+  #managerDashboard .mgr-revenue-total strong {
+    font-size: 22px;
+  }
+  #managerDashboard .mgr-plan-item {
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding: 12px;
+  }
+  #managerDashboard .mgr-panel-note {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  #managerDashboard .mgr-bottom-grid {
+    gap: 14px;
+  }
+}
+/* At most 600px, show data-driven cards rather than nine table columns.
+   The original tables remain available if JavaScript fails to initialize. */
+@media (max-width: 600px) {
+  #managerDashboard .mgr-kpis {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #managerDashboard .mgr-kpi {
+    min-height: 0;
+    padding: 16px;
+  }
+  #managerDashboard .mgr-kpi strong {
+    font-size: clamp(30px, 8vw, 38px);
+  }
+  #managerDashboard .mgr-bar-line {
+    grid-template-columns: minmax(0, 1fr) 78px;
+    grid-template-areas: "name number" "bar bar";
+    gap: 7px 10px;
+    border: 1px solid #e5ebe1;
+    background: #fafcf9;
+    padding: 11px;
+    border-radius: 10px;
+  }
+  #managerDashboard .mgr-bar-name {
+    grid-area: name;
+    font-size: 13px;
+  }
+  #managerDashboard .mgr-bar-line b {
+    grid-area: number;
+    font-size: 13px;
+  }
+  #managerDashboard .mgr-bar-line .mgr-bar-graph {
+    grid-area: bar;
+  }
+  .bv-managers-ready #managerDashboard .mgr-table-panel .mgr-table-scroll,
+  .bv-managers-ready #managerDashboard .mgr-deals-panel .mgr-table-scroll,
+  .bv-managers-ready #managerDashboard .mgr-heat-panel .mgr-matrix-scroll {
+    display: none;
+  }
+  .bv-managers-ready #managerDashboard .mgr-summary-cards,
+  .bv-managers-ready #managerDashboard .mgr-deal-cards,
+  .bv-managers-ready #managerDashboard .mgr-matrix-cards {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 11px;
+  }
+  #managerDashboard .mgr-scroll-hint {
+    display: none !important;
+  }
+  #managerDashboard .mgr-summary-card,
+  #managerDashboard .mgr-deal-card,
+  #managerDashboard .mgr-matrix-card {
+    min-width: 0;
+    display: grid;
+    gap: 13px;
+    padding: 15px;
+    border: 1px solid #e3e8df;
+    border-radius: 12px;
+    background: #fff;
+  }
+  #managerDashboard .mgr-summary-card.is-selected,
+  #managerDashboard .mgr-matrix-card.is-selected {
+    border-color: #a6c6a8;
+    background: #f2f8ef;
+  }
+  #managerDashboard .mgr-card-title {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  #managerDashboard .mgr-card-title strong {
+    font-size: 15px;
+    color: #214b36;
+    line-height: 1.35;
+    font-weight: 850;
+    overflow-wrap: anywhere;
+  }
+  #managerDashboard .mgr-card-title small {
+    font-size: 12px;
+    color: var(--bv-color-secondary-ink);
+  }
+  #managerDashboard .mgr-card-revenue {
+    display: grid;
+    gap: 4px;
+    border-radius: 9px;
+    background: #eef5ec;
+    padding: 13px;
+  }
+  #managerDashboard .mgr-card-revenue > span,
+  #managerDashboard .mgr-card-value > span {
+    font-size: 12px;
+    color: var(--bv-color-secondary-ink);
+    line-height: 1.4;
+  }
+  #managerDashboard .mgr-card-revenue > strong {
+    color: #1e5737;
+    font-size: clamp(22px, 6.5vw, 28px);
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+    line-height: 1.25;
+  }
+  #managerDashboard .mgr-card-values {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  #managerDashboard .mgr-card-value {
+    display: grid;
+    align-content: center;
+    gap: 5px;
+    min-width: 0;
+    padding: 10px;
+    background: #f8f8f3;
+    border: 1px solid #efeee7;
+    border-radius: 9px;
+  }
+  #managerDashboard .mgr-card-value b {
+    color: #2c6041;
+    font-size: clamp(15px, 4.5vw, 19px);
+    line-height: 1.35;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+  #managerDashboard .mgr-card-value.is-margin {
+    border: 1px dashed #decfae;
+    background: #fbf5e9;
+  }
+  #managerDashboard .mgr-card-value.is-margin b {
+    color: #776447;
+  }
+  #managerDashboard .mgr-card-value.is-qualified b {
+    color: #236c46;
+  }
+  #managerDashboard .mgr-card-badge {
+    font-size: 11px;
+    line-height: 1.35;
+    border-radius: 7px;
+    padding: 5px 9px;
+    font-weight: 800;
+    background: #e8f2e8;
+    color: #356947;
+  }
+  #managerDashboard .mgr-card-badge.is-empty {
+    background: #f3efe7;
+    color: #836d50;
+  }
+  #managerDashboard .mgr-deal-card .mgr-card-revenue {
+    background: #f7f4e9;
+  }
+  #managerDashboard .mgr-deal-card .mgr-card-revenue > strong {
+    color: #76572e;
+  }
+  #managerDashboard .mgr-matrix-card .mgr-card-values {
+    gap: 7px;
+  }
+  #managerDashboard .mgr-matrix-card .mgr-card-value.is-source-selected {
+    border-color: #a6c5a8;
+    background: #e9f4e8;
+  }
+  #managerDashboard .mgr-mobile-total {
+    display: grid;
+    gap: 9px;
+    border: 1px solid #dddfd5;
+    border-radius: 11px;
+    padding: 14px;
+    background: #f5f2e9;
+  }
+  #managerDashboard .mgr-mobile-total > strong {
+    color: #254c37;
+    font-size: 15px;
+  }
+  #managerDashboard .mgr-mobile-total > span {
+    color: #2c6042;
+    font-size: 19px;
+    font-weight: 850;
+    overflow-wrap: anywhere;
+  }
+  #managerDashboard .mgr-plan-item strong {
+    font-size: 17px;
+  }
+}
+@media (max-width: 359px) {
+  #managerDashboard .mgr-tools-controls {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #managerDashboard .mgr-card-values {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #managerDashboard .mgr-kpi {
+    min-height: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #managerDashboard .mgr-revenue-track i,
+  #managerDashboard .mgr-bar-graph span {
+    transition: none !important;
+  }
+}

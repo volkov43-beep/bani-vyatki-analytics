@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="./styles.css">
 <link rel="stylesheet" href="./managers.css">
 <link rel="stylesheet" href="./navigation.css">
+<link rel="stylesheet" href="./managers-responsive.css">
 <script src="./managers-data.js" defer></script>
 <script src="./managers.js" defer></script>
 <script src="./navigation.js" defer></script>
@@ -84,6 +85,7 @@
             <option value="ilya">Илья Блинов</option>
             <option value="mikhail">Михаил Русинов</option>
           </select></label>
+          <button id="mgrResetFilters" class="mgr-reset-filters" type="button" disabled aria-label="Сбросить фильтры менеджера и источника">Сбросить</button>
         </div>
       </section>
 
@@ -104,12 +106,14 @@
 
       <section class="mgr-panel mgr-table-panel" aria-labelledby="mgrTableTitle">
         <div class="mgr-panel-heading"><div><span class="mgr-kicker">СОТРУДНИКИ</span><h2 id="mgrTableTitle">Вклад менеджеров в выручку</h2><p>Все 13 договоров сентября, включая три добавленных; обращения — отдельная когорта CRM</p></div><span id="mgrTableCount" class="mgr-panel-badge">4 сотрудника</span></div>
-        <div class="mgr-table-scroll"><table class="mgr-table">
+        <div class="mgr-table-scroll" role="region" tabindex="0" aria-label="Подробная таблица выручки, маржи и обращений по менеджерам"><table class="mgr-table">
           <thead><tr>
             <th scope="col">Ответственный</th><th scope="col">Договоры</th><th scope="col">Выручка по договорам</th><th scope="col">Доля выручки</th><th scope="col">Средний чек</th><th scope="col">Маржа, ₽</th><th scope="col">Обращения</th><th scope="col">Целевые</th><th scope="col">Доля целевых</th>
           </tr></thead>
           <tbody id="mgrTable"></tbody><tfoot id="mgrTableTotal"></tfoot>
         </table></div>
+        <p class="mgr-scroll-hint" id="mgrSummaryHint">Прокрутите таблицу по горизонтали, чтобы увидеть все показатели</p>
+        <div id="mgrSummaryCards" class="mgr-summary-cards" aria-label="Карточки результатов менеджеров на мобильном экране"></div>
         <p class="mgr-panel-note">Договоры и выручка — результаты по дате заключения в сентябре. Обращения и целевые — сделки, созданные в сентябре. Это разные когорты, поэтому персональную конверсию между ними пока не считаем. «—» в марже означает отсутствие данных, а не нулевую прибыль.</p>
       </section>
 
@@ -118,13 +122,15 @@
           <div><span class="mgr-kicker">ДЕТАЛИЗАЦИЯ ПРОДАЖ</span><h2 id="mgrDealsTitle">Договоры сентября — по каждой сделке</h2><p>Дата, ответственный, источник, сумма продажи и поле будущего учёта маржи</p></div>
           <span class="mgr-panel-badge" id="mgrDealsCount">13 договоров</span>
         </div>
-        <div class="mgr-table-scroll">
+        <div class="mgr-table-scroll" role="region" tabindex="0" aria-label="Таблица всех 13 сентябрьских договоров по менеджерам с полями маржи">
           <table class="mgr-deals-table">
             <thead><tr><th scope="col">Дата договора</th><th scope="col">Менеджер</th><th scope="col">Источник</th><th scope="col">Выручка по договору, ₽</th><th scope="col">Маржа по сделке, ₽</th></tr></thead>
             <tbody id="mgrDeals"></tbody>
             <tfoot id="mgrDealsTotals"></tfoot>
           </table>
         </div>
+        <p class="mgr-scroll-hint" id="mgrDealsHint">Прокрутите таблицу, чтобы увидеть все поля договора</p>
+        <div id="mgrDealCards" class="mgr-deal-cards" aria-label="Карточки договоров на мобильном экране"></div>
         <div class="mgr-deals-note"><strong>Маржа по сделке:</strong> поле пока пустое. После настройки Битрикс24 менеджеры будут заполнять его в карточке сделки, а наш дашборд будет автоматически суммировать маржу по каждому сотруднику. Здесь сохранение значений пока не реализовано.</div>
         <p class="mgr-panel-note">Покупатели обезличены: в публичной демонстрации нет их имён, телефонов и идентификаторов CRM. Фильтры по менеджеру и источнику сверху действуют также на эту таблицу.</p>
       </section>
@@ -132,7 +138,9 @@
       <section class="mgr-bottom-grid">
         <article class="mgr-panel mgr-heat-panel" aria-labelledby="mgrMatrixTitle">
           <div class="mgr-panel-heading"><div><span class="mgr-kicker">ИСТОЧНИКИ И НАГРУЗКА</span><h2 id="mgrMatrixTitle">Обращения по каналам</h2><p>Как распределяются сентябрьские обращения между менеджерами</p></div></div>
-          <div class="mgr-matrix-scroll"><table class="mgr-matrix"><thead><tr><th scope="col">Сотрудник</th><th scope="col">Авито</th><th scope="col">ВКонтакте</th><th scope="col">Звонки</th><th scope="col">Прочие</th></tr></thead><tbody id="mgrMatrix"></tbody></table></div>
+          <div class="mgr-matrix-scroll" role="region" tabindex="0" aria-label="Распределение обращений между менеджерами и источниками"><table class="mgr-matrix"><thead><tr><th scope="col">Сотрудник</th><th scope="col">Авито</th><th scope="col">ВКонтакте</th><th scope="col">Звонки</th><th scope="col">Прочие</th></tr></thead><tbody id="mgrMatrix"></tbody></table></div>
+          <p class="mgr-scroll-hint" id="mgrMatrixHint">Прокрутите матрицу по горизонтали, чтобы увидеть все источники</p>
+          <div id="mgrMatrixCards" class="mgr-matrix-cards" aria-label="Источники обращений по менеджерам на мобильном экране"></div>
           <p class="mgr-panel-note">Числа в матрице — созданные сделки, закреплённые за сотрудником на момент выгрузки.</p>
         </article>
         <article class="mgr-panel mgr-plan-panel" aria-labelledby="mgrPlanTitle">

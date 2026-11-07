@@ -18,7 +18,10 @@
     {id: "stories", name: "Истории"}, {id: "video", name: "Видео"}
   ];
   const months = data.months;
+  const year = m => m.id.slice(0, 4);
   const state = {month: months.length - 1, top: "reach"};
+  // Charts are laid out for any number of months (a new month is appended every month).
+  document.documentElement.style.setProperty("--vk-months", String(months.length));
 
   function el(tag, cls, text) {
     const n = document.createElement(tag);
@@ -56,6 +59,8 @@
       b.classList.toggle("active", i === state.month);
       b.setAttribute("aria-pressed", String(i === state.month));
     });
+    const active = wrap.children[state.month];
+    if (active && wrap.scrollWidth > wrap.clientWidth + 2) wrap.scrollLeft = active.offsetLeft - wrap.clientWidth / 2 + active.offsetWidth / 2;
   }
 
   /* ---------- KPI ---------- */
@@ -125,9 +130,13 @@
     root.append(svg("path", {d: area, class: "vk-line"}));
     months.forEach((m, i) => {
       const d = new Date(m.id + "-15T00:00:00").getTime();
-      root.append(svg("text", {x: x(d), y: H - 8, class: "vk-axis" + (i === state.month ? " is-current" : ""), "text-anchor": "middle"}, W < 520 ? m.label.toLowerCase() : m.name.toLowerCase()));
-      const endDay = pts.filter(p => p[0].getMonth() === new Date(d).getMonth()).pop();
-      if (endDay) {
+      const shortAxis = W < 520 || months.length > 6;
+      if (!(W < 420 && months.length > 6 && i % 2 && i !== state.month))
+        root.append(svg("text", {x: x(d), y: H - 8, class: "vk-axis" + (i === state.month ? " is-current" : ""), "text-anchor": "middle"}, shortAxis ? m.label.toLowerCase() : m.name.toLowerCase()));
+      const dm = new Date(d);
+      const endDay = pts.filter(p => p[0].getFullYear() === dm.getFullYear() && p[0].getMonth() === dm.getMonth()).pop();
+      const labelled = months.length <= 6 || i === state.month || i === months.length - 1;
+      if (endDay && labelled) {
         const cx = x(endDay[0].getTime()), cy = y(endDay[1]);
         root.append(svg("circle", {cx, cy, r: 4.5, class: "vk-point" + (i === state.month ? " is-current" : "")}));
         root.append(svg("text", {x: cx - (i === months.length - 1 ? 4 : 0), y: cy - 10, class: "vk-point-label", "text-anchor": i === months.length - 1 ? "end" : "middle"}, fmt(endDay[1])));
@@ -135,6 +144,8 @@
     });
     root.append(svg("text", {x: x(t0) + 2, y: y(pts[0][1]) - 10, class: "vk-point-label"}, fmt(pts[0][1])));
     host.replaceChildren(root);
+    const first = months[0], lastM = months[months.length - 1];
+    $("vkLineSubtitle").textContent = `${first.name}${year(first) !== year(lastM) ? " " + year(first) : ""} – ${lastM.name.toLowerCase()} ${year(lastM)}, на конец каждого дня. Выбранный месяц подсвечен.`;
   }
   // The chart is drawn for the real container width (no horizontal scroll, readable labels).
   let lineWidth = 0, lineFrame = 0;
@@ -208,7 +219,7 @@
     const ch = change(a.reachTotal, pa.reachTotal);
     const head = el("div", "vk-total-head");
     const totalStrong = el("strong", "", fmt(a.reachTotal)); totalStrong.id = "vkTotalValue";
-    head.append(el("span", "", m.name + " 2026"), totalStrong,
+    head.append(el("span", "", m.name + " " + year(m)), totalStrong,
       el("span", "vk-trend " + (ch === null || ch >= 0 ? "positive" : "negative"), ch === null ? "—" : (ch >= 0 ? "↗ +" : "↘ −") + pct(Math.abs(ch)) + " к прошлому месяцу"));
     const list = el("ul", "vk-total-list");
     REACH_FORMATS.forEach(([f, name]) => {
@@ -368,7 +379,7 @@
     [["Расход за месяц", rub(a.spend), "все кампании"], ["Подписчиков с рекламы", fmt(a.subscribers), "по данным кабинета"],
      ["Цена подписчика", cps === null ? "—" : rub(Math.round(cps * 100) / 100), "кампании на подписку"]]
       .forEach(([k, v, note]) => { const t = el("div", "mini"); t.append(el("span", "", k), el("b", "", v), el("small", "", note)); tiles.append(t); });
-    d.append(el("h3", "", m.name + " 2026"), tiles);
+    d.append(el("h3", "", m.name + " " + year(m)), tiles);
     if (a.campaigns.length) {
       const ul = el("ul", "vk-campaigns");
       a.campaigns.forEach(c => ul.append(el("li", "", c)));
@@ -380,7 +391,8 @@
     const sumSpend = knownMonths.reduce((s, x) => s + x.ads.spend, 0);
     const sumSubSpend = knownMonths.reduce((s, x) => s + x.ads.spendSubscriptions, 0), sumSubs = knownMonths.reduce((s, x) => s + x.ads.subscribers, 0);
     const missing = months.filter(x => x.ads.spend === null).map(x => x.name.toLowerCase());
-    d.append(el("p", "vk-ads-total", `Июль – октябрь${missing.length ? " (без: " + missing.join(", ") + ")" : ""}: расход ${rub(Math.round(sumSpend))}, из них на подписку ${rub(Math.round(sumSubSpend))} — ${fmt(sumSubs)} подписчиков, в среднем ${rub(Math.round(sumSubSpend / sumSubs * 100) / 100)} за подписчика.`));
+    const span = months[0].name.toLowerCase() + " – " + months[months.length - 1].name.toLowerCase();
+    d.append(el("p", "vk-ads-total", `${span[0].toUpperCase() + span.slice(1)}${missing.length ? " (без: " + missing.join(", ") + ")" : ""}: расход ${rub(Math.round(sumSpend))}, из них на подписку ${rub(Math.round(sumSubSpend))} — ${fmt(sumSubs)} подписчиков, в среднем ${rub(Math.round(sumSubSpend / sumSubs * 100) / 100)} за подписчика.`));
   }
 
   /* ---------- funnel ---------- */
@@ -406,8 +418,13 @@
     });
   }
 
+  // With many months the bar charts show figures only for the selected month (the rest stay in tooltips and the table).
+  function compact() {
+    ["vkFlow", "vkTotal", "vkAdsBars"].forEach(id => $(id).classList.toggle("is-compact", months.length > 6));
+  }
+
   function renderMonth() {
-    drawSwitch(); drawKpis(); drawLine(); drawFlow(); drawTotal(); drawPlan(); drawCalendar(); drawFormats(); drawTop(); drawAds(); drawFunnel();
+    drawSwitch(); drawKpis(); drawLine(); drawFlow(); drawTotal(); drawPlan(); drawCalendar(); drawFormats(); drawTop(); drawAds(); drawFunnel(); compact();
   }
   bindTop();
   renderMonth();

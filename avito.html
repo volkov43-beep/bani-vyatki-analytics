@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#123d2f">
+<title>Авито: объявления | Bani Vyatki Analytics</title>
+<link rel="icon" type="image/webp" href="./assets/logo-bani-vyatki.webp">
+<link rel="stylesheet" href="./design-system.css">
+<link rel="stylesheet" href="./styles.css">
+<link rel="stylesheet" href="./avito.css">
+<link rel="stylesheet" href="./navigation.css">
+<script src="./avito-data.js" defer></script>
+<script src="./avito.js" defer></script>
+<script src="./navigation.js" defer></script>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark"><img src="./assets/logo-bani-vyatki.webp" alt="Логотип Бани Вятки" width="52" height="52"></span><span class="brand-text"><b>Бани Вятки</b><small>ANALYTICS</small></span>
+      <button class="bv-menu-toggle" type="button" aria-controls="bv-primary-nav" aria-expanded="false" aria-label="Открыть меню разделов">
+        <span class="bv-menu-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="bv-menu-toggle-text" aria-hidden="true">Меню</span>
+      </button>
+    </div>
+    <div class="sidebar-caption">АНАЛИТИКА БИЗНЕСА</div>
+    <nav id="bv-primary-nav" aria-label="Разделы дашборда">
+      <a class="nav-link" href="./index.html" aria-label="Общие показатели" data-bv-label="Общие показатели"><span class="nav-icon" aria-hidden="true">▦</span><span class="bv-nav-label">Общие показатели</span></a>
+      <a class="nav-link" href="./sources.html" aria-label="Источники обращений" data-bv-label="Источники обращений"><span class="nav-icon" aria-hidden="true">◈</span><span class="bv-nav-label">Источники обращений</span></a>
+      <a class="nav-link" href="./sales.html" aria-label="Продажи и воронка" data-bv-label="Продажи и воронка"><span class="nav-icon" aria-hidden="true">▽</span><span class="bv-nav-label">Продажи и воронка</span></a>
+      <a class="nav-link" href="./managers.html" aria-label="Менеджеры" data-bv-label="Менеджеры"><span class="nav-icon" aria-hidden="true">♙</span><span class="bv-nav-label">Менеджеры</span></a>
+      <a class="nav-link" href="./cycle.html" aria-label="Цикл сделки" data-bv-label="Цикл сделки"><span class="nav-icon" aria-hidden="true">◷</span><span class="bv-nav-label">Цикл сделки</span></a>
+      <a class="nav-link" href="./vk.html" aria-label="ВКонтакте" data-bv-label="ВКонтакте"><span class="nav-icon" aria-hidden="true">◎</span><span class="bv-nav-label">ВКонтакте</span></a>
+      <a class="nav-link current" aria-current="page" href="./avito.html" aria-label="Авито: объявления" data-bv-label="Авито: объявления"><span class="nav-icon" aria-hidden="true">◧</span><span class="bv-nav-label">Авито</span></a>
+      <span class="nav-link pending" data-bv-label="Расходы · позже" aria-label="Раздел «Расходы» пока не готов"><span class="nav-icon" aria-hidden="true">▥</span><span class="bv-nav-label">Расходы</span> <i>позже</i></span>
+    </nav>
+    <div class="sidebar-bottom">Просмотры, контакты и затраты —<br><strong>по каждому объявлению.</strong><small>Прототип · раздел 07</small></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><span>УПРАВЛЕНЧЕСКАЯ АНАЛИТИКА <b>/ АВИТО</b></span><span class="demo-status"><span class="status-dot"></span> Статистика Avito Pro по дням</span></header>
+    <main class="av-main" id="avito">
+      <section class="av-heading">
+        <div><p class="eyebrow">BANI VYATKI ANALYTICS / 07</p><h1>Авито: объявления</h1><p class="subtitle">Сколько людей видят и открывают объявления, сколько из них пишут и звонят, во что это обходится — по дням и по каждому объявлению.</p></div>
+        <div class="av-month-picker"><span id="avMonthLabel">Месяц отчёта</span><div class="av-toggle av-month-switch" id="avMonthSwitch" role="group" aria-labelledby="avMonthLabel"></div><small id="avMonthNote" class="av-month-note"></small></div>
+      </section>
+
+      <div class="av-scope"><span class="av-scope-icon" aria-hidden="true">i</span><p><strong>Отдельный раздел.</strong> Цифры — из Avito Pro, в общие итоги дашборда не входят: обращения и продажи считаются в CRM (разделы 01–05). Контакт на Авито — это написал в чат или посмотрел телефон, ещё не обращение и не заявка.</p></div>
+
+      <section class="av-kpis" id="avKpis" aria-label="Ключевые показатели месяца"></section>
+
+      <section class="av-panel av-daily" aria-labelledby="avDailyTitle">
+        <div class="av-panel-header"><div><span class="av-kicker">ПО ДНЯМ</span><h2 id="avDailyTitle">Просмотры, контакты и затраты</h2><p id="avDailySubtitle">Три графика с общей шкалой дней: видно, как расход и просмотры отражаются на контактах</p></div></div>
+        <div id="avDaily" class="av-daily-charts"></div>
+        <div class="av-legend"><span><i class="av-key views"></i>Просмотры</span><span><i class="av-key contacts"></i>Контакты</span><span><i class="av-key cost"></i>Затраты</span><span><i class="av-key empty"></i>День ещё не загружен</span><span><i class="av-key avg"></i>Среднее за загруженные дни</span></div>
+        <details class="av-details"><summary>Таблица по дням</summary><div class="table-scroll" role="region" aria-label="Таблица показателей по дням" tabindex="0"><table id="avDailyTable"><thead><tr><th scope="col">День</th><th scope="col">Объявлений</th><th scope="col">Показы</th><th scope="col">Просмотры</th><th scope="col">Контакты</th><th scope="col">Чат / телефон</th><th scope="col">В избранное</th><th scope="col">Затраты, ₽</th><th scope="col">из них бонусами</th></tr></thead><tbody></tbody></table></div></details>
+      </section>
+
+      <section class="av-panel av-months-panel" aria-labelledby="avMonthsTitle">
+        <div class="av-panel-header"><div><span class="av-kicker">ПО МЕСЯЦАМ</span><h2 id="avMonthsTitle">Месяц к месяцу</h2><p>Средние за день — чтобы незаконченный месяц можно было честно сравнить с полным</p></div></div>
+        <div class="table-scroll" role="region" aria-label="Сравнение месяцев" tabindex="0"><table id="avMonths"><thead><tr><th scope="col">Месяц</th><th scope="col">Дней в данных</th><th scope="col">Просмотров в день</th><th scope="col">Контактов в день</th><th scope="col">Затраты в день</th><th scope="col">Конверсия в контакт</th><th scope="col">Цена контакта</th></tr></thead><tbody></tbody></table></div>
+      </section>
+
+      <section class="av-panel av-listings" aria-labelledby="avListTitle">
+        <div class="av-panel-header"><div><span class="av-kicker">ОБЪЯВЛЕНИЯ МЕСЯЦА</span><h2 id="avListTitle">Какие объявления работают, а какие нет</h2><p id="avListSubtitle">Каждое объявление отнесено к группе по просмотрам в день и конверсии из просмотра в контакт</p></div></div>
+        <div id="avGroups" class="av-groups" role="group" aria-label="Фильтр по группам"></div>
+        <div class="av-list-body">
+          <figure class="av-scatter-wrap">
+            <div id="avScatter" class="av-scatter"></div>
+            <figcaption id="avScatterCaption" class="av-scatter-caption"></figcaption>
+          </figure>
+          <div id="avRules" class="av-rules"></div>
+        </div>
+        <div class="av-list-tools">
+          <label for="avSort">Сортировать<select id="avSort"><option value="contacts">по контактам</option><option value="views">по просмотрам</option><option value="cost">по затратам</option><option value="cpc">по цене контакта</option><option value="cr">по конверсии</option></select></label>
+          <span id="avListCount" class="av-list-count" aria-live="polite"></span>
+        </div>
+        <div class="table-scroll av-table-wrap" role="region" aria-label="Таблица объявлений" tabindex="0"><table id="avTable"><thead><tr><th scope="col">№</th><th scope="col">Объявление</th><th scope="col">Просмотры по дням</th><th scope="col">Дней</th><th scope="col">Показы</th><th scope="col">Просмотры</th><th scope="col">В день</th><th scope="col">Контакты</th><th scope="col">Конверсия</th><th scope="col">Затраты</th><th scope="col">Цена контакта</th><th scope="col">Группа</th></tr></thead><tbody></tbody></table></div>
+        <ol id="avCards" class="av-cards" aria-label="Объявления месяца — мобильная версия"></ol>
+        <button type="button" id="avCardsMore" class="av-more" hidden></button>
+      </section>
+
+      <div class="av-method-summary"><strong>Источник и ограничения прототипа:</strong> Avito Pro → «Статистика объявлений», отдельная выгрузка за каждый день. Затраты = расходы на объявления деньгами + списанные бонусы. Номера объявлений в выгрузке пустые, поэтому объявления сопоставлены по городу, адресу, цене и дате первой публикации; названия сверены вручную. Данные статические, без API Авито. <a href="./docs/avito.md">Методика раздела</a>.</div>
+      <footer>© Bani Vyatki Analytics · Раздел 07 · Прототип для согласования</footer>
+    </main>
+  </div>
+</div>
+<div id="avTip" class="av-tip" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

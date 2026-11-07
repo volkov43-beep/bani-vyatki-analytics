@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Bani Vyatki Analytics — comprehensive responsive release audit, iteration 08.
 
-Uses real pages from localhost, not mocked UI. Covers all five dashboard routes,
+Uses real pages from localhost, not mocked UI. Covers all seven dashboard routes,
 inter-page navigation, responsive reflow, selected WCAG-like semantics and
 cross-module September facts. Never connects to Bitrix or publishes client data.
 
@@ -21,7 +21,7 @@ if ENGINE not in {"chromium", "firefox", "webkit"}:
     raise ValueError("BV_BROWSER must be chromium, firefox or webkit")
 
 WIDTHS = [320, 360, 390, 768, 1024, 1440, 1920] if ENGINE == "chromium" else [360, 768, 1440]
-ROUTES = ["index.html", "sources.html", "sales.html", "managers.html", "cycle.html", "vk.html"]
+ROUTES = ["index.html", "sources.html", "sales.html", "managers.html", "cycle.html", "vk.html", "avito.html"]
 SELECTORS = {
     "index.html": "html.bv-overview-ready",
     "sources.html": "html.bv-sources-ready",
@@ -29,6 +29,7 @@ SELECTORS = {
     "managers.html": "html.bv-managers-ready",
     "cycle.html": "html.bv-cycle-ready",
     "vk.html": "html.bv-vk-ready",
+    "avito.html": "html.bv-avito-ready",
 }
 SHOTS = Path("artifacts/final-qa") / ENGINE
 SHOTS.mkdir(parents=True, exist_ok=True)
@@ -89,7 +90,7 @@ def common(page, route, width):
     global warnings
     chk(page.locator("main").count()==1, f"{route}/{width}: exactly one main landmark")
     chk(page.locator("main h1").count()==1, f"{route}/{width}: exactly one page h1")
-    chk(page.locator("#bv-primary-nav a[href]").count()==6, f"{route}/{width}: 6 live page links")
+    chk(page.locator("#bv-primary-nav a[href]").count()==7, f"{route}/{width}: 7 live page links")
     chk(page.locator('#bv-primary-nav a[aria-current="page"]').count()==1,
         f"{route}/{width}: one active navigation item")
     active_href=page.locator('#bv-primary-nav a[aria-current="page"]').get_attribute("href")
@@ -241,6 +242,14 @@ def modules(page, route, width):
         chk(txt(page,'#vkFunnel [data-step="deals"] strong')=="3",
             f"{route}/{width}: September VK contracts must match section 03")
         page.locator("#vkMonthSwitch button",has_text="Октябрь").click()
+    elif route=="avito.html":
+        chk(page.locator("#avKpis .av-kpi").count()==5,f"{route}/{width}: Avito KPI count")
+        page.locator("#avMonthSwitch button",has_text="Октябрь").click()
+        chk(txt(page,'#avKpis [data-kpi="views"] strong')=="7 491",f"{route}/{width}: October Avito views")
+        chk(txt(page,'#avKpis [data-kpi="contacts"] strong')=="115",f"{route}/{width}: October Avito contacts")
+        chk(txt(page,'#avKpis [data-kpi="cost"] strong')=="87 916 ₽",f"{route}/{width}: October Avito costs")
+        page.locator("#avMonthSwitch button",has_text="Ноябрь").click()
+        chk(txt(page,'#avKpis [data-kpi="contacts"] strong')=="10",f"{route}/{width}: November Avito contacts")
 
 
 def test_navigation(browser, width):

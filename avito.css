@@ -2,7 +2,9 @@
    Базовая оболочка — styles.css; токены — design-system.css; navigation.css подключается после этого файла.
    Раздел не зависит от стилей других разделов: компоненты описаны здесь с префиксом av-. */
 :root{
-  --av-bar:#2f7a55;--av-bar-active:#174b39;--av-empty-a:#f3f1ea;--av-empty-b:#e7e3d7;
+  --av-bar:#2f7a55;--av-bar-active:#174b39;
+  /* цвета графиков по дням: просмотры — синий, контакты — красный, затраты — зелёный (проверены на различимость) */
+  --av-views:#3d7bb8;--av-views-active:#2b5f93;--av-contacts:#de7268;--av-contacts-active:#b8524a;--av-cost:#2f7a55;--av-cost-active:#174b39;--av-empty-a:#f3f1ea;--av-empty-b:#e7e3d7;
   --av-grid:#ecebe3;--av-axis:#5f7363;--av-avg:#b48a4f;--av-cross:#f6ecd8;
 }
 
@@ -66,6 +68,14 @@
 .av-axis{font-size:11px;fill:var(--av-axis);font-family:var(--bv-font-body);font-variant-numeric:tabular-nums}
 .av-bar{fill:var(--av-bar)}
 .av-bar.is-active{fill:var(--av-bar-active)}
+.av-mini[data-metric="views"] .av-bar{fill:var(--av-views)}.av-mini[data-metric="views"] .av-bar.is-active{fill:var(--av-views-active)}
+.av-mini[data-metric="contacts"] .av-bar{fill:var(--av-contacts)}.av-mini[data-metric="contacts"] .av-bar.is-active{fill:var(--av-contacts-active)}
+.av-mini[data-metric="cost"] .av-bar{fill:var(--av-cost)}.av-mini[data-metric="cost"] .av-bar.is-active{fill:var(--av-cost-active)}
+.av-mini-title b{display:inline-flex;align-items:center;gap:6px}
+.av-mini-title b::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--av-bar)}
+.av-mini[data-metric="views"] .av-mini-title b::before,.av-key.views{background:var(--av-views)}
+.av-mini[data-metric="contacts"] .av-mini-title b::before,.av-key.contacts{background:var(--av-contacts)}
+.av-mini[data-metric="cost"] .av-mini-title b::before,.av-key.cost{background:var(--av-cost)}
 .av-zero{stroke:#b9c4b8;stroke-width:1.5}
 .av-empty{fill:var(--av-empty-a);stroke:#e2ddd0;stroke-width:1;stroke-dasharray:2 2}
 .av-avg{stroke:var(--av-avg);stroke-width:1.5}

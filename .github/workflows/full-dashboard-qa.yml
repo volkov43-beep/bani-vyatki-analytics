@@ -45,7 +45,7 @@ jobs:
           node scripts/check-responsive-foundation.mjs
           node scripts/check-navigation.mjs
           node scripts/check-public-dashboard.mjs
-          for name in app.js sources.js sales.js managers.js cycle.js navigation.js; do
+          for name in app.js sources.js sales.js managers.js cycle.js vk.js vk-data.js navigation.js; do
             node --check "$name"
           done
           python3 -m py_compile scripts/test-dashboard-release.py
@@ -56,7 +56,7 @@ jobs:
           python3 -m venv .venv
           .venv/bin/python -m pip install --disable-pip-version-check playwright==1.56.0
           .venv/bin/python -m playwright install --with-deps "${{ matrix.browser }}"
-      - name: Exercise all five pages and user journeys
+      - name: Exercise all six pages and user journeys
         shell: bash
         env:
           BV_BROWSER: ${{ matrix.browser }}

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#123d2f">
+<title>ВКонтакте | Bani Vyatki Analytics</title>
+<link rel="icon" type="image/webp" href="./assets/logo-bani-vyatki.webp">
+<link rel="stylesheet" href="./design-system.css">
+<link rel="stylesheet" href="./styles.css">
+<link rel="stylesheet" href="./vk.css">
+<link rel="stylesheet" href="./navigation.css">
+<script src="./vk-data.js" defer></script>
+<script src="./vk.js" defer></script>
+<script src="./navigation.js" defer></script>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark"><img src="./assets/logo-bani-vyatki.webp" alt="Логотип Бани Вятки" width="52" height="52"></span><span class="brand-text"><b>Бани Вятки</b><small>ANALYTICS</small></span>
+      <button class="bv-menu-toggle" type="button" aria-controls="bv-primary-nav" aria-expanded="false" aria-label="Открыть меню разделов">
+        <span class="bv-menu-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="bv-menu-toggle-text" aria-hidden="true">Меню</span>
+      </button>
+    </div>
+    <div class="sidebar-caption">АНАЛИТИКА БИЗНЕСА</div>
+    <nav id="bv-primary-nav" aria-label="Разделы дашборда">
+      <a class="nav-link" href="./index.html" aria-label="Общие показатели" data-bv-label="Общие показатели"><span class="nav-icon" aria-hidden="true">▦</span><span class="bv-nav-label">Общие показатели</span></a>
+      <a class="nav-link" href="./sources.html" aria-label="Источники обращений" data-bv-label="Источники обращений"><span class="nav-icon" aria-hidden="true">◈</span><span class="bv-nav-label">Источники обращений</span></a>
+      <a class="nav-link" href="./sales.html" aria-label="Продажи и воронка" data-bv-label="Продажи и воронка"><span class="nav-icon" aria-hidden="true">▽</span><span class="bv-nav-label">Продажи и воронка</span></a>
+      <a class="nav-link" href="./managers.html" aria-label="Менеджеры" data-bv-label="Менеджеры"><span class="nav-icon" aria-hidden="true">♙</span><span class="bv-nav-label">Менеджеры</span></a>
+      <a class="nav-link" href="./cycle.html" aria-label="Цикл сделки" data-bv-label="Цикл сделки"><span class="nav-icon" aria-hidden="true">◷</span><span class="bv-nav-label">Цикл сделки</span></a>
+      <a class="nav-link current" aria-current="page" href="./vk.html" aria-label="ВКонтакте" data-bv-label="ВКонтакте"><span class="nav-icon" aria-hidden="true">◎</span><span class="bv-nav-label">ВКонтакте</span></a>
+      <span class="nav-link pending" data-bv-label="Расходы · позже" aria-label="Раздел «Расходы» пока не готов"><span class="nav-icon" aria-hidden="true">▥</span><span class="bv-nav-label">Расходы</span> <i>позже</i></span>
+    </nav>
+    <div class="sidebar-bottom">Сообщество, контент и реклама —<br><strong>от подписчика до договора.</strong><small>Прототип · раздел 06</small></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><span>УПРАВЛЕНЧЕСКАЯ АНАЛИТИКА <b>/ ВКОНТАКТЕ</b></span><span class="demo-status"><span class="status-dot"></span> Статистика ВК + рекламный кабинет + CRM</span></header>
+    <main class="vk-main" id="vk">
+      <section class="vk-heading">
+        <div><p class="eyebrow">BANI VYATKI ANALYTICS / 06</p><h1>ВКонтакте</h1><p class="subtitle">Как растёт сообщество, сколько и что мы публикуем, какой охват получаем, что даёт реклама и сколько обращений и договоров приходит из ВКонтакте.</p></div>
+        <div class="vk-month-picker"><span id="vkMonthLabel">Месяц отчёта</span><div class="vk-toggle vk-month-switch" id="vkMonthSwitch" role="group" aria-labelledby="vkMonthLabel"></div></div>
+      </section>
+
+      <section class="vk-kpis" id="vkKpis" aria-label="Ключевые показатели месяца"></section>
+
+      <section class="vk-grid vk-grid-wide">
+        <article class="vk-panel" aria-labelledby="vkLineTitle">
+          <div class="vk-panel-header"><div><span class="vk-kicker">АУДИТОРИЯ</span><h2 id="vkLineTitle">Подписчики по дням</h2><p>Июль – октябрь 2026, на конец каждого дня. Выбранный месяц подсвечен.</p></div></div>
+          <div class="vk-scroll"><div id="vkLine"></div></div>
+          <div class="vk-legend"><span><i class="vk-key line"></i>Подписчики</span><span><i class="vk-key ads"></i>Периоды рекламы на подписку</span></div>
+        </article>
+        <article class="vk-panel" aria-labelledby="vkFlowTitle">
+          <div class="vk-panel-header"><div><span class="vk-kicker">ПРИШЛИ И УШЛИ</span><h2 id="vkFlowTitle">Подписки по месяцам</h2><p>Подписавшиеся разделены на пришедших с рекламы и остальных</p></div></div>
+          <div id="vkFlow" class="vk-flow" role="img" aria-label="Подписки и отписки по месяцам"></div>
+          <div class="vk-legend"><span><i class="vk-key organic"></i>Подписались: остальные</span><span><i class="vk-key ads"></i>С рекламы</span><span><i class="vk-key unsub"></i>Отписались</span></div>
+        </article>
+      </section>
+
+      <section class="vk-panel vk-reach-panel" aria-labelledby="vkTotalTitle">
+        <div class="vk-panel-header"><div><span class="vk-kicker">ОХВАТ ЗА МЕСЯЦ</span><h2 id="vkTotalTitle">Итого охват: посты, клипы, истории и видео</h2><p>Сумма дневных охватов всех форматов за месяц и изменение к прошлому месяцу</p></div></div>
+        <div class="vk-reach-body">
+          <div><div id="vkTotal" class="vk-total" role="img" aria-label="Итого охват по месяцам"></div>
+            <div class="vk-legend"><span><i class="vk-key f-posts"></i>Посты</span><span><i class="vk-key f-clips"></i>Клипы</span><span><i class="vk-key f-stories"></i>Истории</span><span><i class="vk-key f-video"></i>Видео</span></div></div>
+          <div id="vkTotalDetail" class="vk-total-detail"></div>
+        </div>
+      </section>
+
+      <section class="vk-grid vk-grid-half">
+        <article class="vk-panel" aria-labelledby="vkPlanTitle">
+          <div class="vk-panel-header"><div><span class="vk-kicker">КОНТЕНТ · ПЛАН И ФАКТ</span><h2 id="vkPlanTitle">Сколько опубликовали</h2><p>Норма — из аналитической записки по контенту (октябрь 2026)</p></div><span class="vk-badge" id="vkPlanBadge" hidden></span></div>
+          <div id="vkPlan" class="vk-plan"></div>
+        </article>
+        <article class="vk-panel" aria-labelledby="vkCalTitle">
+          <div class="vk-panel-header"><div><span class="vk-kicker">РИТМ ПУБЛИКАЦИЙ</span><h2 id="vkCalTitle">Календарь месяца</h2><p id="vkCalSubtitle">Дни, в которые выходили материалы</p></div></div>
+          <div id="vkCalendar" class="vk-calendar"></div>
+          <div class="vk-legend"><span><i class="vk-dot posts"></i>Пост</span><span><i class="vk-dot clips"></i>Клип</span><span><i class="vk-dot stories"></i>История</span><span><i class="vk-dot video"></i>Видео</span></div>
+        </article>
+      </section>
+
+      <section class="vk-grid vk-grid-half">
+        <article class="vk-panel" aria-labelledby="vkReachTitle">
+          <div class="vk-panel-header"><div><span class="vk-kicker">ОХВАТ И ВОВЛЕЧЁННОСТЬ</span><h2 id="vkReachTitle">Как работает каждый формат</h2><p>Обычный охват — медиана: охват типичной публикации месяца</p></div></div>
+          <div class="table-scroll"><table id="vkFormats"><thead><tr><th scope="col">Формат</th><th scope="col">Публикаций</th><th scope="col">Обычный охват</th><th scope="col">Обычный ERR</th><th scope="col">Охват к прошлому месяцу</th></tr></thead><tbody></tbody></table></div>
+          <div id="vkReachStats" class="vk-mini-grid"></div>
+        </article>
+        <article class="vk-panel" aria-labelledby="vkTopTitle">
+          <div class="vk-panel-header"><div><span class="vk-kicker">ЛИДЕРЫ МЕСЯЦА</span><h2 id="vkTopTitle">Лучшие публикации</h2><p>Посты и клипы. ERR — реакции относительно охвата</p></div>
+            <div class="vk-toggle" role="group" aria-label="Критерий рейтинга"><button type="button" class="active" id="vkTopReach" aria-pressed="true">По охвату</button><button type="button" id="vkTopErr" aria-pressed="false">По реакции</button></div></div>
+          <ol id="vkTop" class="vk-top"></ol>
+        </article>
+      </section>
+
+      <section class="vk-panel vk-ads" aria-labelledby="vkAdsTitle">
+        <div class="vk-panel-header"><div><span class="vk-kicker">РЕКЛАМА ВКОНТАКТЕ</span><h2 id="vkAdsTitle">Расходы и подписчики с рекламы</h2><p>По данным рекламного кабинета ВК</p></div><span class="vk-badge" id="vkAdsBadge"></span></div>
+        <div class="vk-ads-body">
+          <div id="vkAdsBars" class="vk-ads-bars" role="img" aria-label="Расход на рекламу по месяцам"></div>
+          <div id="vkAdsDetail" class="vk-ads-detail"></div>
+        </div>
+      </section>
+
+      <section class="vk-panel vk-funnel-panel" aria-labelledby="vkFunnelTitle">
+        <div class="vk-panel-header"><div><span class="vk-kicker">ОТ ПОДПИСЧИКА ДО ДОГОВОРА</span><h2 id="vkFunnelTitle">Что ВКонтакте даёт продажам</h2><p>События одного месяца в сообществе и в CRM</p></div></div>
+        <ol id="vkFunnel" class="vk-funnel"></ol>
+        <div class="vk-method"><span class="vk-method-icon" aria-hidden="true">i</span><p>Это события одного месяца, а <strong>не последовательная конверсия</strong>: договор может заключить подписчик прошлых месяцев, а первое сообщение — написать человек без подписки. Обращения, целевые и договоры — из CRM по источнику «ВКонтакте».</p></div>
+      </section>
+
+      <div class="vk-method-summary"><strong>Источники и ограничения прототипа:</strong> статистика сообщества ВК (по дням), выгрузки постов, клипов, видео и историй, отчёт рекламного кабинета ВК, сделки CRM по источнику «ВКонтакте». Данные статические, без API и персональных данных. Пометка «ждём выгрузку» означает, что исходный файл ещё не получен. <a href="./docs/vk.md">Методика раздела</a>.</div>
+      <footer>© Bani Vyatki Analytics · Раздел 06 · Прототип для согласования</footer>
+    </main>
+  </div>
+</div>
+</body>
+</html>

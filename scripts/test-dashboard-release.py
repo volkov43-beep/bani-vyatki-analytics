@@ -21,13 +21,14 @@ if ENGINE not in {"chromium", "firefox", "webkit"}:
     raise ValueError("BV_BROWSER must be chromium, firefox or webkit")
 
 WIDTHS = [320, 360, 390, 768, 1024, 1440, 1920] if ENGINE == "chromium" else [360, 768, 1440]
-ROUTES = ["index.html", "sources.html", "sales.html", "managers.html", "cycle.html"]
+ROUTES = ["index.html", "sources.html", "sales.html", "managers.html", "cycle.html", "vk.html"]
 SELECTORS = {
     "index.html": "html.bv-overview-ready",
     "sources.html": "html.bv-sources-ready",
     "sales.html": "#stageBars .stage-row",
     "managers.html": "html.bv-managers-ready",
     "cycle.html": "html.bv-cycle-ready",
+    "vk.html": "html.bv-vk-ready",
 }
 SHOTS = Path("artifacts/final-qa") / ENGINE
 SHOTS.mkdir(parents=True, exist_ok=True)
@@ -88,7 +89,7 @@ def common(page, route, width):
     global warnings
     chk(page.locator("main").count()==1, f"{route}/{width}: exactly one main landmark")
     chk(page.locator("main h1").count()==1, f"{route}/{width}: exactly one page h1")
-    chk(page.locator("#bv-primary-nav a[href]").count()==5, f"{route}/{width}: 5 live page links")
+    chk(page.locator("#bv-primary-nav a[href]").count()==6, f"{route}/{width}: 6 live page links")
     chk(page.locator('#bv-primary-nav a[aria-current="page"]').count()==1,
         f"{route}/{width}: one active navigation item")
     active_href=page.locator('#bv-primary-nav a[aria-current="page"]').get_attribute("href")
@@ -228,6 +229,18 @@ def modules(page, route, width):
         chk(txt(page,"#cycleTimeline .cycle-timeline-row:first-child .cycle-days")=="0",
             f"{route}/{width}: cycle sorting")
         page.locator("#cycleReset").click()
+    elif route=="vk.html":
+        chk(page.locator("#vkKpis .vk-kpi").count()==5,f"{route}/{width}: VK KPI count")
+        chk(txt(page,'#vkKpis [data-kpi="subscribers"] strong').startswith("2 141"),
+            f"{route}/{width}: October subscribers")
+        chk(txt(page,"#vkTotalValue")=="15 674",f"{route}/{width}: October total reach")
+        page.locator("#vkMonthSwitch button",has_text="Сентябрь").click()
+        chk(txt(page,"#vkTotalValue")=="9 420",f"{route}/{width}: September total reach")
+        chk(txt(page,'#vkFunnel [data-step="leads"] strong')=="21",
+            f"{route}/{width}: September VK inquiries must match section 02")
+        chk(txt(page,'#vkFunnel [data-step="deals"] strong')=="3",
+            f"{route}/{width}: September VK contracts must match section 03")
+        page.locator("#vkMonthSwitch button",has_text="Октябрь").click()
 
 
 def test_navigation(browser, width):

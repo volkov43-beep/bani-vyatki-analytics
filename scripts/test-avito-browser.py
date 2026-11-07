@@ -2,7 +2,7 @@
 """Bani Vyatki Analytics / section 07 «Авито: объявления»: responsive browser QA.
 
 Actual static page served on localhost; requires Playwright 1.56.0 Chromium.
-Checks approved October–November 2026 aggregates from daily Avito Pro exports,
+Checks approved September–November 2026 aggregates from daily Avito Pro exports,
 month switching, the daily charts and table, listing groups and their filter,
 responsive reflow (15 widths), touch targets, readable text contrast and the
 absence of contacts. Does not connect to Avito, Bitrix24 or any external service.
@@ -24,6 +24,8 @@ checks = 0
 
 # Approved aggregates. Totals = sum of the daily Avito Pro exports; costs = money + written-off bonuses.
 EXPECTED = {
+    "Сентябрь": dict(views="4 489", contacts="112", cr="2,5%", cost="85 493 ₽", cpc="763 ₽", days=30, loaded=30,
+                    listings=26, groups={"work": 4, "look": 6, "hidden": 5, "weak": 4, "few": 7}),
     "Октябрь": dict(views="7 491", contacts="115", cr="1,5%", cost="87 916 ₽", cpc="764 ₽", days=31, loaded=31,
                     listings=30, groups={"work": 4, "look": 4, "hidden": 3, "weak": 4, "few": 15}),
     "Ноябрь":  dict(views="626", contacts="10", cr="1,6%", cost="15 756 ₽", cpc="1 576 ₽", days=30, loaded=6,
@@ -109,7 +111,7 @@ with sync_playwright() as p:
         # default month is the latest one
         ensure(text(page.locator("#avMonthSwitch button[aria-pressed='true']")) == "Ноябрь", f"{width}: default month")
         ensure("6 из 30" in text(page.locator("#avMonthNote")), f"{width}: partial month note")
-        for name in ("Октябрь", "Ноябрь"):
+        for name in EXPECTED:
             select_month(page, name)
             check_month(page, name, width)
             overflow = page.evaluate("document.documentElement.scrollWidth - document.documentElement.clientWidth")

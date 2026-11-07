@@ -12,14 +12,15 @@ import { fileURLToPath } from "node:url";
 
 const root=resolve(fileURLToPath(new URL("..",import.meta.url)));
 const read=name=>readFileSync(resolve(root,name),"utf8");
-const pages=["index.html","sources.html","sales.html","managers.html","cycle.html"];
-const cssFiles=["design-system.css","styles.css","sources.css","sales.css","managers.css","cycle.css"];
+const pages=["index.html","sources.html","sales.html","managers.html","cycle.html","vk.html"];
+const cssFiles=["design-system.css","styles.css","sources.css","sales.css","managers.css","cycle.css","vk.css"];
 const cssForPage={
   "index.html":null,
   "sources.html":"sources.css",
   "sales.html":"sales.css",
   "managers.html":"managers.css",
-  "cycle.html":"cycle.css"
+  "cycle.html":"cycle.css",
+  "vk.html":"vk.css"
 };
 let checks=0;
 function check(value,message){assert.ok(value,message);checks++;}
@@ -130,5 +131,19 @@ check(sources.daily.reduce((t,d)=>t+d[1].reduce((a,b)=>a+b,0),0)===222,"Septembe
 check(sources.daily.reduce((t,d)=>t+d[2].reduce((a,b)=>a+b,0),0)===122,"September target inquiries changed");
 check(sales.summary.contracts===13 && sales.summary.revenue===5643000,"Sales summary changed");
 check(cycle.knownStarts.length===13,"Deal cycle sample changed");
+// Section 06 VK: approved July–October 2026 aggregates (iteration 1).
+const vk=fixtures("vk-data.js").BV_VK;
+const vkMonth=id=>vk.months.find(m=>m.id===id);
+check(vk.months.map(m=>m.id).join()==="2026-07,2026-08,2026-09,2026-10","VK months changed");
+check(vk.months.map(m=>m.audience.end).join()==="1884,1951,1969,2141","VK month-end subscribers changed");
+check(vk.months.map(m=>m.audience.subscribed).join()==="78,82,26,186","VK subscriptions changed");
+check(vk.months.map(m=>m.audience.unsubscribed).join()==="11,15,8,16","VK unsubscriptions changed");
+check(vk.months.every(m=>m.audience.net===m.audience.subscribed-m.audience.unsubscribed),"VK net growth is not subscribed − unsubscribed");
+check(vk.months.map(m=>m.audience.reachTotal).join()==="12355,27261,9420,15674","VK total monthly reach changed");
+check(vk.months.every(m=>Object.values(m.audience.reachByFormat).reduce((a,b)=>a+b,0)===m.audience.reachTotal),"VK reach by format does not sum to total");
+check(vkMonth("2026-10").audience.fromAds===130 && vkMonth("2026-10").ads.spend===5226.8,"VK October ads changed");
+check(vkMonth("2026-09").crm.leads===21 && vkMonth("2026-09").crm.target===6 && vkMonth("2026-09").crm.deals===3,"VK September CRM must match section 02/03");
+check(vkMonth("2026-09").crm.deals===sales.sources.find(s=>s.id==="vk").deals,"VK September deals differ from sales section");
+check(!/@|\+7|\b8\d{10}\b|https?:\/\//.test(read("vk-data.js")),"VK data must not contain contacts or links");
 
 process.stdout.write("PASS: "+checks+" structural and data integrity checks. Browser QA remains pending.\n");

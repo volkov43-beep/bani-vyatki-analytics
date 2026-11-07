@@ -42,22 +42,28 @@
   /* ---------- month switch ---------- */
   function drawSwitch() {
     const wrap = $("vkMonthSwitch");
-    wrap.replaceChildren();
-    months.forEach((m, i) => {
-      const b = el("button", i === state.month ? "active" : "", m.name);
-      b.type = "button";
+    // Buttons are created once and only change state: keyboard focus is never lost.
+    if (wrap.children.length !== months.length) {
+      wrap.replaceChildren();
+      months.forEach((m, i) => {
+        const b = el("button", "", m.name);
+        b.type = "button";
+        b.addEventListener("click", () => { state.month = i; renderMonth(); });
+        wrap.append(b);
+      });
+    }
+    [...wrap.children].forEach((b, i) => {
+      b.classList.toggle("active", i === state.month);
       b.setAttribute("aria-pressed", String(i === state.month));
-      b.addEventListener("click", () => { state.month = i; renderMonth(); });
-      wrap.append(b);
     });
   }
 
   /* ---------- KPI ---------- */
   function kpi(glyph, color, title, value, unit, trend, trendClass, foot) {
-    const a = el("article", "sales-kpi");
-    const top = el("div", "sales-kpi-top");
-    top.append(el("span", "sales-glyph " + color, glyph));
-    if (trend) top.append(el("span", "sales-trend " + trendClass, trend));
+    const a = el("article", "vk-kpi");
+    const top = el("div", "vk-kpi-top");
+    top.append(el("span", "vk-glyph " + color, glyph));
+    if (trend) top.append(el("span", "vk-trend " + trendClass, trend));
     const strong = el("strong", "", value + " ");
     if (unit) strong.append(el("small", "", unit));
     a.append(top, el("h2", "", title), strong, el("p", "", foot));
@@ -86,19 +92,23 @@
       kpi("✉", "brown", "Первые сообщения", fmt(a.firstMessages), "чел.", trendText(msgChange), msgChange === null || msgChange >= 0 ? "positive" : "negative",
         "Начатые переписки — ещё не заявки")
     );
+    ["subscribers", "reach", "subscribed", "content", "messages"].forEach((k, n) => { wrap.children[n].dataset.kpi = k; });
   }
 
   /* ---------- daily subscribers line ---------- */
   function drawLine() {
-    const W = 760, H = 270, L = 46, R = 16, T = 22, B = 30;
+    const host = $("vkLine");
+    const W = Math.max(280, Math.round(host.clientWidth || 760)), H = W < 520 ? 230 : 270, L = W < 520 ? 40 : 46, R = 14, T = 22, B = 30;
     const pts = data.daily.map(([d, v]) => [new Date(d + "T00:00:00"), v]);
     const t0 = pts[0][0].getTime(), t1 = pts[pts.length - 1][0].getTime();
     const vals = pts.map(p => p[1]);
     const yMin = Math.floor((Math.min(...vals) - 20) / 50) * 50, yMax = Math.ceil((Math.max(...vals) + 20) / 50) * 50;
     const x = t => L + (t - t0) / (t1 - t0) * (W - L - R);
     const y = v => T + (yMax - v) / (yMax - yMin) * (H - T - B);
-    const root = svg("svg", {viewBox: `0 0 ${W} ${H}`, class: "vk-line-svg", role: "img", "aria-label": "Подписчики по дням"});
-    for (let v = yMin; v <= yMax; v += 50) {
+    const summary = "Подписчики по дням: " + months.map(m => m.name.toLowerCase() + " — " + fmt(m.audience.end) + " на конец месяца").join(", ") + ".";
+    const root = svg("svg", {viewBox: `0 0 ${W} ${H}`, width: W, height: H, class: "vk-line-svg", role: "img", "aria-label": summary});
+    const step = W < 520 ? 100 : 50;
+    for (let v = yMin; v <= yMax; v += step) {
       root.append(svg("line", {x1: L, x2: W - R, y1: y(v), y2: y(v), class: "vk-grid-line"}));
       root.append(svg("text", {x: L - 8, y: y(v) + 4, class: "vk-axis", "text-anchor": "end"}, fmt(v)));
     }
@@ -115,7 +125,7 @@
     root.append(svg("path", {d: area, class: "vk-line"}));
     months.forEach((m, i) => {
       const d = new Date(m.id + "-15T00:00:00").getTime();
-      root.append(svg("text", {x: x(d), y: H - 8, class: "vk-axis" + (i === state.month ? " is-current" : ""), "text-anchor": "middle"}, m.name.toLowerCase()));
+      root.append(svg("text", {x: x(d), y: H - 8, class: "vk-axis" + (i === state.month ? " is-current" : ""), "text-anchor": "middle"}, W < 520 ? m.label.toLowerCase() : m.name.toLowerCase()));
       const endDay = pts.filter(p => p[0].getMonth() === new Date(d).getMonth()).pop();
       if (endDay) {
         const cx = x(endDay[0].getTime()), cy = y(endDay[1]);
@@ -124,19 +134,29 @@
       }
     });
     root.append(svg("text", {x: x(t0) + 2, y: y(pts[0][1]) - 10, class: "vk-point-label"}, fmt(pts[0][1])));
-    $("vkLine").replaceChildren(root);
-    // On narrow screens the chart scrolls: keep the selected month in view.
-    const viewport = $("vkLine").parentElement;
-    if (viewport.scrollWidth > viewport.clientWidth + 2) {
-      const ratio = (x(Math.max(ms, t0)) + x(me)) / 2 / W;
-      viewport.scrollLeft = Math.max(0, ratio * viewport.scrollWidth - viewport.clientWidth / 2);
-    }
+    host.replaceChildren(root);
+  }
+  // The chart is drawn for the real container width (no horizontal scroll, readable labels).
+  let lineWidth = 0, lineFrame = 0;
+  function watchLine() {
+    const host = $("vkLine");
+    const redraw = () => {
+      cancelAnimationFrame(lineFrame);
+      lineFrame = requestAnimationFrame(() => {
+        const w = Math.round(host.clientWidth);
+        if (w && Math.abs(w - lineWidth) > 2) { lineWidth = w; drawLine(); }
+      });
+    };
+    if (window.ResizeObserver) new ResizeObserver(redraw).observe(host);
+    else window.addEventListener("resize", redraw);
   }
 
   /* ---------- monthly flows ---------- */
   function drawFlow() {
     const wrap = $("vkFlow");
     wrap.replaceChildren();
+    wrap.setAttribute("aria-label", "Подписки по месяцам: " + months.map(m => m.name.toLowerCase() + " — подписались " + fmt(m.audience.subscribed) +
+      (m.audience.fromAds ? " (с рекламы " + fmt(m.audience.fromAds) + ")" : "") + ", отписались " + fmt(m.audience.unsubscribed)).join("; ") + ".");
     const ceiling = Math.max(...months.map(m => m.audience.subscribed));
     months.forEach((m, i) => {
       const a = m.audience, col = el("div", "vk-flow-col" + (i === state.month ? " is-current" : ""));
@@ -163,6 +183,7 @@
   function drawTotal() {
     const i = state.month, wrap = $("vkTotal");
     wrap.replaceChildren();
+    wrap.setAttribute("aria-label", "Итого охват по месяцам: " + months.map(m => m.name.toLowerCase() + " — " + fmt(m.audience.reachTotal)).join(", ") + ".");
     const ceiling = Math.max(...months.map(m => m.audience.reachTotal));
     months.forEach((m, j) => {
       const a = m.audience, prev = prevOf(j).audience.reachTotal, ch = change(a.reachTotal, prev);
@@ -186,8 +207,9 @@
     d.replaceChildren();
     const ch = change(a.reachTotal, pa.reachTotal);
     const head = el("div", "vk-total-head");
-    head.append(el("span", "", m.name + " 2026"), el("strong", "", fmt(a.reachTotal)),
-      el("span", "sales-trend " + (ch === null || ch >= 0 ? "positive" : "negative"), ch === null ? "—" : (ch >= 0 ? "↗ +" : "↘ −") + pct(Math.abs(ch)) + " к прошлому месяцу"));
+    const totalStrong = el("strong", "", fmt(a.reachTotal)); totalStrong.id = "vkTotalValue";
+    head.append(el("span", "", m.name + " 2026"), totalStrong,
+      el("span", "vk-trend " + (ch === null || ch >= 0 ? "positive" : "negative"), ch === null ? "—" : (ch >= 0 ? "↗ +" : "↘ −") + pct(Math.abs(ch)) + " к прошлому месяцу"));
     const list = el("ul", "vk-total-list");
     REACH_FORMATS.forEach(([f, name]) => {
       const v = a.reachByFormat[f], share = v / a.reachTotal;
@@ -325,6 +347,7 @@
     const max = Math.max(...months.map(x => x.ads.spend || 0));
     const bars = $("vkAdsBars");
     bars.replaceChildren();
+    bars.setAttribute("aria-label", "Расход на рекламу по месяцам: " + months.map(x => x.name.toLowerCase() + " — " + (x.ads.spend === null ? "нет данных" : rub(Math.round(x.ads.spend)))).join(", ") + ".");
     months.forEach((x, j) => {
       const col = el("div", "vk-ads-col" + (j === i ? " is-current" : ""));
       const known = x.ads.spend !== null;
@@ -372,8 +395,10 @@
     ];
     const wrap = $("vkFunnel");
     wrap.replaceChildren();
+    const keys = ["subscribed", "messages", "leads", "target", "deals"];
     steps.forEach(([title, val, note], k) => {
       const li = el("li", "vk-step" + (val === null ? " is-pending" : "") + (k === steps.length - 1 ? " is-final" : ""));
+      li.dataset.step = keys[k];
       li.append(el("span", "vk-step-title", title));
       if (val === null) li.append(el("strong", "", "—"), pendingNote("ждём выгрузку CRM"));
       else li.append(el("strong", "", fmt(val)), el("small", "", note));
@@ -386,5 +411,6 @@
   }
   bindTop();
   renderMonth();
+  watchLine();
   document.documentElement.classList.add("bv-vk-ready");
 })();

@@ -83,7 +83,7 @@ def check_month(page, name, width):
     ensure(("ждём выгрузку" in badge) != exp["ads_known"], f"{width}/{name}: ads status badge {badge!r}")
     ensure(page.locator("#vkPlan .vk-plan-row").count() == 4, f"{width}/{name}: four formats plan/fact")
     ensure(page.locator("#vkFormats tbody tr").count() == 4, f"{width}/{name}: four format rows")
-    ensure(page.locator("#vkTotal .vk-total-col").count() == 4, f"{width}/{name}: four months of reach")
+    ensure(page.locator("#vkTotal .vk-total-col").count() == len(EXPECTED), f"{width}/{name}: reach column per month")
     ensure(page.locator("#vkTotal .vk-total-col.is-current").count() == 1, f"{width}/{name}: selected reach month")
 
 
@@ -100,8 +100,12 @@ with sync_playwright() as playwright:
         ensure(page.locator("main h1").count() == 1 and text(page.locator("main h1")) == "ВКонтакте", f"{width}: heading")
         ensure(page.locator('#bv-primary-nav a[aria-current="page"][href="./vk.html"]').count() == 1, f"{width}: active nav item")
         ensure(page.locator("#vkKpis .vk-kpi").count() == 5, f"{width}: five KPI cards")
-        ensure(page.locator("#vkMonthSwitch button").count() == 4, f"{width}: four months")
-        check_month(page, "Октябрь", width)
+        n_months = page.evaluate("window.BV_VK.months.length")
+        last = page.evaluate("window.BV_VK.months[window.BV_VK.months.length - 1].name")
+        ensure(n_months == len(EXPECTED), f"{width}: every month in vk-data.js needs approved values in EXPECTED")
+        ensure(page.locator("#vkMonthSwitch button").count() == n_months, f"{width}: month buttons = months in data")
+        ensure(text(page.locator("#vkMonthSwitch button[aria-pressed='true']")) == last, f"{width}: latest month selected by default")
+        check_month(page, last, width)
 
         metrics = page.evaluate("""() => ({html: document.documentElement.scrollWidth, body: document.body.scrollWidth,
             viewport: document.documentElement.clientWidth,
@@ -127,16 +131,18 @@ with sync_playwright() as playwright:
             page.screenshot(path=str(SHOTS / f"vk-{width}-october.png"), full_page=True)
 
         if width in (360, 390, 1024, 1440):
-            for name in ("Сентябрь", "Июль", "Август", "Октябрь"):
+            for name in EXPECTED:
                 select_month(page, name)
                 check_month(page, name, width)
-            select_month(page, "Октябрь")
-            ensure(page.locator("#vkCalendar .vk-cal-day").count() == 31, f"{width}: October has 31 days")
-            ensure(page.locator("#vkCalendar .vk-cal-day.is-unknown").count() == 11, f"{width}: Oct 21–31 marked as not exported")
-            ensure(page.locator("#vkPlanBadge").is_visible(), f"{width}: partial October content badge")
+                info = page.evaluate("n => { const m = window.BV_VK.months.find(x => x.name === n); return {id: m.id, complete: m.content.complete, through: m.content.through}; }", name)
+                year, month = map(int, info["id"].split("-"))
+                days = (__import__("calendar").monthrange(year, month))[1]
+                ensure(page.locator("#vkCalendar .vk-cal-day").count() == days, f"{width}/{name}: calendar days")
+                unknown = 0 if info["complete"] else days - int(info["through"][-2:])
+                ensure(page.locator("#vkCalendar .vk-cal-day.is-unknown").count() == unknown, f"{width}/{name}: days without content export")
+                ensure(page.locator("#vkPlanBadge").is_visible() == (not info["complete"]), f"{width}/{name}: partial content badge")
             select_month(page, "Июль")
             ensure("к июню" in text(page.locator('#vkKpis [data-kpi="reach"] .vk-trend')), f"{width}: July compares with June")
-            ensure(not page.locator("#vkPlanBadge").is_visible(), f"{width}: July content is complete")
             page.locator("#vkTopErr").click()
             ensure(page.locator("#vkTopErr").get_attribute("aria-pressed") == "true", f"{width}: ERR ranking toggle")
             ensure(page.locator("#vkTop .vk-top-item").count() == 3, f"{width}: three leaders")
@@ -144,7 +150,7 @@ with sync_playwright() as playwright:
             select_month(page, "Сентябрь")
             if width == 390:
                 page.screenshot(path=str(SHOTS / "vk-390-september.png"), full_page=True)
-            select_month(page, "Октябрь")
+            select_month(page, last)
 
         body = page.locator("main").inner_text()
         ensure(not re.search(r"@|\+7\s?\(?\d|\b8\d{10}\b", body), f"{width}: contacts must not be published")

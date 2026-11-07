@@ -13,7 +13,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 BASE = os.environ.get("BV_PREVIEW_BASE", "http://127.0.0.1:8765").rstrip("/")
-ROUTES = ["index.html", "sources.html", "sales.html", "managers.html", "cycle.html", "vk.html"]
+ROUTES = ["index.html", "sources.html", "sales.html", "managers.html", "cycle.html", "vk.html", "avito.html"]
 WIDTHS = [320, 360, 390, 768, 1024, 1440, 1920]
 SHOTS = Path("artifacts/navigation")
 SHOTS.mkdir(parents=True, exist_ok=True)
@@ -45,7 +45,7 @@ with sync_playwright() as playwright:
             nav = page.locator("#bv-primary-nav")
             toggle = page.locator(".bv-menu-toggle")
             page_links = nav.locator("a[href]")
-            ok(page_links.count() == 6, f"{width}/{route}: 6 navigation links")
+            ok(page_links.count() == 7, f"{width}/{route}: 7 navigation links")
             ok(nav.locator('a[aria-current="page"]').count() == 1,
                f"{width}/{route}: only one active page")
             ok(not page_errors, f"{width}/{route}: JavaScript errors: {page_errors}")

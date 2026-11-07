@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const read = name => readFileSync(resolve(root, name), "utf8");
-const pages = ["index.html","sources.html","sales.html","managers.html","cycle.html","vk.html"];
+const pages = ["index.html","sources.html","sales.html","managers.html","cycle.html","vk.html","avito.html"];
 const navCss = read("navigation.css");
 const navJs = read("navigation.js");
 let checks=0;
@@ -32,7 +32,7 @@ for(const page of pages){
   check((h.match(/aria-controls="bv-primary-nav"/g)||[]).length===1,"Menu aria-controls missing: "+page);
   check((h.match(/class="bv-menu-toggle"/g)||[]).length===1,"Missing toggle: "+page);
   check((h.match(/aria-current="page"/g)||[]).length===1,"Exactly one current page link required: "+page);
-  check((h.match(/class="bv-nav-label"/g)||[]).length===7,"Six page links + pending label expected: "+page);
+  check((h.match(/class="bv-nav-label"/g)||[]).length===8,"Seven page links + pending label expected: "+page);
   check((h.match(/aria-hidden="true"/g)||[]).length>=8,"Decorative icons must be hidden: "+page);
   for(const dest of pages){
     if(dest===page)continue;

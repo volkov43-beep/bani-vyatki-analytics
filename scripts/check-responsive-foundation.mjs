@@ -12,15 +12,16 @@ import { fileURLToPath } from "node:url";
 
 const root=resolve(fileURLToPath(new URL("..",import.meta.url)));
 const read=name=>readFileSync(resolve(root,name),"utf8");
-const pages=["index.html","sources.html","sales.html","managers.html","cycle.html","vk.html"];
-const cssFiles=["design-system.css","styles.css","sources.css","sales.css","managers.css","cycle.css","vk.css"];
+const pages=["index.html","sources.html","sales.html","managers.html","cycle.html","vk.html","avito.html"];
+const cssFiles=["design-system.css","styles.css","sources.css","sales.css","managers.css","cycle.css","vk.css","avito.css"];
 const cssForPage={
   "index.html":null,
   "sources.html":"sources.css",
   "sales.html":"sales.css",
   "managers.html":"managers.css",
   "cycle.html":"cycle.css",
-  "vk.html":"vk.css"
+  "vk.html":"vk.css",
+  "avito.html":"avito.css"
 };
 let checks=0;
 function check(value,message){assert.ok(value,message);checks++;}
@@ -145,5 +146,21 @@ check(vkMonth("2026-10").audience.fromAds===130 && vkMonth("2026-10").ads.spend=
 check(vkMonth("2026-09").crm.leads===21 && vkMonth("2026-09").crm.target===6 && vkMonth("2026-09").crm.deals===3,"VK September CRM must match section 02/03");
 check(vkMonth("2026-09").crm.deals===sales.sources.find(s=>s.id==="vk").deals,"VK September deals differ from sales section");
 check(!/@|\+7|\b8\d{10}\b|https?:\/\//.test(read("vk-data.js")),"VK data must not contain contacts or links");
+// Section 07 Avito: approved October–November 2026 aggregates from daily Avito Pro exports.
+const av=fixtures("avito-data.js").BV_AVITO;
+const avF=Object.fromEntries(av.fields.map((f,i)=>[f,i]));
+const avSum=(month,field)=>Math.round(av.rows.filter(r=>av.dates[r[avF.day]].startsWith(month)).reduce((t,r)=>t+r[avF[field]],0)*100)/100;
+check(av.months.map(m=>m.id).join()==="2026-10,2026-11","Avito months changed");
+check(av.months.map(m=>m.loadedDays).join()==="31,6","Avito loaded days changed");
+check(av.dates.length===37 && new Set(av.dates).size===37,"Avito dates must be unique days");
+check(av.months.every(m=>av.dates.filter(d=>d.startsWith(m.id)).length===m.loadedDays),"Avito month metadata differs from dates");
+check(avSum("2026-10","shows")===50410 && avSum("2026-10","views")===7491 && avSum("2026-10","contacts")===115,"Avito October totals changed");
+check(avSum("2026-10","spendMoney")===81415.95 && avSum("2026-10","spendBonus")===6500,"Avito October spend changed");
+check(avSum("2026-11","views")===626 && avSum("2026-11","contacts")===10 && avSum("2026-11","spendMoney")===15755.81,"Avito November totals changed");
+check(av.rows.every(r=>r.length===av.fields.length && av.listings[r[avF.listing]] && av.dates[r[avF.day]]),"Avito rows reference unknown listing or day");
+check(new Set(av.rows.map(r=>r[avF.day]+":"+r[avF.listing])).size===av.rows.length,"Avito listing appears twice on one day");
+check(av.listings.length===30 && new Set(av.listings.map(l=>l.id)).size===30,"Avito listing reference changed");
+check(av.listings.every(l=>l.pair?l.titles.length===2&&l.title===null:l.titles.length===1),"Avito pair/title structure broken");
+check(!/@|\+7|\b8\d{10}\b|https?:\/\//.test(read("avito-data.js")),"Avito data must not contain contacts or links");
 
 process.stdout.write("PASS: "+checks+" structural and data integrity checks. Browser QA remains pending.\n");

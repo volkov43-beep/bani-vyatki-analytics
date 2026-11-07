@@ -76,6 +76,9 @@
     wrap.replaceChildren(
       kpi("◎", "green", "Подписчиков на конец месяца", fmt(a.end), "чел.", signed(a.net) + " за месяц", a.net >= 0 ? "positive" : "negative",
         "На начало месяца: " + fmt(a.start)),
+      kpi("◉", "green", "Итого охват за месяц", fmt(a.reachTotal), "", trendText(change(a.reachTotal, p.audience.reachTotal)),
+        change(a.reachTotal, p.audience.reachTotal) === null || change(a.reachTotal, p.audience.reachTotal) >= 0 ? "positive" : "negative",
+        "Посты, клипы, истории и видео вместе"),
       kpi("↗", "gold", "Подписались", fmt(a.subscribed), "чел.", trendText(subChange), subChange === null || subChange >= 0 ? "positive" : "negative",
         "Отписались: " + fmt(a.unsubscribed) + " · с рекламы: " + (a.fromAds === null ? "ждём выгрузку" : fmt(a.fromAds))),
       kpi("▤", "olive", "Постов и клипов", fmt(pc), "шт.", normState[0], normState[1],
@@ -153,6 +156,50 @@
       if (ads) col.title = `${m.name}: подписались ${a.subscribed} (с рекламы ${ads}), отписались ${a.unsubscribed}`;
       wrap.append(col);
     });
+  }
+
+  /* ---------- total monthly reach ---------- */
+  const REACH_FORMATS = [["posts", "Посты"], ["clips", "Клипы"], ["stories", "Истории"], ["video", "Видео"]];
+  function drawTotal() {
+    const i = state.month, wrap = $("vkTotal");
+    wrap.replaceChildren();
+    const ceiling = Math.max(...months.map(m => m.audience.reachTotal));
+    months.forEach((m, j) => {
+      const a = m.audience, prev = prevOf(j).audience.reachTotal, ch = change(a.reachTotal, prev);
+      const col = el("div", "vk-total-col" + (j === i ? " is-current" : ""));
+      col.append(el("span", "vk-total-change " + (ch === null ? "" : ch >= 0 ? "up" : "down"), ch === null ? "" : (ch >= 0 ? "+" : "−") + pct(Math.abs(ch), 0)));
+      col.append(el("b", "vk-total-val", fmt(a.reachTotal)));
+      const stack = el("div", "vk-total-stack");
+      stack.style.height = Math.max(6, Math.round(190 * a.reachTotal / ceiling)) + "px";
+      REACH_FORMATS.slice().reverse().forEach(([f, name]) => {
+        const v = a.reachByFormat[f], seg = el("i", "vk-seg f-" + f);
+        seg.style.flexGrow = String(v);
+        seg.title = name + ": " + fmt(v);
+        stack.append(seg);
+      });
+      col.append(stack, el("span", "vk-flow-label", m.label));
+      col.title = m.name + ": итого " + fmt(a.reachTotal);
+      wrap.append(col);
+    });
+    const m = months[i], a = m.audience, pv = prevOf(i), pa = pv.audience;
+    const d = $("vkTotalDetail");
+    d.replaceChildren();
+    const ch = change(a.reachTotal, pa.reachTotal);
+    const head = el("div", "vk-total-head");
+    head.append(el("span", "", m.name + " 2026"), el("strong", "", fmt(a.reachTotal)),
+      el("span", "sales-trend " + (ch === null || ch >= 0 ? "positive" : "negative"), ch === null ? "—" : (ch >= 0 ? "↗ +" : "↘ −") + pct(Math.abs(ch)) + " к прошлому месяцу"));
+    const list = el("ul", "vk-total-list");
+    REACH_FORMATS.forEach(([f, name]) => {
+      const v = a.reachByFormat[f], share = v / a.reachTotal;
+      const prevV = pv.audience.reachByFormat ? pv.audience.reachByFormat[f] : null;
+      const fc = change(v, prevV);
+      const li = el("li");
+      const bar = el("span", "vk-share"); const fill = el("i", "f-" + f); fill.style.width = (share * 100).toFixed(1) + "%"; bar.append(fill);
+      li.append(el("span", "vk-total-name", name), bar, el("b", "", fmt(v)), el("small", "", pct(share, 0)),
+        el("em", fc === null ? "" : fc >= 0 ? "up" : "down", fc === null ? "" : (fc >= 0 ? "+" : "−") + pct(Math.abs(fc), 0)));
+      list.append(li);
+    });
+    d.append(head, list, el("p", "vk-ads-caption", "Один человек мог попасть в охват в разные дни и через разные форматы, поэтому это не число уникальных людей, а объём показов аудитории. Сравнивать месяцы между собой корректно."));
   }
 
   /* ---------- plan / fact ---------- */
@@ -242,7 +289,6 @@
       return box;
     };
     stats.append(
-      mini("Средний охват сообщества в день", "reachPerDay", fmt, "Все форматы, сумма охватов за день"),
       mini("Охват постов среди неподписчиков", "nonSubscriberShare", v => pct(v, 0), "Чем выше доля, тем больше новых людей видят посты")
     );
   }
@@ -336,7 +382,7 @@
   }
 
   function renderMonth() {
-    drawSwitch(); drawKpis(); drawLine(); drawFlow(); drawPlan(); drawCalendar(); drawFormats(); drawTop(); drawAds(); drawFunnel();
+    drawSwitch(); drawKpis(); drawLine(); drawFlow(); drawTotal(); drawPlan(); drawCalendar(); drawFormats(); drawTop(); drawAds(); drawFunnel();
   }
   bindTop();
   renderMonth();

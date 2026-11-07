@@ -45,7 +45,7 @@
         <div class="vk-month-picker"><span id="vkMonthLabel">Месяц отчёта</span><div class="sales-toggle vk-month-switch" id="vkMonthSwitch" role="group" aria-labelledby="vkMonthLabel"></div></div>
       </section>
 
-      <section class="sales-kpis" id="vkKpis" aria-label="Ключевые показатели месяца"></section>
+      <section class="sales-kpis vk-kpis" id="vkKpis" aria-label="Ключевые показатели месяца"></section>
 
       <section class="vk-grid vk-grid-wide">
         <article class="sales-panel" aria-labelledby="vkLineTitle">
@@ -58,6 +58,15 @@
           <div id="vkFlow" class="vk-flow" role="img" aria-label="Подписки и отписки по месяцам"></div>
           <div class="vk-legend"><span><i class="vk-key organic"></i>Подписались: остальные</span><span><i class="vk-key ads"></i>С рекламы</span><span><i class="vk-key unsub"></i>Отписались</span></div>
         </article>
+      </section>
+
+      <section class="sales-panel vk-reach-panel" aria-labelledby="vkTotalTitle">
+        <div class="sales-panel-header"><div><span class="panel-kicker">ОХВАТ ЗА МЕСЯЦ</span><h2 id="vkTotalTitle">Итого охват: посты, клипы, истории и видео</h2><p>Сумма дневных охватов всех форматов за месяц и изменение к прошлому месяцу</p></div></div>
+        <div class="vk-reach-body">
+          <div><div id="vkTotal" class="vk-total" role="img" aria-label="Итого охват по месяцам"></div>
+            <div class="vk-legend"><span><i class="vk-key f-posts"></i>Посты</span><span><i class="vk-key f-clips"></i>Клипы</span><span><i class="vk-key f-stories"></i>Истории</span><span><i class="vk-key f-video"></i>Видео</span></div></div>
+          <div id="vkTotalDetail" class="vk-total-detail"></div>
+        </div>
       </section>
 
       <section class="vk-grid vk-grid-half">

@@ -11,7 +11,8 @@ window.BV_VK = Object.freeze({
    "subscribed":136,
    "unsubscribed":20,
    "net":116,
-   "firstMessages":35
+   "firstMessages":35,
+   "reachTotal":11204
   },
   "content":{
    "posts":4,
@@ -68,6 +69,14 @@ window.BV_VK = Object.freeze({
     "visitors":875,
     "firstMessages":19,
     "reachPerDay":325,
+    "reachTotal":12355,
+    "reachByFormat":{
+     "posts":5916,
+     "clips":3802,
+     "stories":2484,
+     "video":153
+    },
+    "reachAllContent":10061,
     "nonSubscriberShare":0.641
    },
    "content":{
@@ -218,6 +227,14 @@ window.BV_VK = Object.freeze({
     "visitors":845,
     "firstMessages":25,
     "reachPerDay":815,
+    "reachTotal":27261,
+    "reachByFormat":{
+     "posts":21978,
+     "clips":3233,
+     "stories":1902,
+     "video":148
+    },
+    "reachAllContent":25258,
     "nonSubscriberShare":0.9373
    },
    "content":{
@@ -357,6 +374,14 @@ window.BV_VK = Object.freeze({
     "visitors":720,
     "firstMessages":20,
     "reachPerDay":224,
+    "reachTotal":9420,
+    "reachByFormat":{
+     "posts":2929,
+     "clips":4392,
+     "stories":1881,
+     "video":218
+    },
+    "reachAllContent":6730,
     "nonSubscriberShare":0.2482
    },
    "content":{
@@ -511,6 +536,14 @@ window.BV_VK = Object.freeze({
     "visitors":1274,
     "firstMessages":20,
     "reachPerDay":364,
+    "reachTotal":15674,
+    "reachByFormat":{
+     "posts":6406,
+     "clips":5087,
+     "stories":3929,
+     "video":252
+    },
+    "reachAllContent":11296,
     "nonSubscriberShare":0.3044
    },
    "content":{

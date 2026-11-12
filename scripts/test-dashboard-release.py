@@ -249,7 +249,7 @@ def modules(page, route, width):
         chk(txt(page,'#avKpis [data-kpi="contacts"] strong')=="115",f"{route}/{width}: October Avito contacts")
         chk(txt(page,'#avKpis [data-kpi="cost"] strong')=="87 916 ₽",f"{route}/{width}: October Avito costs")
         page.locator("#avMonthSwitch button",has_text="Ноябрь").click()
-        chk(txt(page,'#avKpis [data-kpi="contacts"] strong')=="10",f"{route}/{width}: November Avito contacts")
+        chk(txt(page,'#avKpis [data-kpi="contacts"] strong')=="18",f"{route}/{width}: November Avito contacts")
 
 
 def test_navigation(browser, width):

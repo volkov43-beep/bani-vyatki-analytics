@@ -32,12 +32,17 @@ Avito Pro → «Статистика объявлений» → Excel, **пер�
 ## Сборка и проверки
 
 ```bash
+# новые дни дописываются к уже опубликованным данным — старые выгрузки не нужны
+python3 scripts/build-avito-data.py --base avito-data.js --exports ПАПКА_С_НОВЫМИ_ДНЯМИ --listings data/avito-listings.csv --out avito-data.js
+# полная пересборка (если есть все дневные выгрузки с 01.08.2026)
 python3 scripts/build-avito-data.py --exports ПАПКА_С_ВЫГРУЗКАМИ --listings data/avito-listings.csv --out avito-data.js
 node scripts/check-responsive-foundation.mjs
 node scripts/check-navigation.mjs
 node scripts/check-public-dashboard.mjs
 python scripts/test-avito-browser.py
 ```
+
+С `--base` сборка останавливается, если день уже есть в данных, если между старыми и новыми днями пропуск или если справочник изменён не дописыванием в конец.
 
 При добавлении месяца или дней: утверждённые итоги нового месяца дописываются в `scripts/check-responsive-foundation.mjs` и в `EXPECTED` в `scripts/test-avito-browser.py`. PR — из ветки `feature/avito-data-ГГГГ-ММ`, с таблицей новых значений и итогами сверки. **Не объединять без одобрения владельца.**
 

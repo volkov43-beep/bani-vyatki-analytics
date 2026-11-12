@@ -10,8 +10,12 @@
 Исходные выгрузки в репозиторий НЕ кладутся. Номера объявлений в выгрузке Avito Pro пустые,
 поэтому объявление определяется по городу, адресу, категории, цене и дате первой публикации.
 Объявление, которого нет в справочнике, останавливает сборку: его нужно добавить в CSV.
+  --base JS       (необязательно) уже опубликованный avito-data.js: его дни сохраняются, из --exports
+                  берутся только следующие дни — так еженедельное обновление не требует старых выгрузок.
 Требуется: pandas, openpyxl.
 Пример: python3 scripts/build-avito-data.py --exports ~/avito --listings data/avito-listings.csv --out avito-data.js
+Дописать новые дни: python3 scripts/build-avito-data.py --base avito-data.js --exports ~/avito-new \
+                    --listings data/avito-listings.csv --out avito-data.js
 """
 from __future__ import annotations
 
@@ -43,6 +47,7 @@ def main() -> None:
     ap.add_argument("--listings", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--updated", default=dt.date.today().isoformat())
+    ap.add_argument("--base", help="готовый avito-data.js: его дни сохраняются, из --exports добавляются только новые дни")
     a = ap.parse_args()
 
     # справочник: одинаковые ключи у двух строк = «близнецы», выгрузка их не различает
@@ -68,9 +73,25 @@ def main() -> None:
         if m.group(1) in files:
             raise SystemExit(f"Два файла за {m.group(1)}: {files[m.group(1)].name}, {f.name}")
         files[m.group(1)] = f
-    dates = sorted(files)
-    rows = []
-    for di, d in enumerate(dates):
+
+    # --base: дописываем новые дни к уже опубликованным данным (старые выгрузки не нужны)
+    dates, rows = [], []
+    if a.base:
+        text = Path(a.base).read_text(encoding="utf-8")
+        base = json.loads(text[text.index("Object.freeze(") + len("Object.freeze("):text.rindex(");")])
+        old_ids = [l["id"] for l in base["listings"]]
+        if old_ids != [l["id"] for l in listings[:len(old_ids)]]:
+            raise SystemExit("Справочник не совпадает с --base: новые объявления добавляются только в конец CSV")
+        overlap = sorted(set(files) & set(base["dates"]))
+        if overlap:
+            raise SystemExit(f"Дни уже есть в {a.base}: {', '.join(overlap)} — уберите эти файлы из папки")
+        dates, rows = list(base["dates"]), [list(r) for r in base["rows"]]
+    new_dates = sorted(files)
+    if dates and new_dates and new_dates[0] <= dates[-1]:
+        raise SystemExit(f"Новые дни ({new_dates[0]}) должны идти после последнего дня в --base ({dates[-1]})")
+    for d in new_dates:
+        di = len(dates)
+        dates.append(d)
         df = pd.read_excel(files[d])
         df.columns = [c.replace("\xa0", " ") for c in df.columns]
         acc = defaultdict(lambda: [0] * 12)
@@ -89,6 +110,11 @@ def main() -> None:
         for li, cell in sorted(acc.items()):
             cell[11] = int(cell[11])
             rows.append([di, li] + cell)
+
+    days = [dt.date.fromisoformat(d) for d in dates]
+    gaps = [str(x + dt.timedelta(1)) for x, y in zip(days, days[1:]) if (y - x).days != 1]
+    if gaps:
+        raise SystemExit(f"Пропуск дней после: {', '.join(gaps)} — нужна выгрузка за каждый день")
 
     months = []
     for mid in sorted({d[:7] for d in dates}):

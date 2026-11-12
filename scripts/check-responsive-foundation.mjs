@@ -151,8 +151,8 @@ const av=fixtures("avito-data.js").BV_AVITO;
 const avF=Object.fromEntries(av.fields.map((f,i)=>[f,i]));
 const avSum=(month,field)=>Math.round(av.rows.filter(r=>av.dates[r[avF.day]].startsWith(month)).reduce((t,r)=>t+r[avF[field]],0)*100)/100;
 check(av.months.map(m=>m.id).join()==="2026-08,2026-09,2026-10,2026-11","Avito months changed");
-check(av.months.map(m=>m.loadedDays).join()==="31,30,31,6","Avito loaded days changed");
-check(av.dates.length===98 && new Set(av.dates).size===98,"Avito dates must be unique days");
+check(av.months.map(m=>m.loadedDays).join()==="31,30,31,11","Avito loaded days changed");
+check(av.dates.length===103 && new Set(av.dates).size===103,"Avito dates must be unique days");
 check(av.months.every(m=>av.dates.filter(d=>d.startsWith(m.id)).length===m.loadedDays),"Avito month metadata differs from dates");
 check(avSum("2026-08","shows")===48743 && avSum("2026-08","views")===7133 && avSum("2026-08","contacts")===126,"Avito August totals changed");
 check(avSum("2026-08","spendMoney")===111744.51 && avSum("2026-08","spendBonus")===7112.8,"Avito August spend changed");
@@ -160,10 +160,11 @@ check(avSum("2026-09","shows")===25863 && avSum("2026-09","views")===4489 && avS
 check(avSum("2026-09","spendMoney")===79093.05 && avSum("2026-09","spendBonus")===6400,"Avito September spend changed");
 check(avSum("2026-10","shows")===50410 && avSum("2026-10","views")===7491 && avSum("2026-10","contacts")===115,"Avito October totals changed");
 check(avSum("2026-10","spendMoney")===81415.95 && avSum("2026-10","spendBonus")===6500,"Avito October spend changed");
-check(avSum("2026-11","views")===626 && avSum("2026-11","contacts")===10 && avSum("2026-11","spendMoney")===15755.81,"Avito November totals changed");
+check(avSum("2026-11","shows")===8156 && avSum("2026-11","views")===1269 && avSum("2026-11","contacts")===18,"Avito November totals changed");
+check(avSum("2026-11","spendMoney")===32144.93 && avSum("2026-11","spendBonus")===0,"Avito November spend changed");
 check(av.rows.every(r=>r.length===av.fields.length && av.listings[r[avF.listing]] && av.dates[r[avF.day]]),"Avito rows reference unknown listing or day");
 check(new Set(av.rows.map(r=>r[avF.day]+":"+r[avF.listing])).size===av.rows.length,"Avito listing appears twice on one day");
-check(av.listings.length===45 && new Set(av.listings.map(l=>l.id)).size===45,"Avito listing reference changed");
+check(av.listings.length===46 && new Set(av.listings.map(l=>l.id)).size===46,"Avito listing reference changed");
 check(av.listings.every(l=>l.pair?l.titles.length===2&&l.title===null:l.titles.length===1),"Avito pair/title structure broken");
 check(!/@|\+7|\b8\d{10}\b|https?:\/\//.test(read("avito-data.js")),"Avito data must not contain contacts or links");
 

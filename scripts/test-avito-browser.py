@@ -30,8 +30,8 @@ EXPECTED = {
                     listings=26, groups={"work": 4, "look": 6, "hidden": 5, "weak": 4, "few": 7}),
     "Октябрь": dict(views="7 491", contacts="115", cr="1,5%", cost="87 916 ₽", cpc="764 ₽", days=31, loaded=31,
                     listings=30, groups={"work": 4, "look": 4, "hidden": 3, "weak": 4, "few": 15}),
-    "Ноябрь":  dict(views="626", contacts="10", cr="1,6%", cost="15 756 ₽", cpc="1 576 ₽", days=30, loaded=6,
-                    listings=22, groups=None),
+    "Ноябрь":  dict(views="1 269", contacts="18", cr="1,4%", cost="32 145 ₽", cpc="1 786 ₽", days=30, loaded=11,
+                    listings=27, groups=None),
 }
 
 
@@ -111,8 +111,10 @@ with sync_playwright() as p:
         page.wait_for_selector("html.bv-avito-ready")
         ensure(not errors, f"{width}: JS errors {errors}")
         # default month is the latest one
-        ensure(text(page.locator("#avMonthSwitch button[aria-pressed='true']")) == "Ноябрь", f"{width}: default month")
-        ensure("6 из 30" in text(page.locator("#avMonthNote")), f"{width}: partial month note")
+        last = list(EXPECTED)[-1]
+        ensure(text(page.locator("#avMonthSwitch button[aria-pressed='true']")) == last, f"{width}: default month")
+        partial = f'{EXPECTED[last]["loaded"]} из {EXPECTED[last]["days"]}'
+        ensure(partial in text(page.locator("#avMonthNote")), f"{width}: partial month note")
         for name in EXPECTED:
             select_month(page, name)
             check_month(page, name, width)

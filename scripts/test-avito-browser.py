@@ -30,7 +30,7 @@ EXPECTED = {
                     listings=26, groups={"work": 4, "look": 6, "hidden": 5, "weak": 4, "few": 7}),
     "Октябрь": dict(views="7 491", contacts="115", cr="1,5%", cost="87 916 ₽", cpc="764 ₽", days=31, loaded=31,
                     listings=30, groups={"work": 4, "look": 4, "hidden": 3, "weak": 4, "few": 15}),
-    "Ноябрь":  dict(views="1 269", contacts="18", cr="1,4%", cost="32 145 ₽", cpc="1 786 ₽", days=30, loaded=11,
+    "Ноябрь":  dict(views="1 380", contacts="20", cr="1,4%", cost="34 792 ₽", cpc="1 740 ₽", days=30, loaded=12,
                     listings=27, groups=None),
 }
 
